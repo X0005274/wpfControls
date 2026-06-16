@@ -87,17 +87,25 @@ namespace com.example.Demo
 
         private static UIElement BuildSelectionSection()
         {
-            ModernComboBoxControl combo = new ModernComboBoxControl();
-            combo.Title = "Country";
-            combo.DisplayMemberPath = "Name";
-            combo.SelectedValuePath = "Code";
-            List<ComboBoxItemModel> countries = new List<ComboBoxItemModel>();
-            countries.Add(new ComboBoxItemModel("KR", "South Korea"));
-            countries.Add(new ComboBoxItemModel("US", "United States"));
-            countries.Add(new ComboBoxItemModel("JP", "Japan"));
-            countries.Add(new ComboBoxItemModel("DE", "Germany"));
-            combo.ItemsSource = countries;
-            combo.SelectedValue = "KR";
+            // Searchable auto-suggest combo in StartsWith mode (e.g. type "u" -> United ...).
+            ModernComboBoxControl comboStartsWith = new ModernComboBoxControl();
+            comboStartsWith.Title = "Country (filter: StartsWith)";
+            comboStartsWith.DisplayMemberPath = "Name";
+            comboStartsWith.SelectedValuePath = "Code";
+            comboStartsWith.FilterMode = ComboBoxFilterMode.StartsWith;
+            comboStartsWith.ItemsSource = BuildCountryList();
+            comboStartsWith.SelectedValue = "KR";
+
+            // Same data in Contains mode (e.g. type "an" -> Germany, Japan).
+            // Each combo gets its own list instance: filtering uses the source's
+            // default collection view, so sharing one list would filter both.
+            ModernComboBoxControl comboContains = new ModernComboBoxControl();
+            comboContains.Title = "Country (filter: Contains)";
+            comboContains.DisplayMemberPath = "Name";
+            comboContains.SelectedValuePath = "Code";
+            comboContains.FilterMode = ComboBoxFilterMode.Contains;
+            comboContains.ItemsSource = BuildCountryList();
+            comboContains.SelectedValue = "US";
 
             ModernCheckBoxControl check = new ModernCheckBoxControl();
             check.Title = "Subscribe to newsletter";
@@ -135,7 +143,19 @@ namespace com.example.Demo
             slider.Maximum = 100;
             slider.Value = 35;
 
-            return Section("Selection", new UIElement[] { combo, check, radio, toggle, listBox, slider });
+            return Section(
+                "Selection",
+                new UIElement[] { comboStartsWith, comboContains, check, radio, toggle, listBox, slider });
+        }
+
+        private static List<ComboBoxItemModel> BuildCountryList()
+        {
+            List<ComboBoxItemModel> countries = new List<ComboBoxItemModel>();
+            countries.Add(new ComboBoxItemModel("KR", "South Korea"));
+            countries.Add(new ComboBoxItemModel("US", "United States"));
+            countries.Add(new ComboBoxItemModel("JP", "Japan"));
+            countries.Add(new ComboBoxItemModel("DE", "Germany"));
+            return countries;
         }
 
         // -------------------------------------------------------------- Display
