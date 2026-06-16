@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8F2A1C3D-4B5E-4789-ABCD-1234567890AB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>com.example</RootNamespace>
+    <AssemblyName>com.example</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Deterministic>true</Deterministic>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Input -->
+    <Page Include="Controls\Wpf\Input\ModernTextBoxControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Input\ModernPasswordBoxControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Input\ModernRichTextBoxControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Input\ModernSearchBoxControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <!-- Selection -->
+    <Page Include="Controls\Wpf\Selection\ModernComboBoxControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Selection\ModernCheckBoxControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Selection\ModernRadioButtonGroupControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Selection\ModernToggleSwitchControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Selection\ModernListBoxControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Selection\ModernSliderControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <!-- Display -->
+    <Page Include="Controls\Wpf\Display\ModernLabelControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Display\ModernProgressBarControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Display\ModernStatusBarControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Display\ModernBadgeControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Display\ModernDatePickerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <!-- Data -->
+    <Page Include="Controls\Wpf\Data\ModernDataGridControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Data\ModernListViewControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Data\ModernTreeViewControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Data\ModernTabControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <!-- Layout -->
+    <Page Include="Controls\Wpf\Layout\ModernExpanderControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Layout\ModernGroupBoxControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Layout\ModernFormSectionControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Layout\ModernScrollSectionControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Input code-behind -->
+    <Compile Include="Controls\Wpf\Input\ModernTextBoxControl.xaml.cs">
+      <DependentUpon>ModernTextBoxControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Input\ModernPasswordBoxControl.xaml.cs">
+      <DependentUpon>ModernPasswordBoxControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Input\ModernRichTextBoxControl.xaml.cs">
+      <DependentUpon>ModernRichTextBoxControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Input\ModernSearchBoxControl.xaml.cs">
+      <DependentUpon>ModernSearchBoxControl.xaml</DependentUpon>
+    </Compile>
+    <!-- Selection code-behind -->
+    <Compile Include="Controls\Wpf\Selection\ModernComboBoxControl.xaml.cs">
+      <DependentUpon>ModernComboBoxControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Selection\ModernCheckBoxControl.xaml.cs">
+      <DependentUpon>ModernCheckBoxControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Selection\ModernRadioButtonGroupControl.xaml.cs">
+      <DependentUpon>ModernRadioButtonGroupControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Selection\ModernToggleSwitchControl.xaml.cs">
+      <DependentUpon>ModernToggleSwitchControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Selection\ModernListBoxControl.xaml.cs">
+      <DependentUpon>ModernListBoxControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Selection\ModernSliderControl.xaml.cs">
+      <DependentUpon>ModernSliderControl.xaml</DependentUpon>
+    </Compile>
+    <!-- Display code-behind -->
+    <Compile Include="Controls\Wpf\Display\ModernLabelControl.xaml.cs">
+      <DependentUpon>ModernLabelControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Display\ModernProgressBarControl.xaml.cs">
+      <DependentUpon>ModernProgressBarControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Display\ModernStatusBarControl.xaml.cs">
+      <DependentUpon>ModernStatusBarControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Display\ModernBadgeControl.xaml.cs">
+      <DependentUpon>ModernBadgeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Display\ModernDatePickerControl.xaml.cs">
+      <DependentUpon>ModernDatePickerControl.xaml</DependentUpon>
+    </Compile>
+    <!-- Data code-behind -->
+    <Compile Include="Controls\Wpf\Data\ModernDataGridControl.xaml.cs">
+      <DependentUpon>ModernDataGridControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Data\ModernListViewControl.xaml.cs">
+      <DependentUpon>ModernListViewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Data\ModernTreeViewControl.xaml.cs">
+      <DependentUpon>ModernTreeViewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Data\ModernTabControl.xaml.cs">
+      <DependentUpon>ModernTabControl.xaml</DependentUpon>
+    </Compile>
+    <!-- Layout code-behind -->
+    <Compile Include="Controls\Wpf\Layout\ModernExpanderControl.xaml.cs">
+      <DependentUpon>ModernExpanderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Layout\ModernGroupBoxControl.xaml.cs">
+      <DependentUpon>ModernGroupBoxControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Layout\ModernFormSectionControl.xaml.cs">
+      <DependentUpon>ModernFormSectionControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Layout\ModernScrollSectionControl.xaml.cs">
+      <DependentUpon>ModernScrollSectionControl.xaml</DependentUpon>
+    </Compile>
+    <!-- Models -->
+    <Compile Include="Models\Ui\ComboBoxItemModel.cs" />
+    <Compile Include="Models\Ui\RadioButtonItemModel.cs" />
+    <Compile Include="Models\Ui\TreeViewItemModel.cs" />
+    <!-- Properties -->
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

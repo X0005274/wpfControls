@@ -1,0 +1,28 @@
+<UserControl x:Class="com.example.Controls.Wpf.Layout.ModernFormSectionControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             x:Name="RootControl"
+             FontFamily="Segoe UI"
+             d:DesignWidth="420" d:DesignHeight="220">
+    <StackPanel>
+        <TextBlock Text="{Binding SectionTitle, ElementName=RootControl}"
+                   FontSize="15"
+                   FontWeight="SemiBold"
+                   Foreground="#FF111827"
+                   Margin="0,0,0,4" />
+        <Border BorderBrush="#FFE5E7EB"
+                BorderThickness="0,0,0,1"
+                Margin="0,0,0,12" />
+
+        <!-- Two-column layout: a shared-size label column and a stretching input column.
+             Consumers add rows whose first column uses SharedSizeGroup "FormLabel"
+             so every label aligns automatically. -->
+        <Grid Grid.IsSharedSizeScope="True">
+            <ContentPresenter Content="{Binding InnerContent, ElementName=RootControl}" />
+        </Grid>
+    </StackPanel>
+
+</UserControl>

@@ -1,0 +1,40 @@
+<UserControl x:Class="com.example.Controls.Wpf.Display.ModernProgressBarControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             x:Name="RootControl"
+             FontFamily="Segoe UI"
+             d:DesignWidth="320">
+    <StackPanel>
+        <Grid Margin="0,0,0,6">
+            <TextBlock Text="{Binding Title, ElementName=RootControl}"
+                       FontSize="13"
+                       FontWeight="SemiBold"
+                       Foreground="#FF1F2937"
+                       HorizontalAlignment="Left" />
+            <TextBlock x:Name="PercentTextBlock"
+                       FontSize="12"
+                       FontWeight="SemiBold"
+                       Foreground="#FF2563EB"
+                       HorizontalAlignment="Right"
+                       Text="0%" />
+        </Grid>
+
+        <Border CornerRadius="5"
+                Height="10"
+                Background="#FFE5E7EB"
+                ClipToBounds="True">
+            <ProgressBar x:Name="InnerProgressBar"
+                         BorderThickness="0"
+                         Background="Transparent"
+                         Foreground="#FF2563EB"
+                         Minimum="{Binding Minimum, ElementName=RootControl}"
+                         Maximum="{Binding Maximum, ElementName=RootControl}"
+                         Value="{Binding Value, ElementName=RootControl}"
+                         IsIndeterminate="{Binding IsIndeterminate, ElementName=RootControl}" />
+        </Border>
+    </StackPanel>
+
+</UserControl>

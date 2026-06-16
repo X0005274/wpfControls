@@ -1,0 +1,62 @@
+<UserControl x:Class="com.example.Controls.Wpf.Selection.ModernRadioButtonGroupControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             x:Name="RootControl"
+             FontFamily="Segoe UI"
+             d:DesignWidth="320">
+    <UserControl.Resources>
+
+        <Style x:Key="ModernRadioButtonStyle" TargetType="RadioButton">
+            <Setter Property="Margin" Value="0,4" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Foreground" Value="#FF1F2937" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <StackPanel Orientation="Horizontal" Background="Transparent">
+                            <Grid Width="20" Height="20" VerticalAlignment="Center">
+                                <Ellipse x:Name="OuterRing"
+                                         Stroke="#FFD1D5DB"
+                                         StrokeThickness="1.5"
+                                         Fill="#FFFFFFFF" />
+                                <Ellipse x:Name="InnerDot"
+                                         Width="10" Height="10"
+                                         Fill="#FF2563EB"
+                                         Visibility="Collapsed" />
+                            </Grid>
+                            <ContentPresenter Margin="10,0,0,0"
+                                              VerticalAlignment="Center" />
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="OuterRing" Property="Stroke" Value="#FF2563EB" />
+                                <Setter TargetName="InnerDot" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="OuterRing" Property="Stroke" Value="#FF2563EB" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.55" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Resources>
+
+    <StackPanel>
+        <TextBlock Text="{Binding Title, ElementName=RootControl}"
+                   FontSize="13"
+                   FontWeight="SemiBold"
+                   Foreground="#FF1F2937"
+                   Margin="0,0,0,6" />
+        <StackPanel x:Name="ItemsHost" />
+    </StackPanel>
+
+</UserControl>

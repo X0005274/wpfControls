@@ -1,0 +1,33 @@
+<UserControl x:Class="com.example.Controls.Wpf.Display.ModernLabelControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             x:Name="RootControl"
+             FontFamily="Segoe UI"
+             d:DesignWidth="280">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+    </UserControl.Resources>
+
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Title, ElementName=RootControl}"
+                       FontSize="13"
+                       FontWeight="SemiBold"
+                       Foreground="#FF1F2937" />
+            <TextBlock Text=" *"
+                       FontSize="13"
+                       FontWeight="SemiBold"
+                       Foreground="#FFDC2626"
+                       Visibility="{Binding IsRequired, ElementName=RootControl, Converter={StaticResource BoolToVisibility}}" />
+        </StackPanel>
+        <TextBlock Text="{Binding Description, ElementName=RootControl}"
+                   FontSize="11"
+                   Foreground="#FF6B7280"
+                   TextWrapping="Wrap"
+                   Margin="0,3,0,0" />
+    </StackPanel>
+
+</UserControl>
