@@ -143,9 +143,26 @@ namespace com.example.Demo
             slider.Maximum = 100;
             slider.Value = 35;
 
+            // Multi-select combo with checkboxes; two items pre-selected.
+            ModernMultiSelectComboBoxControl multiSelect = new ModernMultiSelectComboBoxControl();
+            multiSelect.Title = "Skills (multi-select)";
+            multiSelect.PlaceholderText = "Select skills...";
+            multiSelect.DisplayMemberPath = "Name";
+            List<ComboBoxItemModel> skills = new List<ComboBoxItemModel>();
+            skills.Add(new ComboBoxItemModel("cs", "C#"));
+            skills.Add(new ComboBoxItemModel("wpf", "WPF"));
+            skills.Add(new ComboBoxItemModel("sql", "SQL"));
+            skills.Add(new ComboBoxItemModel("az", "Azure"));
+            skills.Add(new ComboBoxItemModel("dkr", "Docker"));
+            multiSelect.ItemsSource = skills;
+            List<object> preselected = new List<object>();
+            preselected.Add(skills[0]);
+            preselected.Add(skills[2]);
+            multiSelect.SelectedItems = preselected;
+
             return Section(
                 "Selection",
-                new UIElement[] { comboStartsWith, comboContains, check, radio, toggle, listBox, slider });
+                new UIElement[] { comboStartsWith, comboContains, multiSelect, check, radio, toggle, listBox, slider });
         }
 
         private static List<ComboBoxItemModel> BuildCountryList()

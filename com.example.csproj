@@ -73,6 +73,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\Wpf\Selection\ModernMultiSelectComboBoxControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\Wpf\Selection\ModernCheckBoxControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -165,8 +169,12 @@
     </Compile>
     <!-- Selection code-behind -->
     <Compile Include="Controls\Wpf\Selection\ComboBoxFilterMode.cs" />
+    <Compile Include="Controls\Wpf\Selection\MultiSelectItem.cs" />
     <Compile Include="Controls\Wpf\Selection\ModernComboBoxControl.xaml.cs">
       <DependentUpon>ModernComboBoxControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Selection\ModernMultiSelectComboBoxControl.xaml.cs">
+      <DependentUpon>ModernMultiSelectComboBoxControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Wpf\Selection\ModernCheckBoxControl.xaml.cs">
       <DependentUpon>ModernCheckBoxControl.xaml</DependentUpon>
