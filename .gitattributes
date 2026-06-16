@@ -1,0 +1,26 @@
+# Normalize line endings: Git stores text as LF, checks out native on each OS.
+* text=auto
+
+# Source and project files (explicitly treated as text)
+*.cs       text diff=csharp
+*.xaml     text
+*.csproj   text
+*.sln      text eol=crlf
+*.config   text
+*.json     text
+*.md       text
+*.xml      text
+*.txt      text
+*.gitignore text
+*.gitattributes text
+
+# Binary assets (never normalize / diff)
+*.png      binary
+*.jpg      binary
+*.jpeg     binary
+*.gif      binary
+*.ico      binary
+*.dll      binary
+*.exe      binary
+*.pdb      binary
+*.snk      binary
