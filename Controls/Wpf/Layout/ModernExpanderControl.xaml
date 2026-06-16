@@ -7,14 +7,22 @@
              x:Name="RootControl"
              FontFamily="Segoe UI"
              d:DesignWidth="360">
-    <Border CornerRadius="8"
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border CornerRadius="{StaticResource Radius.Lg}"
             BorderThickness="1"
-            BorderBrush="#FFE5E7EB"
-            Background="#FFFFFFFF"
+            BorderBrush="{StaticResource Brush.BorderSubtle}"
+            Background="{StaticResource Brush.Surface}"
             ClipToBounds="True">
         <StackPanel>
             <Border x:Name="HeaderBorder"
-                    Background="#FFFFFFFF"
+                    Background="{StaticResource Brush.Surface}"
                     Cursor="Hand"
                     Padding="14,12"
                     MouseLeftButtonUp="HeaderBorder_MouseLeftButtonUp">
@@ -27,7 +35,7 @@
                     <Path Grid.Column="0"
                           Width="9" Height="9"
                           Stretch="Fill"
-                          Fill="#FF6B7280"
+                          Fill="{StaticResource Brush.TextSecondary}"
                           VerticalAlignment="Center"
                           Margin="0,0,10,0"
                           Data="M0,0 L4,4 L0,8 Z"
@@ -38,18 +46,17 @@
                     </Path>
 
                     <TextBlock Grid.Column="1"
-                               Text="{Binding HeaderText, ElementName=RootControl}"
+                               Style="{StaticResource Text.Title}"
                                FontSize="13"
-                               FontWeight="SemiBold"
-                               Foreground="#FF1F2937"
+                               Text="{Binding HeaderText, ElementName=RootControl}"
                                VerticalAlignment="Center" />
                 </Grid>
             </Border>
 
             <Border x:Name="ContentArea"
-                    BorderBrush="#FFF1F2F4"
+                    BorderBrush="{StaticResource Brush.BorderSubtle}"
                     BorderThickness="0,1,0,0"
-                    Padding="14,12">
+                    Padding="16,12">
                 <Border.LayoutTransform>
                     <ScaleTransform x:Name="ContentScale" ScaleY="0" />
                 </Border.LayoutTransform>

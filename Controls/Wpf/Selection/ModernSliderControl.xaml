@@ -8,117 +8,120 @@
              FontFamily="Segoe UI"
              d:DesignWidth="320">
     <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
-        <Style x:Key="SliderDecreaseStyle" TargetType="RepeatButton">
-            <Setter Property="OverridesDefaultStyle" Value="True" />
-            <Setter Property="Focusable" Value="False" />
-            <Setter Property="IsTabStop" Value="False" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="RepeatButton">
-                        <Border Height="4"
-                                CornerRadius="2"
-                                Background="#FF2563EB"
-                                VerticalAlignment="Center" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="SliderIncreaseStyle" TargetType="RepeatButton">
-            <Setter Property="OverridesDefaultStyle" Value="True" />
-            <Setter Property="Focusable" Value="False" />
-            <Setter Property="IsTabStop" Value="False" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="RepeatButton">
-                        <Border Height="4"
-                                CornerRadius="2"
-                                Background="Transparent"
-                                VerticalAlignment="Center" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="SliderThumbStyle" TargetType="Thumb">
-            <Setter Property="OverridesDefaultStyle" Value="True" />
-            <Setter Property="Height" Value="18" />
-            <Setter Property="Width" Value="18" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Thumb">
-                        <Ellipse x:Name="ThumbEllipse"
-                                 Fill="#FFFFFFFF"
-                                 Stroke="#FF2563EB"
-                                 StrokeThickness="2">
-                            <Ellipse.Effect>
-                                <DropShadowEffect Color="#FF000000"
-                                                  Opacity="0.2"
-                                                  BlurRadius="3"
-                                                  ShadowDepth="1" />
-                            </Ellipse.Effect>
-                        </Ellipse>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ThumbEllipse" Property="Fill" Value="#FFEFF6FF" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="ModernSliderStyle" TargetType="Slider">
-            <Setter Property="OverridesDefaultStyle" Value="True" />
-            <Setter Property="MinHeight" Value="24" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Slider">
-                        <Grid VerticalAlignment="Center">
+            <Style x:Key="SliderDecreaseStyle" TargetType="RepeatButton">
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Focusable" Value="False" />
+                <Setter Property="IsTabStop" Value="False" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RepeatButton">
                             <Border Height="4"
                                     CornerRadius="2"
-                                    Background="#FFE5E7EB"
+                                    Background="{StaticResource Brush.Accent}"
                                     VerticalAlignment="Center" />
-                            <Track x:Name="PART_Track">
-                                <Track.DecreaseRepeatButton>
-                                    <RepeatButton Style="{StaticResource SliderDecreaseStyle}"
-                                                  Command="{x:Static Slider.DecreaseLarge}" />
-                                </Track.DecreaseRepeatButton>
-                                <Track.IncreaseRepeatButton>
-                                    <RepeatButton Style="{StaticResource SliderIncreaseStyle}"
-                                                  Command="{x:Static Slider.IncreaseLarge}" />
-                                </Track.IncreaseRepeatButton>
-                                <Track.Thumb>
-                                    <Thumb Style="{StaticResource SliderThumbStyle}" />
-                                </Track.Thumb>
-                            </Track>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" Value="0.55" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
 
+            <Style x:Key="SliderIncreaseStyle" TargetType="RepeatButton">
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Focusable" Value="False" />
+                <Setter Property="IsTabStop" Value="False" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RepeatButton">
+                            <Border Height="4"
+                                    CornerRadius="2"
+                                    Background="Transparent"
+                                    VerticalAlignment="Center" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="SliderThumbStyle" TargetType="Thumb">
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Height" Value="18" />
+                <Setter Property="Width" Value="18" />
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Thumb">
+                            <Ellipse x:Name="ThumbEllipse"
+                                     Fill="{StaticResource Brush.Surface}"
+                                     Stroke="{StaticResource Brush.Accent}"
+                                     StrokeThickness="2">
+                                <Ellipse.Effect>
+                                    <DropShadowEffect Color="#FF000000"
+                                                      Opacity="0.2"
+                                                      BlurRadius="3"
+                                                      ShadowDepth="1" />
+                                </Ellipse.Effect>
+                            </Ellipse>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="ThumbEllipse" Property="Fill" Value="{StaticResource Brush.SelectedBackground}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ModernSliderStyle" TargetType="Slider">
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="MinHeight" Value="24" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Slider">
+                            <Grid VerticalAlignment="Center">
+                                <Border Height="4"
+                                        CornerRadius="2"
+                                        Background="{StaticResource Brush.BorderSubtle}"
+                                        VerticalAlignment="Center" />
+                                <Track x:Name="PART_Track">
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Style="{StaticResource SliderDecreaseStyle}"
+                                                      Command="{x:Static Slider.DecreaseLarge}" />
+                                    </Track.DecreaseRepeatButton>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Style="{StaticResource SliderIncreaseStyle}"
+                                                      Command="{x:Static Slider.IncreaseLarge}" />
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb Style="{StaticResource SliderThumbStyle}" />
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.55" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <StackPanel>
-        <Grid Margin="0,0,0,6">
-            <TextBlock Text="{Binding Title, ElementName=RootControl}"
+        <Grid Margin="{StaticResource Gap.Label}">
+            <TextBlock Style="{StaticResource Text.Label}"
+                       HorizontalAlignment="Left"
+                       Text="{Binding Title, ElementName=RootControl}" />
+            <TextBlock FontFamily="Segoe UI"
                        FontSize="13"
                        FontWeight="SemiBold"
-                       Foreground="#FF1F2937"
-                       HorizontalAlignment="Left" />
-            <TextBlock Text="{Binding Value, ElementName=RootControl, StringFormat={}{0:0.##}}"
-                       FontSize="13"
-                       FontWeight="SemiBold"
-                       Foreground="#FF2563EB"
-                       HorizontalAlignment="Right" />
+                       Foreground="{StaticResource Brush.Accent}"
+                       HorizontalAlignment="Right"
+                       Text="{Binding Value, ElementName=RootControl, StringFormat={}{0:0.##}}" />
         </Grid>
 
         <Slider x:Name="InnerSlider"

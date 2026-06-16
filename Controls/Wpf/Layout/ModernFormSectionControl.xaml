@@ -7,13 +7,19 @@
              x:Name="RootControl"
              FontFamily="Segoe UI"
              d:DesignWidth="420" d:DesignHeight="220">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <StackPanel>
-        <TextBlock Text="{Binding SectionTitle, ElementName=RootControl}"
-                   FontSize="15"
-                   FontWeight="SemiBold"
-                   Foreground="#FF111827"
-                   Margin="0,0,0,4" />
-        <Border BorderBrush="#FFE5E7EB"
+        <TextBlock Style="{StaticResource Text.Title}"
+                   Margin="0,0,0,4"
+                   Text="{Binding SectionTitle, ElementName=RootControl}" />
+        <Border BorderBrush="{StaticResource Brush.BorderSubtle}"
                 BorderThickness="0,0,0,1"
                 Margin="0,0,0,12" />
 

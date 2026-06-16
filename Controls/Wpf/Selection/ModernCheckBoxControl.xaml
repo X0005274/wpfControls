@@ -8,51 +8,55 @@
              FontFamily="Segoe UI"
              d:DesignWidth="320">
     <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
-        <Style x:Key="ModernCheckBoxStyle" TargetType="CheckBox">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="CheckBox">
-                        <StackPanel Orientation="Horizontal" Background="Transparent">
-                            <Border x:Name="Box"
-                                    Width="20" Height="20"
-                                    CornerRadius="4"
-                                    BorderThickness="1.5"
-                                    BorderBrush="#FFD1D5DB"
-                                    Background="#FFFFFFFF"
-                                    VerticalAlignment="Top"
-                                    Margin="0,1,0,0">
-                                <Path x:Name="CheckMark"
-                                      Width="12" Height="12"
-                                      Stretch="Uniform"
-                                      Stroke="#FFFFFFFF"
-                                      StrokeThickness="2"
-                                      StrokeEndLineCap="Round"
-                                      StrokeStartLineCap="Round"
-                                      Data="M2,6 L5,9 L10,3"
-                                      Visibility="Collapsed" />
-                            </Border>
-                            <ContentPresenter Margin="10,0,0,0"
-                                              VerticalAlignment="Center" />
-                        </StackPanel>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="Box" Property="Background" Value="#FF2563EB" />
-                                <Setter TargetName="Box" Property="BorderBrush" Value="#FF2563EB" />
-                                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Box" Property="BorderBrush" Value="#FF2563EB" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" Value="0.55" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
+            <Style x:Key="ModernCheckBoxStyle" TargetType="CheckBox">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="CheckBox">
+                            <StackPanel Orientation="Horizontal" Background="Transparent">
+                                <Border x:Name="Box"
+                                        Width="20" Height="20"
+                                        CornerRadius="{StaticResource Radius.Sm}"
+                                        BorderThickness="1.5"
+                                        BorderBrush="{StaticResource Brush.Border}"
+                                        Background="{StaticResource Brush.Surface}"
+                                        VerticalAlignment="Top"
+                                        Margin="0,1,0,0">
+                                    <Path x:Name="CheckMark"
+                                          Width="12" Height="12"
+                                          Stretch="Uniform"
+                                          Stroke="{StaticResource Brush.Surface}"
+                                          StrokeThickness="2"
+                                          StrokeEndLineCap="Round"
+                                          StrokeStartLineCap="Round"
+                                          Data="M2,6 L5,9 L10,3"
+                                          Visibility="Collapsed" />
+                                </Border>
+                                <ContentPresenter Margin="10,0,0,0"
+                                                  VerticalAlignment="Center" />
+                            </StackPanel>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="Box" Property="Background" Value="{StaticResource Brush.Accent}" />
+                                    <Setter TargetName="Box" Property="BorderBrush" Value="{StaticResource Brush.Accent}" />
+                                    <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Box" Property="BorderBrush" Value="{StaticResource Brush.Accent}" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.55" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <CheckBox x:Name="InnerCheckBox"
@@ -61,15 +65,12 @@
               IsChecked="{Binding IsChecked, ElementName=RootControl, Mode=TwoWay}"
               IsEnabled="{Binding IsEditorEnabled, ElementName=RootControl}">
         <StackPanel>
-            <TextBlock Text="{Binding Title, ElementName=RootControl}"
-                       FontSize="13"
+            <TextBlock Style="{StaticResource Text.Body}"
                        FontWeight="SemiBold"
-                       Foreground="#FF1F2937" />
-            <TextBlock Text="{Binding Description, ElementName=RootControl}"
-                       FontSize="11"
-                       Foreground="#FF6B7280"
-                       TextWrapping="Wrap"
-                       Margin="0,2,0,0" />
+                       Text="{Binding Title, ElementName=RootControl}" />
+            <TextBlock Style="{StaticResource Text.Helper}"
+                       Margin="0,2,0,0"
+                       Text="{Binding Description, ElementName=RootControl}" />
         </StackPanel>
     </CheckBox>
 

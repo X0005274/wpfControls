@@ -8,75 +8,79 @@
              FontFamily="Segoe UI"
              d:DesignWidth="320">
     <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
-        <Style x:Key="ToggleSwitchStyle" TargetType="ToggleButton">
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Focusable" Value="True" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ToggleButton">
-                        <Grid Width="46" Height="24" Background="Transparent">
-                            <Border x:Name="Track"
-                                    Width="46" Height="24"
-                                    CornerRadius="12">
-                                <Border.Background>
-                                    <SolidColorBrush x:Name="TrackBrush" Color="#FFD1D5DB" />
-                                </Border.Background>
-                            </Border>
-                            <Ellipse x:Name="Thumb"
-                                     Width="18" Height="18"
-                                     Fill="#FFFFFFFF"
-                                     HorizontalAlignment="Left"
-                                     VerticalAlignment="Center"
-                                     Margin="3,0,0,0">
-                                <Ellipse.Effect>
-                                    <DropShadowEffect Color="#FF000000"
-                                                      Opacity="0.25"
-                                                      BlurRadius="3"
-                                                      ShadowDepth="1" />
-                                </Ellipse.Effect>
-                                <Ellipse.RenderTransform>
-                                    <TranslateTransform x:Name="ThumbTransform" X="0" />
-                                </Ellipse.RenderTransform>
-                            </Ellipse>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="True">
-                                <Trigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="ThumbTransform"
-                                                             Storyboard.TargetProperty="X"
-                                                             To="22" Duration="0:0:0.18" />
-                                            <ColorAnimation Storyboard.TargetName="TrackBrush"
-                                                            Storyboard.TargetProperty="Color"
-                                                            To="#FF2563EB" Duration="0:0:0.18" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.EnterActions>
-                                <Trigger.ExitActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="ThumbTransform"
-                                                             Storyboard.TargetProperty="X"
-                                                             To="0" Duration="0:0:0.18" />
-                                            <ColorAnimation Storyboard.TargetName="TrackBrush"
-                                                            Storyboard.TargetProperty="Color"
-                                                            To="#FFD1D5DB" Duration="0:0:0.18" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.ExitActions>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" Value="0.55" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
+            <Style x:Key="ToggleSwitchStyle" TargetType="ToggleButton">
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Focusable" Value="True" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ToggleButton">
+                            <Grid Width="46" Height="24" Background="Transparent">
+                                <Border x:Name="Track"
+                                        Width="46" Height="24"
+                                        CornerRadius="12">
+                                    <Border.Background>
+                                        <SolidColorBrush x:Name="TrackBrush" Color="{StaticResource Color.TrackOff}" />
+                                    </Border.Background>
+                                </Border>
+                                <Ellipse x:Name="Thumb"
+                                         Width="18" Height="18"
+                                         Fill="{StaticResource Brush.Surface}"
+                                         HorizontalAlignment="Left"
+                                         VerticalAlignment="Center"
+                                         Margin="3,0,0,0">
+                                    <Ellipse.Effect>
+                                        <DropShadowEffect Color="#FF000000"
+                                                          Opacity="0.25"
+                                                          BlurRadius="3"
+                                                          ShadowDepth="1" />
+                                    </Ellipse.Effect>
+                                    <Ellipse.RenderTransform>
+                                        <TranslateTransform x:Name="ThumbTransform" X="0" />
+                                    </Ellipse.RenderTransform>
+                                </Ellipse>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="ThumbTransform"
+                                                                 Storyboard.TargetProperty="X"
+                                                                 To="22" Duration="0:0:0.18" />
+                                                <ColorAnimation Storyboard.TargetName="TrackBrush"
+                                                                Storyboard.TargetProperty="Color"
+                                                                To="{StaticResource Color.Accent}" Duration="0:0:0.18" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="ThumbTransform"
+                                                                 Storyboard.TargetProperty="X"
+                                                                 To="0" Duration="0:0:0.18" />
+                                                <ColorAnimation Storyboard.TargetName="TrackBrush"
+                                                                Storyboard.TargetProperty="Color"
+                                                                To="{StaticResource Color.TrackOff}" Duration="0:0:0.18" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.55" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid>
@@ -86,15 +90,12 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" VerticalAlignment="Center">
-            <TextBlock Text="{Binding Title, ElementName=RootControl}"
-                       FontSize="13"
+            <TextBlock Style="{StaticResource Text.Body}"
                        FontWeight="SemiBold"
-                       Foreground="#FF1F2937" />
-            <TextBlock Text="{Binding Description, ElementName=RootControl}"
-                       FontSize="11"
-                       Foreground="#FF6B7280"
-                       TextWrapping="Wrap"
-                       Margin="0,2,0,0" />
+                       Text="{Binding Title, ElementName=RootControl}" />
+            <TextBlock Style="{StaticResource Text.Helper}"
+                       Margin="0,2,0,0"
+                       Text="{Binding Description, ElementName=RootControl}" />
         </StackPanel>
 
         <ToggleButton Grid.Column="1"

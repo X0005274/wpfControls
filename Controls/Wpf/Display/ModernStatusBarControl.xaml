@@ -7,11 +7,18 @@
              x:Name="RootControl"
              FontFamily="Segoe UI"
              d:DesignWidth="360">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Border x:Name="StatusBorder"
-            CornerRadius="6"
+            CornerRadius="{StaticResource Radius.Md}"
             BorderThickness="1"
             BorderBrush="#FFBFDBFE"
-            Background="#FFEFF6FF"
+            Background="{StaticResource Brush.InfoBackground}"
             Padding="12,8"
             MinHeight="36">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -22,7 +29,7 @@
             <TextBlock x:Name="MessageText"
                        Text="{Binding StatusText, ElementName=RootControl}"
                        FontSize="13"
-                       Foreground="#FF1F2937"
+                       Foreground="{StaticResource Brush.TextPrimary}"
                        VerticalAlignment="Center"
                        TextWrapping="Wrap"
                        Margin="10,0,0,0" />

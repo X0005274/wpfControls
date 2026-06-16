@@ -8,159 +8,165 @@
              FontFamily="Segoe UI"
              d:DesignWidth="320">
     <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
-        <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+            <!-- Field / collapsed view: comma-separated summary + chevron -->
+            <ControlTemplate x:Key="FieldToggleTemplate" TargetType="ToggleButton">
+                <Border x:Name="FocusRing"
+                        CornerRadius="{StaticResource Radius.Md}"
+                        BorderThickness="1"
+                        BorderBrush="Transparent">
+                    <Border x:Name="FieldBorder"
+                            CornerRadius="{StaticResource Radius.Md}"
+                            BorderThickness="1"
+                            BorderBrush="{StaticResource Brush.Border}"
+                            Background="{StaticResource Brush.Surface}"
+                            MinHeight="{StaticResource Size.ControlHeight}"
+                            SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="38" />
+                            </Grid.ColumnDefinitions>
 
-        <Style x:Key="TitleTextStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="12.5" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Foreground" Value="#FF374151" />
-            <Setter Property="Margin" Value="0,0,0,6" />
-        </Style>
-
-        <!-- Field / collapsed view: shows the comma-separated summary and a chevron -->
-        <ControlTemplate x:Key="FieldToggleTemplate" TargetType="ToggleButton">
-            <Border x:Name="FieldBorder"
-                    CornerRadius="6"
-                    BorderThickness="1"
-                    BorderBrush="#FFD0D5DD"
-                    Background="#FFFFFFFF"
-                    MinHeight="38"
-                    SnapsToDevicePixels="True">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="38" />
-                    </Grid.ColumnDefinitions>
-
-                    <Grid Grid.Column="0" Margin="12,0,2,0">
-                        <TextBlock x:Name="Placeholder"
-                                   Text="{Binding PlaceholderText, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                   Foreground="#FF9CA3AF"
-                                   FontSize="13"
-                                   VerticalAlignment="Center"
-                                   IsHitTestVisible="False"
-                                   Visibility="Collapsed" />
-                        <TextBlock x:Name="Summary"
-                                   Text="{Binding SummaryText, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                   Foreground="#FF111827"
-                                   FontSize="13"
-                                   VerticalAlignment="Center"
-                                   TextTrimming="CharacterEllipsis" />
-                    </Grid>
-
-                    <Grid Grid.Column="1">
-                        <Rectangle Width="1"
-                                   HorizontalAlignment="Left"
-                                   Fill="#FFEDEFF2"
-                                   Margin="0,9" />
-                        <Path x:Name="Arrow"
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center"
-                              Width="10" Height="6"
-                              Stretch="Uniform"
-                              Stroke="#FF6B7280"
-                              StrokeThickness="1.6"
-                              StrokeStartLineCap="Round"
-                              StrokeEndLineCap="Round"
-                              StrokeLineJoin="Round"
-                              Data="M1,1 L5,5 L9,1"
-                              RenderTransformOrigin="0.5,0.5">
-                            <Path.RenderTransform>
-                                <RotateTransform Angle="0" />
-                            </Path.RenderTransform>
-                        </Path>
-                    </Grid>
-                </Grid>
-            </Border>
-            <ControlTemplate.Triggers>
-                <DataTrigger Binding="{Binding Text, ElementName=Summary}" Value="">
-                    <Setter TargetName="Placeholder" Property="Visibility" Value="Visible" />
-                </DataTrigger>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="FieldBorder" Property="BorderBrush" Value="#FF98A2B3" />
-                </Trigger>
-                <Trigger Property="IsChecked" Value="True">
-                    <Setter TargetName="FieldBorder" Property="BorderBrush" Value="#FF2563EB" />
-                    <Setter TargetName="Arrow" Property="Stroke" Value="#FF2563EB" />
-                    <Setter TargetName="Arrow" Property="RenderTransform">
-                        <Setter.Value>
-                            <RotateTransform Angle="180" />
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter TargetName="FieldBorder" Property="Background" Value="#FFF9FAFB" />
-                    <Setter TargetName="FieldBorder" Property="BorderBrush" Value="#FFE5E7EB" />
-                    <Setter TargetName="Arrow" Property="Stroke" Value="#FFCBD2DB" />
-                    <Setter TargetName="Summary" Property="Foreground" Value="#FF9CA3AF" />
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-
-        <!-- Dropdown row: a styled checkbox filling the whole row -->
-        <Style x:Key="MultiSelectCheckBoxStyle" TargetType="CheckBox">
-            <Setter Property="FontSize" Value="13" />
-            <Setter Property="Foreground" Value="#FF1F2937" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="CheckBox">
-                        <Border x:Name="Row"
-                                Background="Transparent"
-                                CornerRadius="6"
-                                Margin="4,1"
-                                Padding="12,8">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Border x:Name="Box"
-                                        Grid.Column="0"
-                                        Width="18" Height="18"
-                                        CornerRadius="4"
-                                        BorderThickness="1.5"
-                                        BorderBrush="#FFD0D5DD"
-                                        Background="#FFFFFFFF"
-                                        VerticalAlignment="Center">
-                                    <Path x:Name="CheckMark"
-                                          Width="11" Height="8"
-                                          Stretch="Uniform"
-                                          Stroke="#FFFFFFFF"
-                                          StrokeThickness="2"
-                                          StrokeStartLineCap="Round"
-                                          StrokeEndLineCap="Round"
-                                          StrokeLineJoin="Round"
-                                          Data="M1,4.5 L4.5,8 L10,1"
-                                          Visibility="Collapsed" />
-                                </Border>
-                                <ContentPresenter Grid.Column="1"
-                                                  Margin="10,0,0,0"
-                                                  VerticalAlignment="Center" />
+                            <Grid Grid.Column="0" Margin="12,0,2,0">
+                                <TextBlock x:Name="Placeholder"
+                                           Text="{Binding PlaceholderText, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                           Foreground="{StaticResource Brush.TextPlaceholder}"
+                                           FontSize="13"
+                                           VerticalAlignment="Center"
+                                           IsHitTestVisible="False"
+                                           Visibility="Collapsed" />
+                                <TextBlock x:Name="Summary"
+                                           Text="{Binding SummaryText, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                           Foreground="{StaticResource Brush.TextPrimary}"
+                                           FontSize="13"
+                                           VerticalAlignment="Center"
+                                           TextTrimming="CharacterEllipsis" />
                             </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Row" Property="Background" Value="#FFF3F4F6" />
-                                <Setter TargetName="Box" Property="BorderBrush" Value="#FF2563EB" />
-                            </Trigger>
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="Box" Property="Background" Value="#FF2563EB" />
-                                <Setter TargetName="Box" Property="BorderBrush" Value="#FF2563EB" />
-                                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
 
+                            <Grid Grid.Column="1">
+                                <Rectangle Width="1"
+                                           HorizontalAlignment="Left"
+                                           Fill="{StaticResource Brush.BorderSubtle}"
+                                           Margin="0,9" />
+                                <Path x:Name="Arrow"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Width="10" Height="6"
+                                      Stretch="Uniform"
+                                      Stroke="{StaticResource Brush.TextSecondary}"
+                                      StrokeThickness="1.6"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      StrokeLineJoin="Round"
+                                      Data="M1,1 L5,5 L9,1"
+                                      RenderTransformOrigin="0.5,0.5">
+                                    <Path.RenderTransform>
+                                        <RotateTransform Angle="0" />
+                                    </Path.RenderTransform>
+                                </Path>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <DataTrigger Binding="{Binding Text, ElementName=Summary}" Value="">
+                        <Setter TargetName="Placeholder" Property="Visibility" Value="Visible" />
+                    </DataTrigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="FieldBorder" Property="BorderBrush" Value="{StaticResource Brush.BorderHover}" />
+                    </Trigger>
+                    <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                        <Setter TargetName="FocusRing" Property="BorderBrush" Value="{StaticResource Brush.FocusRing}" />
+                        <Setter TargetName="FieldBorder" Property="BorderBrush" Value="{StaticResource Brush.FocusBorder}" />
+                    </Trigger>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter TargetName="FocusRing" Property="BorderBrush" Value="{StaticResource Brush.FocusRing}" />
+                        <Setter TargetName="FieldBorder" Property="BorderBrush" Value="{StaticResource Brush.FocusBorder}" />
+                        <Setter TargetName="Arrow" Property="Stroke" Value="{StaticResource Brush.Accent}" />
+                        <Setter TargetName="Arrow" Property="RenderTransform">
+                            <Setter.Value>
+                                <RotateTransform Angle="180" />
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter TargetName="FieldBorder" Property="Background" Value="{StaticResource Brush.DisabledBackground}" />
+                        <Setter TargetName="FieldBorder" Property="BorderBrush" Value="{StaticResource Brush.BorderSubtle}" />
+                        <Setter TargetName="Arrow" Property="Stroke" Value="{StaticResource Brush.DisabledText}" />
+                        <Setter TargetName="Summary" Property="Foreground" Value="{StaticResource Brush.DisabledText}" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
+            <!-- Dropdown row: a styled checkbox filling the whole row -->
+            <Style x:Key="MultiSelectCheckBoxStyle" TargetType="CheckBox">
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="CheckBox">
+                            <Border x:Name="Row"
+                                    Background="Transparent"
+                                    CornerRadius="{StaticResource Radius.Md}"
+                                    Margin="4,1"
+                                    Padding="{StaticResource Pad.Item}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border x:Name="Box"
+                                            Grid.Column="0"
+                                            Width="18" Height="18"
+                                            CornerRadius="{StaticResource Radius.Sm}"
+                                            BorderThickness="1.5"
+                                            BorderBrush="{StaticResource Brush.Border}"
+                                            Background="{StaticResource Brush.Surface}"
+                                            VerticalAlignment="Center">
+                                        <Path x:Name="CheckMark"
+                                              Width="11" Height="8"
+                                              Stretch="Uniform"
+                                              Stroke="{StaticResource Brush.Surface}"
+                                              StrokeThickness="2"
+                                              StrokeStartLineCap="Round"
+                                              StrokeEndLineCap="Round"
+                                              StrokeLineJoin="Round"
+                                              Data="M1,4.5 L4.5,8 L10,1"
+                                              Visibility="Collapsed" />
+                                    </Border>
+                                    <ContentPresenter Grid.Column="1"
+                                                      Margin="10,0,0,0"
+                                                      VerticalAlignment="Center" />
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Row" Property="Background" Value="{StaticResource Brush.HoverBackground}" />
+                                    <Setter TargetName="Box" Property="BorderBrush" Value="{StaticResource Brush.Accent}" />
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="Box" Property="Background" Value="{StaticResource Brush.Accent}" />
+                                    <Setter TargetName="Box" Property="BorderBrush" Value="{StaticResource Brush.Accent}" />
+                                    <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <StackPanel>
-        <TextBlock Style="{StaticResource TitleTextStyle}"
+        <TextBlock Style="{StaticResource Text.Label}"
+                   Margin="{StaticResource Gap.Label}"
                    Text="{Binding Title, ElementName=RootControl}" />
 
         <Grid>
@@ -176,19 +182,13 @@
                    PopupAnimation="Fade"
                    IsOpen="{Binding IsChecked, ElementName=DropToggle, Mode=TwoWay}"
                    Width="{Binding ActualWidth, ElementName=DropToggle}">
-                <Border CornerRadius="8"
+                <Border CornerRadius="{StaticResource Radius.Lg}"
                         BorderThickness="1"
-                        BorderBrush="#FFE5E7EB"
-                        Background="#FFFFFFFF"
+                        BorderBrush="{StaticResource Brush.BorderSubtle}"
+                        Background="{StaticResource Brush.Surface}"
                         Margin="0,6,0,8"
-                        SnapsToDevicePixels="True">
-                    <Border.Effect>
-                        <DropShadowEffect Color="#FF101828"
-                                          Opacity="0.12"
-                                          BlurRadius="14"
-                                          ShadowDepth="3"
-                                          Direction="270" />
-                    </Border.Effect>
+                        SnapsToDevicePixels="True"
+                        Effect="{StaticResource Shadow.Popup}">
                     <ScrollViewer MaxHeight="260"
                                   VerticalScrollBarVisibility="Auto"
                                   Padding="0,4">

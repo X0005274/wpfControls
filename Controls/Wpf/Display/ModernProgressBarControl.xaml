@@ -7,29 +7,36 @@
              x:Name="RootControl"
              FontFamily="Segoe UI"
              d:DesignWidth="320">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <StackPanel>
-        <Grid Margin="0,0,0,6">
-            <TextBlock Text="{Binding Title, ElementName=RootControl}"
-                       FontSize="13"
-                       FontWeight="SemiBold"
-                       Foreground="#FF1F2937"
-                       HorizontalAlignment="Left" />
+        <Grid Margin="{StaticResource Gap.Label}">
+            <TextBlock Style="{StaticResource Text.Label}"
+                       HorizontalAlignment="Left"
+                       Text="{Binding Title, ElementName=RootControl}" />
             <TextBlock x:Name="PercentTextBlock"
+                       FontFamily="Segoe UI"
                        FontSize="12"
                        FontWeight="SemiBold"
-                       Foreground="#FF2563EB"
+                       Foreground="{StaticResource Brush.Accent}"
                        HorizontalAlignment="Right"
                        Text="0%" />
         </Grid>
 
         <Border CornerRadius="5"
                 Height="10"
-                Background="#FFE5E7EB"
+                Background="{StaticResource Brush.BorderSubtle}"
                 ClipToBounds="True">
             <ProgressBar x:Name="InnerProgressBar"
                          BorderThickness="0"
                          Background="Transparent"
-                         Foreground="#FF2563EB"
+                         Foreground="{StaticResource Brush.Accent}"
                          Minimum="{Binding Minimum, ElementName=RootControl}"
                          Maximum="{Binding Maximum, ElementName=RootControl}"
                          Value="{Binding Value, ElementName=RootControl}"

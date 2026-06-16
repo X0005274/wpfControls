@@ -8,59 +8,77 @@
              FontFamily="Segoe UI"
              d:DesignWidth="280">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding Title, ElementName=RootControl}"
-                       FontSize="13"
-                       FontWeight="SemiBold"
-                       Foreground="#FF1F2937"
-                       Margin="0,0,0,4" />
-            <TextBlock Text=" *"
-                       FontSize="13"
-                       FontWeight="SemiBold"
-                       Foreground="#FFDC2626"
-                       Margin="0,0,0,4"
+        <StackPanel Orientation="Horizontal" Margin="{StaticResource Gap.Label}">
+            <TextBlock Style="{StaticResource Text.Label}"
+                       Text="{Binding Title, ElementName=RootControl}" />
+            <TextBlock Text="*"
+                       FontFamily="Segoe UI"
+                       FontSize="12"
+                       FontWeight="Medium"
+                       Foreground="{StaticResource Brush.ErrorBorder}"
+                       Margin="3,0,0,0"
                        Visibility="{Binding IsRequired, ElementName=RootControl, Converter={StaticResource BoolToVisibility}}" />
         </StackPanel>
 
-        <Border x:Name="FieldBorder"
-                CornerRadius="6"
+        <Border x:Name="FocusRing"
+                CornerRadius="{StaticResource Radius.Md}"
                 BorderThickness="1"
-                Padding="4,2"
-                MinHeight="36">
+                BorderBrush="Transparent">
             <Border.Style>
                 <Style TargetType="Border">
-                    <Setter Property="Background" Value="#FFFFFFFF" />
-                    <Setter Property="BorderBrush" Value="#FFD1D5DB" />
                     <Style.Triggers>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                            <Setter Property="BorderBrush" Value="#FF2563EB" />
+                            <Setter Property="BorderBrush" Value="{StaticResource Brush.FocusRing}" />
                         </Trigger>
-                        <DataTrigger Binding="{Binding IsEnabled, ElementName=InnerDatePicker}" Value="False">
-                            <Setter Property="Background" Value="#FFF3F4F6" />
-                            <Setter Property="BorderBrush" Value="#FFE5E7EB" />
-                            <Setter Property="Opacity" Value="0.75" />
-                        </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Border.Style>
-            <DatePicker x:Name="InnerDatePicker"
-                        BorderThickness="0"
-                        Background="Transparent"
-                        FontSize="13"
-                        VerticalContentAlignment="Center"
-                        SelectedDate="{Binding SelectedDate, ElementName=RootControl, Mode=TwoWay}"
-                        IsEnabled="{Binding IsEditorEnabled, ElementName=RootControl}" />
+
+            <Border x:Name="FieldBorder"
+                    CornerRadius="{StaticResource Radius.Md}"
+                    BorderThickness="1"
+                    Padding="4,0"
+                    MinHeight="{StaticResource Size.ControlHeight}">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="{StaticResource Brush.Surface}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource Brush.Border}" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource Brush.BorderHover}" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource Brush.FocusBorder}" />
+                            </Trigger>
+                            <DataTrigger Binding="{Binding IsEnabled, ElementName=InnerDatePicker}" Value="False">
+                                <Setter Property="Background" Value="{StaticResource Brush.DisabledBackground}" />
+                                <Setter Property="BorderBrush" Value="{StaticResource Brush.BorderSubtle}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <DatePicker x:Name="InnerDatePicker"
+                            BorderThickness="0"
+                            Background="Transparent"
+                            FontSize="13"
+                            VerticalContentAlignment="Center"
+                            SelectedDate="{Binding SelectedDate, ElementName=RootControl, Mode=TwoWay}"
+                            IsEnabled="{Binding IsEditorEnabled, ElementName=RootControl}" />
+            </Border>
         </Border>
 
-        <TextBlock Text="{Binding Description, ElementName=RootControl}"
-                   FontSize="11"
-                   Foreground="#FF6B7280"
-                   TextWrapping="Wrap"
-                   Margin="0,4,0,0" />
+        <TextBlock Style="{StaticResource Text.Helper}"
+                   Margin="{StaticResource Gap.Helper}"
+                   Text="{Binding Description, ElementName=RootControl}" />
     </StackPanel>
 
 </UserControl>

@@ -7,10 +7,18 @@
              x:Name="RootControl"
              FontFamily="Segoe UI"
              d:DesignWidth="360" d:DesignHeight="300">
-    <Border CornerRadius="8"
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border CornerRadius="{StaticResource Radius.Lg}"
             BorderThickness="1"
-            BorderBrush="#FFE5E7EB"
-            Background="#FFFFFFFF"
+            BorderBrush="{StaticResource Brush.BorderSubtle}"
+            Background="{StaticResource Brush.Surface}"
             ClipToBounds="True">
         <Grid>
             <Grid.RowDefinitions>
@@ -20,21 +28,20 @@
 
             <!-- Fixed header -->
             <Border Grid.Row="0"
-                    Background="#FFF9FAFB"
-                    BorderBrush="#FFE5E7EB"
+                    Background="{StaticResource Brush.HeaderBackground}"
+                    BorderBrush="{StaticResource Brush.BorderSubtle}"
                     BorderThickness="0,0,0,1"
                     Padding="14,12">
-                <TextBlock Text="{Binding HeaderText, ElementName=RootControl}"
+                <TextBlock Style="{StaticResource Text.Title}"
                            FontSize="13"
-                           FontWeight="SemiBold"
-                           Foreground="#FF1F2937" />
+                           Text="{Binding HeaderText, ElementName=RootControl}" />
             </Border>
 
             <!-- Scrollable content -->
             <ScrollViewer Grid.Row="1"
                           VerticalScrollBarVisibility="Auto"
                           HorizontalScrollBarVisibility="Disabled"
-                          Padding="14,12">
+                          Padding="16,12">
                 <ContentPresenter Content="{Binding InnerContent, ElementName=RootControl}" />
             </ScrollViewer>
         </Grid>

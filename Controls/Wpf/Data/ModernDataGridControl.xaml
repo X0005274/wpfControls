@@ -8,82 +8,86 @@
              FontFamily="Segoe UI"
              d:DesignWidth="480" d:DesignHeight="260">
     <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
-        <Style x:Key="ModernColumnHeaderStyle" TargetType="DataGridColumnHeader">
-            <Setter Property="Background" Value="#FFF9FAFB" />
-            <Setter Property="Foreground" Value="#FF374151" />
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Height" Value="38" />
-            <Setter Property="Padding" Value="12,0" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="HorizontalContentAlignment" Value="Left" />
-            <Setter Property="BorderBrush" Value="#FFE5E7EB" />
-            <Setter Property="BorderThickness" Value="0,0,1,1" />
-        </Style>
+            <Style x:Key="ModernColumnHeaderStyle" TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="{StaticResource Brush.HeaderBackground}" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Height" Value="38" />
+                <Setter Property="Padding" Value="12,0" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                <Setter Property="BorderBrush" Value="{StaticResource Brush.BorderSubtle}" />
+                <Setter Property="BorderThickness" Value="0,0,1,1" />
+            </Style>
 
-        <Style x:Key="ModernRowStyle" TargetType="DataGridRow">
-            <Setter Property="Background" Value="#FFFFFFFF" />
-            <Setter Property="Foreground" Value="#FF1F2937" />
-            <Style.Triggers>
-                <!-- Alternating and hover only paint when the row is NOT selected,
-                     so they never compete with the selected cell background. -->
-                <Trigger Property="AlternationIndex" Value="1">
-                    <Setter Property="Background" Value="#FFF9FAFB" />
-                </Trigger>
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-                        <Condition Property="IsMouseOver" Value="True" />
-                        <Condition Property="IsSelected" Value="False" />
-                    </MultiTrigger.Conditions>
-                    <Setter Property="Background" Value="#FFF1F5FB" />
-                </MultiTrigger>
-            </Style.Triggers>
-        </Style>
+            <Style x:Key="ModernRowStyle" TargetType="DataGridRow">
+                <Setter Property="Background" Value="{StaticResource Brush.Surface}" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
+                <Style.Triggers>
+                    <!-- Alternating and hover only paint when the row is NOT selected,
+                         so they never compete with the selected cell background. -->
+                    <Trigger Property="AlternationIndex" Value="1">
+                        <Setter Property="Background" Value="{StaticResource Brush.SurfaceAlt}" />
+                    </Trigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsMouseOver" Value="True" />
+                            <Condition Property="IsSelected" Value="False" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background" Value="{StaticResource Brush.HoverBackground}" />
+                    </MultiTrigger>
+                </Style.Triggers>
+            </Style>
 
-        <!-- Selection is driven at the cell level so the text colour is always
-             controlled: a clearly readable dark-navy on a light-blue fill. -->
-        <Style x:Key="ModernCellStyle" TargetType="DataGridCell">
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Padding" Value="12,8" />
-            <Setter Property="FontSize" Value="13" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="#FF1F2937" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="DataGridCell">
-                        <Border Background="{TemplateBinding Background}"
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="#FFDBEAFE" />
-                    <Setter Property="Foreground" Value="#FF1E3A8A" />
-                    <Setter Property="FontWeight" Value="SemiBold" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
+            <!-- Selection is driven at the cell level so the text colour is always
+                 controlled: a clearly readable dark-navy on a light-blue fill. -->
+            <Style x:Key="ModernCellStyle" TargetType="DataGridCell">
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding" Value="{StaticResource Pad.Item}" />
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Border Background="{TemplateBinding Background}"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="{StaticResource Brush.SelectedBackground}" />
+                        <Setter Property="Foreground" Value="{StaticResource Brush.SelectedText}" />
+                        <Setter Property="FontWeight" Value="SemiBold" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
 
-    <Border CornerRadius="8"
+    <Border CornerRadius="{StaticResource Radius.Lg}"
             BorderThickness="1"
-            BorderBrush="#FFE5E7EB"
-            Background="#FFFFFFFF"
+            BorderBrush="{StaticResource Brush.BorderSubtle}"
+            Background="{StaticResource Brush.Surface}"
             ClipToBounds="True">
         <DataGrid x:Name="InnerDataGrid"
                   AutoGenerateColumns="True"
                   HeadersVisibility="Column"
                   GridLinesVisibility="Horizontal"
-                  HorizontalGridLinesBrush="#FFF1F2F4"
-                  VerticalGridLinesBrush="#FFF1F2F4"
+                  HorizontalGridLinesBrush="{StaticResource Brush.BorderSubtle}"
+                  VerticalGridLinesBrush="{StaticResource Brush.BorderSubtle}"
                   BorderThickness="0"
                   Background="Transparent"
-                  RowBackground="#FFFFFFFF"
+                  RowBackground="{StaticResource Brush.Surface}"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"
                   CanUserResizeRows="False"
