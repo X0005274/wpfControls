@@ -1,12 +1,13 @@
 # com.example — Modern WPF Control Library
 
-A set of **23 pure-WPF UserControls** with a clean, conservative, enterprise look,
+A set of **24 pure-WPF UserControls** with a clean, conservative, enterprise look,
 built for **.NET Framework 4.8** and designed to be hosted inside existing
 **WinForms** applications through `ElementHost`.
 
 - **No third-party UI frameworks** — no MahApps, ModernWpf, MaterialDesign, DevExpress, Telerik, or Syncfusion. Pure WPF only.
 - **Bindable by design** — every reusable value is exposed as a `DependencyProperty`.
 - **WinForms-first hosting** — each control drops into a `System.Windows.Forms.Integration.ElementHost`.
+- **Searchable & multi-select** — an editable auto-suggest combo (`StartsWith` / `Contains` filter modes) and a multi-select combo with checkboxes.
 - **Incremental modernization** — add modern UI to legacy WinForms forms without rewriting business logic.
 
 > Namespace root: `com.example` · IDE: Visual Studio 2026 · Language: C#
@@ -26,7 +27,11 @@ Labeled text box (required / placeholder / focus states), read-only text box, pa
 ### Selection
 ![Selection controls](docs/screenshots/02-selection.png)
 
-Styled combo box, checkbox, radio button group, animated toggle switch, list box, and slider.
+Searchable auto-suggest combo box, multi-select combo with checkboxes, checkbox, radio button group, animated toggle switch, list box, and slider.
+
+The multi-select combo keeps its dropdown open while you toggle checkboxes and shows a comma-separated summary in the collapsed field:
+
+![Multi-select combo dropdown](docs/screenshots/07-multiselect.png)
 
 ### Display
 ![Display controls](docs/screenshots/03-display.png)
@@ -50,7 +55,7 @@ Animated Expander, GroupBox, FormSection (shared-size aligned label/input rows),
 | Group | Controls |
 |-------|----------|
 | **Input** | `ModernTextBoxControl`, `ModernPasswordBoxControl`, `ModernRichTextBoxControl`, `ModernSearchBoxControl` |
-| **Selection** | `ModernComboBoxControl`, `ModernCheckBoxControl`, `ModernRadioButtonGroupControl`, `ModernToggleSwitchControl`, `ModernListBoxControl`, `ModernSliderControl` |
+| **Selection** | `ModernComboBoxControl` (searchable auto-suggest), `ModernMultiSelectComboBoxControl` (checkbox multi-select), `ModernCheckBoxControl`, `ModernRadioButtonGroupControl`, `ModernToggleSwitchControl`, `ModernListBoxControl`, `ModernSliderControl` |
 | **Display** | `ModernLabelControl`, `ModernProgressBarControl`, `ModernStatusBarControl`, `ModernBadgeControl`, `ModernDatePickerControl` |
 | **Data** | `ModernDataGridControl`, `ModernListViewControl`, `ModernTreeViewControl`, `ModernTabControl` |
 | **Layout** | `ModernExpanderControl`, `ModernGroupBoxControl`, `ModernFormSectionControl`, `ModernScrollSectionControl` |
@@ -75,7 +80,7 @@ wpfControls
     ├── com.example.Demo.csproj   # WinForms host executable
     ├── Program.cs                # [STAThread] entry point
     ├── DemoForm.cs               # native WinForms shell + ElementHost
-    ├── GalleryBuilder.cs         # builds the WPF gallery (all 23 controls)
+    ├── GalleryBuilder.cs         # builds the WPF gallery (all controls)
     └── DemoRow.cs                # sample data model
 ```
 
