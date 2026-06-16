@@ -8,36 +8,59 @@
              FontFamily="Segoe UI"
              d:DesignWidth="280" d:DesignHeight="220">
     <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
-        <Style x:Key="ModernListBoxItemStyle" TargetType="ListBoxItem">
-            <Setter Property="Padding" Value="10,8" />
-            <Setter Property="FontSize" Value="13" />
-            <Setter Property="Foreground" Value="#FF1F2937" />
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListBoxItem">
-                        <Border x:Name="ItemBorder"
-                                Background="Transparent"
-                                CornerRadius="4"
-                                Margin="3,1"
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter VerticalAlignment="Center" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ItemBorder" Property="Background" Value="#FFF3F4F6" />
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="ItemBorder" Property="Background" Value="#FFEFF6FF" />
-                                <Setter Property="Foreground" Value="#FF1D4ED8" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
+            <Style x:Key="ModernListBoxItemStyle" TargetType="ListBoxItem">
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <Border x:Name="ItemBorder"
+                                    Background="Transparent"
+                                    CornerRadius="{StaticResource Radius.Md}"
+                                    Margin="3,1">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle x:Name="AccentBar"
+                                               Grid.Column="0"
+                                               Width="3"
+                                               RadiusX="1.5" RadiusY="1.5"
+                                               Fill="Transparent"
+                                               VerticalAlignment="Stretch"
+                                               Margin="0,4" />
+                                    <ContentPresenter Grid.Column="1"
+                                                      Margin="{StaticResource Pad.Item}"
+                                                      VerticalAlignment="Center" />
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver" Value="True" />
+                                        <Condition Property="IsSelected" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource Brush.HoverBackground}" />
+                                </MultiTrigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource Brush.SelectedBackground}" />
+                                    <Setter TargetName="AccentBar" Property="Fill" Value="{StaticResource Brush.Accent}" />
+                                    <Setter Property="Foreground" Value="{StaticResource Brush.SelectedText}" />
+                                    <Setter Property="FontWeight" Value="SemiBold" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid>
@@ -47,20 +70,19 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0"
-                   Text="{Binding Title, ElementName=RootControl}"
-                   FontSize="13"
-                   FontWeight="SemiBold"
-                   Foreground="#FF1F2937"
-                   Margin="0,0,0,6" />
+                   Style="{StaticResource Text.Label}"
+                   Margin="{StaticResource Gap.Label}"
+                   Text="{Binding Title, ElementName=RootControl}" />
 
         <Border Grid.Row="1"
-                CornerRadius="6"
+                CornerRadius="{StaticResource Radius.Lg}"
                 BorderThickness="1"
-                BorderBrush="#FFD1D5DB"
-                Background="#FFFFFFFF">
+                BorderBrush="{StaticResource Brush.BorderSubtle}"
+                Background="{StaticResource Brush.Surface}">
             <ListBox x:Name="InnerListBox"
                      BorderThickness="0"
                      Background="Transparent"
+                     Padding="0,4"
                      ItemContainerStyle="{StaticResource ModernListBoxItemStyle}"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      ItemsSource="{Binding ItemsSource, ElementName=RootControl}"

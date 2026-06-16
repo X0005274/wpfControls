@@ -51,6 +51,11 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <!-- Theme / design tokens -->
+    <Page Include="Themes\Tokens.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <!-- Input -->
     <Page Include="Controls\Wpf\Input\ModernTextBoxControl.xaml">
       <Generator>MSBuild:Compile</Generator>

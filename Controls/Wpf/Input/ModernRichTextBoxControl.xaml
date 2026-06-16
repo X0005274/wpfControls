@@ -8,23 +8,12 @@
              FontFamily="Segoe UI"
              d:DesignWidth="360" d:DesignHeight="180">
     <UserControl.Resources>
-
-        <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
-
-        <Style x:Key="TitleTextStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="13" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Foreground" Value="#FF1F2937" />
-            <Setter Property="Margin" Value="0,0,0,4" />
-        </Style>
-
-        <Style x:Key="DescriptionTextStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="11" />
-            <Setter Property="Foreground" Value="#FF6B7280" />
-            <Setter Property="Margin" Value="0,4,0,0" />
-            <Setter Property="TextWrapping" Value="Wrap" />
-        </Style>
-
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid>
@@ -34,58 +23,78 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <TextBlock Style="{StaticResource TitleTextStyle}"
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="{StaticResource Gap.Label}">
+            <TextBlock Style="{StaticResource Text.Label}"
                        Text="{Binding Title, ElementName=RootControl}" />
-            <TextBlock Text=" *"
-                       FontSize="13"
-                       FontWeight="SemiBold"
-                       Foreground="#FFDC2626"
-                       Margin="0,0,0,4"
+            <TextBlock Text="*"
+                       FontFamily="Segoe UI"
+                       FontSize="12"
+                       FontWeight="Medium"
+                       Foreground="{StaticResource Brush.ErrorBorder}"
+                       Margin="3,0,0,0"
                        Visibility="{Binding IsRequired, ElementName=RootControl, Converter={StaticResource BoolToVisibility}}" />
         </StackPanel>
 
-        <Border x:Name="FieldBorder"
+        <Border x:Name="FocusRing"
                 Grid.Row="1"
-                CornerRadius="6"
+                CornerRadius="{StaticResource Radius.Md}"
                 BorderThickness="1"
-                MinHeight="120">
+                BorderBrush="Transparent">
             <Border.Style>
                 <Style TargetType="Border">
-                    <Setter Property="Background" Value="#FFFFFFFF" />
-                    <Setter Property="BorderBrush" Value="#FFD1D5DB" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsKeyboardFocusWithin, ElementName=InnerRichTextBox}" Value="True">
-                            <Setter Property="BorderBrush" Value="#FF2563EB" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding IsReadOnly, ElementName=InnerRichTextBox}" Value="True">
-                            <Setter Property="Background" Value="#FFF3F4F6" />
-                            <Setter Property="BorderBrush" Value="#FFE5E7EB" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding IsEnabled, ElementName=InnerRichTextBox}" Value="False">
-                            <Setter Property="Background" Value="#FFF3F4F6" />
-                            <Setter Property="BorderBrush" Value="#FFE5E7EB" />
-                            <Setter Property="Opacity" Value="0.75" />
+                            <Setter Property="BorderBrush" Value="{StaticResource Brush.FocusRing}" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Border.Style>
-            <RichTextBox x:Name="InnerRichTextBox"
-                         BorderThickness="0"
-                         Background="Transparent"
-                         FontSize="13"
-                         Foreground="#FF1F2937"
-                         Padding="8"
-                         AcceptsReturn="True"
-                         AcceptsTab="True"
-                         VerticalScrollBarVisibility="Auto"
-                         HorizontalScrollBarVisibility="Auto"
-                         IsReadOnly="{Binding IsReadOnly, ElementName=RootControl}"
-                         IsEnabled="{Binding IsEditorEnabled, ElementName=RootControl}" />
+
+            <Border x:Name="FieldBorder"
+                    CornerRadius="{StaticResource Radius.Md}"
+                    BorderThickness="1"
+                    MinHeight="120">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="{StaticResource Brush.Surface}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource Brush.Border}" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource Brush.BorderHover}" />
+                            </Trigger>
+                            <DataTrigger Binding="{Binding IsKeyboardFocusWithin, ElementName=InnerRichTextBox}" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource Brush.FocusBorder}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsReadOnly, ElementName=InnerRichTextBox}" Value="True">
+                                <Setter Property="Background" Value="{StaticResource Brush.SurfaceAlt}" />
+                                <Setter Property="BorderBrush" Value="{StaticResource Brush.Border}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsEnabled, ElementName=InnerRichTextBox}" Value="False">
+                                <Setter Property="Background" Value="{StaticResource Brush.DisabledBackground}" />
+                                <Setter Property="BorderBrush" Value="{StaticResource Brush.BorderSubtle}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <RichTextBox x:Name="InnerRichTextBox"
+                             BorderThickness="0"
+                             Background="Transparent"
+                             FontSize="13"
+                             Foreground="{StaticResource Brush.TextPrimary}"
+                             CaretBrush="{StaticResource Brush.TextPrimary}"
+                             Padding="8"
+                             AcceptsReturn="True"
+                             AcceptsTab="True"
+                             VerticalScrollBarVisibility="Auto"
+                             HorizontalScrollBarVisibility="Auto"
+                             IsReadOnly="{Binding IsReadOnly, ElementName=RootControl}"
+                             IsEnabled="{Binding IsEditorEnabled, ElementName=RootControl}" />
+            </Border>
         </Border>
 
         <TextBlock Grid.Row="2"
-                   Style="{StaticResource DescriptionTextStyle}"
+                   Style="{StaticResource Text.Helper}"
+                   Margin="{StaticResource Gap.Helper}"
                    Text="{Binding Description, ElementName=RootControl}" />
     </Grid>
 

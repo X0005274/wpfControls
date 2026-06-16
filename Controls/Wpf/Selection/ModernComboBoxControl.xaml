@@ -6,247 +6,228 @@
              mc:Ignorable="d"
              x:Name="RootControl"
              FontFamily="Segoe UI"
-             TextOptions.TextFormattingMode="Ideal"
-             TextOptions.TextRenderingMode="ClearType"
              d:DesignWidth="320">
     <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
-        <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+            <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
 
-        <!-- Label / title typography -->
-        <Style x:Key="TitleTextStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="12.5" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Foreground" Value="#FF374151" />
-            <Setter Property="Margin" Value="0,0,0,6" />
-        </Style>
-
-        <!-- Dropdown item: refined hover / selected states with a check affordance -->
-        <Style x:Key="ModernComboBoxItemStyle" TargetType="ComboBoxItem">
-            <Setter Property="FontSize" Value="13" />
-            <Setter Property="Foreground" Value="#FF1F2937" />
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ComboBoxItem">
-                        <Border x:Name="ItemBorder"
-                                Background="Transparent"
-                                CornerRadius="6"
-                                Margin="4,1"
-                                Padding="12,9">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <ContentPresenter Grid.Column="0"
-                                                  VerticalAlignment="Center" />
-                                <Path x:Name="CheckMark"
-                                      Grid.Column="1"
-                                      Width="12" Height="9"
-                                      Margin="10,0,0,0"
-                                      Stretch="Uniform"
-                                      Stroke="#FF2563EB"
-                                      StrokeThickness="2"
-                                      StrokeStartLineCap="Round"
-                                      StrokeEndLineCap="Round"
-                                      StrokeLineJoin="Round"
-                                      Data="M1,5 L4.5,8.5 L11,1"
-                                      VerticalAlignment="Center"
-                                      Visibility="Collapsed" />
-                            </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ItemBorder" Property="Background" Value="#FFF3F4F6" />
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="ItemBorder" Property="Background" Value="#FFEFF5FF" />
-                                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
-                                <Setter Property="Foreground" Value="#FF1D4ED8" />
-                                <Setter Property="FontWeight" Value="SemiBold" />
-                            </Trigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsSelected" Value="True" />
-                                    <Condition Property="IsMouseOver" Value="True" />
-                                </MultiTrigger.Conditions>
-                                <Setter TargetName="ItemBorder" Property="Background" Value="#FFE3EDFD" />
-                            </MultiTrigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Transparent click surface for the chevron area (toggles the dropdown) -->
-        <ControlTemplate x:Key="ChevronToggleTemplate" TargetType="ToggleButton">
-            <Border Background="Transparent" />
-        </ControlTemplate>
-
-        <!-- Full ComboBox template -->
-        <Style x:Key="ModernComboBoxStyle" TargetType="ComboBox">
-            <Setter Property="FontSize" Value="13" />
-            <Setter Property="Foreground" Value="#FF111827" />
-            <Setter Property="MinHeight" Value="38" />
-            <Setter Property="HorizontalContentAlignment" Value="Left" />
-            <Setter Property="ItemContainerStyle" Value="{StaticResource ModernComboBoxItemStyle}" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ComboBox">
-                        <Grid>
-                            <Border x:Name="FieldBorder"
-                                    CornerRadius="6"
-                                    BorderThickness="1"
-                                    BorderBrush="#FFD0D5DD"
-                                    Background="#FFFFFFFF"
-                                    SnapsToDevicePixels="True">
+            <!-- Dropdown item: hover / selected from tokens, with a check affordance -->
+            <Style x:Key="ModernComboBoxItemStyle" TargetType="ComboBoxItem">
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ComboBoxItem">
+                            <Border x:Name="ItemBorder"
+                                    Background="Transparent"
+                                    CornerRadius="{StaticResource Radius.Md}"
+                                    Margin="4,1"
+                                    Padding="{StaticResource Pad.Item}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="38" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-
-                                    <!-- Input area -->
-                                    <Grid Grid.Column="0" Margin="12,0,2,0">
-                                        <ContentPresenter x:Name="ContentSite"
-                                                          VerticalAlignment="Center"
-                                                          HorizontalAlignment="Left"
-                                                          IsHitTestVisible="False"
-                                                          Content="{TemplateBinding SelectionBoxItem}"
-                                                          ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                                          ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" />
-
-                                        <!-- The name PART_EditableTextBox is required by the
-                                             WPF ComboBox to wire up editable mode. -->
-                                        <TextBox x:Name="PART_EditableTextBox"
-                                                 VerticalAlignment="Center"
-                                                 VerticalContentAlignment="Center"
-                                                 Background="Transparent"
-                                                 BorderThickness="0"
-                                                 Padding="0"
-                                                 FontSize="13"
-                                                 Foreground="#FF111827"
-                                                 CaretBrush="#FF2563EB"
-                                                 SelectionBrush="#FF2563EB"
-                                                 SelectionOpacity="0.22"
-                                                 Focusable="True"
-                                                 IsReadOnly="{TemplateBinding IsReadOnly}"
-                                                 Visibility="Hidden" />
-                                    </Grid>
-
-                                    <!-- Chevron area: subtle divider, chevron, transparent click toggle -->
-                                    <Grid Grid.Column="1">
-                                        <Rectangle Width="1"
-                                                   HorizontalAlignment="Left"
-                                                   Fill="#FFEDEFF2"
-                                                   Margin="0,9" />
-                                        <Path x:Name="Arrow"
-                                              HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"
-                                              Width="10" Height="6"
-                                              Stretch="Uniform"
-                                              Stroke="#FF6B7280"
-                                              StrokeThickness="1.6"
-                                              StrokeStartLineCap="Round"
-                                              StrokeEndLineCap="Round"
-                                              StrokeLineJoin="Round"
-                                              Data="M1,1 L5,5 L9,1"
-                                              RenderTransformOrigin="0.5,0.5">
-                                            <Path.RenderTransform>
-                                                <RotateTransform Angle="0" />
-                                            </Path.RenderTransform>
-                                        </Path>
-                                        <ToggleButton x:Name="ToggleButton"
-                                                      Focusable="False"
-                                                      ClickMode="Press"
-                                                      Template="{StaticResource ChevronToggleTemplate}"
-                                                      IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" />
-                                    </Grid>
+                                    <ContentPresenter Grid.Column="0" VerticalAlignment="Center" />
+                                    <Path x:Name="CheckMark"
+                                          Grid.Column="1"
+                                          Width="12" Height="9"
+                                          Margin="10,0,0,0"
+                                          Stretch="Uniform"
+                                          Stroke="{StaticResource Brush.Accent}"
+                                          StrokeThickness="2"
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          StrokeLineJoin="Round"
+                                          Data="M1,5 L4.5,8.5 L11,1"
+                                          VerticalAlignment="Center"
+                                          Visibility="Collapsed" />
                                 </Grid>
                             </Border>
+                            <ControlTemplate.Triggers>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver" Value="True" />
+                                        <Condition Property="IsSelected" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource Brush.HoverBackground}" />
+                                </MultiTrigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource Brush.SelectedBackground}" />
+                                    <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
+                                    <Setter Property="Foreground" Value="{StaticResource Brush.SelectedText}" />
+                                    <Setter Property="FontWeight" Value="SemiBold" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
 
-                            <Popup x:Name="PART_Popup"
-                                   Placement="Bottom"
-                                   IsOpen="{TemplateBinding IsDropDownOpen}"
-                                   AllowsTransparency="True"
-                                   Focusable="False"
-                                   PopupAnimation="Fade">
-                                <Border x:Name="DropDownBorder"
-                                        MinWidth="{Binding ActualWidth, ElementName=FieldBorder}"
-                                        MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                                        Margin="0,6,0,8"
-                                        CornerRadius="8"
+            <!-- Transparent click surface for the chevron area -->
+            <ControlTemplate x:Key="ChevronToggleTemplate" TargetType="ToggleButton">
+                <Border Background="Transparent" />
+            </ControlTemplate>
+
+            <!-- Full ComboBox template, token-driven -->
+            <Style x:Key="ModernComboBoxStyle" TargetType="ComboBox">
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
+                <Setter Property="MinHeight" Value="{StaticResource Size.ControlHeight}" />
+                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                <Setter Property="ItemContainerStyle" Value="{StaticResource ModernComboBoxItemStyle}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ComboBox">
+                            <Grid>
+                                <!-- Outer focus ring (flat, no shadow) -->
+                                <Border x:Name="FocusRing"
+                                        CornerRadius="{StaticResource Radius.Md}"
                                         BorderThickness="1"
-                                        BorderBrush="#FFE5E7EB"
-                                        Background="#FFFFFFFF"
-                                        SnapsToDevicePixels="True">
-                                    <Border.Effect>
-                                        <DropShadowEffect Color="#FF101828"
-                                                          Opacity="0.12"
-                                                          BlurRadius="14"
-                                                          ShadowDepth="3"
-                                                          Direction="270" />
-                                    </Border.Effect>
-                                    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                                  Padding="0,4">
-                                        <ItemsPresenter SnapsToDevicePixels="True" />
-                                    </ScrollViewer>
+                                        BorderBrush="Transparent">
+                                    <Border x:Name="FieldBorder"
+                                            CornerRadius="{StaticResource Radius.Md}"
+                                            BorderThickness="1"
+                                            BorderBrush="{StaticResource Brush.Border}"
+                                            Background="{StaticResource Brush.Surface}"
+                                            SnapsToDevicePixels="True">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="38" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Input area -->
+                                            <Grid Grid.Column="0" Margin="12,0,2,0">
+                                                <ContentPresenter x:Name="ContentSite"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Left"
+                                                                  IsHitTestVisible="False"
+                                                                  Content="{TemplateBinding SelectionBoxItem}"
+                                                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                                  ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" />
+                                                <!-- PART_EditableTextBox is required for editable mode. -->
+                                                <TextBox x:Name="PART_EditableTextBox"
+                                                         VerticalAlignment="Center"
+                                                         VerticalContentAlignment="Center"
+                                                         Background="Transparent"
+                                                         BorderThickness="0"
+                                                         Padding="0"
+                                                         FontSize="13"
+                                                         Foreground="{StaticResource Brush.TextPrimary}"
+                                                         CaretBrush="{StaticResource Brush.TextPrimary}"
+                                                         SelectionBrush="{StaticResource Brush.Accent}"
+                                                         SelectionOpacity="0.22"
+                                                         Focusable="True"
+                                                         IsReadOnly="{TemplateBinding IsReadOnly}"
+                                                         Visibility="Hidden" />
+                                            </Grid>
+
+                                            <!-- Chevron area: divider + chevron + transparent toggle -->
+                                            <Grid Grid.Column="1">
+                                                <Rectangle Width="1"
+                                                           HorizontalAlignment="Left"
+                                                           Fill="{StaticResource Brush.BorderSubtle}"
+                                                           Margin="0,9" />
+                                                <Path x:Name="Arrow"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"
+                                                      Width="10" Height="6"
+                                                      Stretch="Uniform"
+                                                      Stroke="{StaticResource Brush.TextSecondary}"
+                                                      StrokeThickness="1.6"
+                                                      StrokeStartLineCap="Round"
+                                                      StrokeEndLineCap="Round"
+                                                      StrokeLineJoin="Round"
+                                                      Data="M1,1 L5,5 L9,1"
+                                                      RenderTransformOrigin="0.5,0.5">
+                                                    <Path.RenderTransform>
+                                                        <RotateTransform Angle="0" />
+                                                    </Path.RenderTransform>
+                                                </Path>
+                                                <ToggleButton x:Name="ToggleButton"
+                                                              Focusable="False"
+                                                              ClickMode="Press"
+                                                              Template="{StaticResource ChevronToggleTemplate}"
+                                                              IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
                                 </Border>
-                            </Popup>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEditable" Value="True">
-                                <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible" />
-                                <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden" />
-                            </Trigger>
 
-                            <!-- Hover -->
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="FieldBorder" Property="BorderBrush" Value="#FF98A2B3" />
-                            </Trigger>
-
-                            <!-- Keyboard focus (typing) -->
-                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                                <Setter TargetName="FieldBorder" Property="BorderBrush" Value="#FF2563EB" />
-                                <Setter TargetName="FieldBorder" Property="Background" Value="#FFFFFFFF" />
-                            </Trigger>
-
-                            <!-- Open -->
-                            <Trigger Property="IsDropDownOpen" Value="True">
-                                <Setter TargetName="FieldBorder" Property="BorderBrush" Value="#FF2563EB" />
-                                <Setter TargetName="Arrow" Property="Stroke" Value="#FF2563EB" />
-                                <Setter TargetName="Arrow" Property="RenderTransform">
-                                    <Setter.Value>
-                                        <RotateTransform Angle="180" />
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-
-                            <!-- Disabled -->
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="FieldBorder" Property="Background" Value="#FFF9FAFB" />
-                                <Setter TargetName="FieldBorder" Property="BorderBrush" Value="#FFE5E7EB" />
-                                <Setter TargetName="Arrow" Property="Stroke" Value="#FFCBD2DB" />
-                                <Setter TargetName="PART_EditableTextBox" Property="Foreground" Value="#FF9CA3AF" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
+                                <Popup x:Name="PART_Popup"
+                                       Placement="Bottom"
+                                       IsOpen="{TemplateBinding IsDropDownOpen}"
+                                       AllowsTransparency="True"
+                                       Focusable="False"
+                                       PopupAnimation="Fade">
+                                    <Border x:Name="DropDownBorder"
+                                            MinWidth="{Binding ActualWidth, ElementName=FieldBorder}"
+                                            MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                            Margin="0,6,0,8"
+                                            CornerRadius="{StaticResource Radius.Lg}"
+                                            BorderThickness="1"
+                                            BorderBrush="{StaticResource Brush.BorderSubtle}"
+                                            Background="{StaticResource Brush.Surface}"
+                                            SnapsToDevicePixels="True"
+                                            Effect="{StaticResource Shadow.Popup}">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,4">
+                                            <ItemsPresenter SnapsToDevicePixels="True" />
+                                        </ScrollViewer>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEditable" Value="True">
+                                    <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible" />
+                                    <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden" />
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="FieldBorder" Property="BorderBrush" Value="{StaticResource Brush.BorderHover}" />
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                    <Setter TargetName="FieldBorder" Property="BorderBrush" Value="{StaticResource Brush.FocusBorder}" />
+                                    <Setter TargetName="FocusRing" Property="BorderBrush" Value="{StaticResource Brush.FocusRing}" />
+                                </Trigger>
+                                <Trigger Property="IsDropDownOpen" Value="True">
+                                    <Setter TargetName="FieldBorder" Property="BorderBrush" Value="{StaticResource Brush.FocusBorder}" />
+                                    <Setter TargetName="FocusRing" Property="BorderBrush" Value="{StaticResource Brush.FocusRing}" />
+                                    <Setter TargetName="Arrow" Property="Stroke" Value="{StaticResource Brush.Accent}" />
+                                    <Setter TargetName="Arrow" Property="RenderTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="180" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="FieldBorder" Property="Background" Value="{StaticResource Brush.DisabledBackground}" />
+                                    <Setter TargetName="FieldBorder" Property="BorderBrush" Value="{StaticResource Brush.BorderSubtle}" />
+                                    <Setter TargetName="Arrow" Property="Stroke" Value="{StaticResource Brush.DisabledText}" />
+                                    <Setter TargetName="PART_EditableTextBox" Property="Foreground" Value="{StaticResource Brush.DisabledText}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Style="{StaticResource TitleTextStyle}"
+        <StackPanel Orientation="Horizontal" Margin="{StaticResource Gap.Label}">
+            <TextBlock Style="{StaticResource Text.Label}"
                        Text="{Binding Title, ElementName=RootControl}" />
-            <TextBlock Text=" *"
-                       FontSize="12.5"
-                       FontWeight="SemiBold"
-                       Foreground="#FFDC2626"
-                       Margin="2,0,0,6"
+            <TextBlock Text="*"
+                       FontFamily="Segoe UI"
+                       FontSize="12"
+                       FontWeight="Medium"
+                       Foreground="{StaticResource Brush.ErrorBorder}"
+                       Margin="3,0,0,0"
                        Visibility="{Binding IsRequired, ElementName=RootControl, Converter={StaticResource BoolToVisibility}}" />
         </StackPanel>
 

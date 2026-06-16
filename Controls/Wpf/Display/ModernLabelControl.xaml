@@ -8,26 +8,29 @@
              FontFamily="Segoe UI"
              d:DesignWidth="280">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <StackPanel>
         <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding Title, ElementName=RootControl}"
-                       FontSize="13"
-                       FontWeight="SemiBold"
-                       Foreground="#FF1F2937" />
-            <TextBlock Text=" *"
-                       FontSize="13"
-                       FontWeight="SemiBold"
-                       Foreground="#FFDC2626"
+            <TextBlock Style="{StaticResource Text.Label}"
+                       Text="{Binding Title, ElementName=RootControl}" />
+            <TextBlock Text="*"
+                       FontFamily="Segoe UI"
+                       FontSize="12"
+                       FontWeight="Medium"
+                       Foreground="{StaticResource Brush.ErrorBorder}"
+                       Margin="3,0,0,0"
                        Visibility="{Binding IsRequired, ElementName=RootControl, Converter={StaticResource BoolToVisibility}}" />
         </StackPanel>
-        <TextBlock Text="{Binding Description, ElementName=RootControl}"
-                   FontSize="11"
-                   Foreground="#FF6B7280"
-                   TextWrapping="Wrap"
-                   Margin="0,3,0,0" />
+        <TextBlock Style="{StaticResource Text.Helper}"
+                   Margin="{StaticResource Gap.Helper}"
+                   Text="{Binding Description, ElementName=RootControl}" />
     </StackPanel>
 
 </UserControl>
