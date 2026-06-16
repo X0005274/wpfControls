@@ -279,4 +279,78 @@ group.InnerContent = new ModernTextBoxControl { Title = "Street" };
 
 10. **Two-way `SelectedValue` on the radio group.** Bind to `RadioButtonItemModel.Code`
     values; the control matches `SelectedValue` against each item's `Code`.
+
+---
+
+## ModernComboBoxControl — searchable auto-suggest
+
+`ModernComboBoxControl` is an **editable** combo: typing opens the dropdown and filters
+the items in real time (case-insensitive). The match mode is configurable via the
+`FilterMode` DependencyProperty (`com.example.Controls.Wpf.Selection.ComboBoxFilterMode`):
+
+- `ComboBoxFilterMode.StartsWith` (default) — display text must start with the typed text.
+- `ComboBoxFilterMode.Contains` — display text must contain the typed text anywhere.
+
+Behavior: an empty text box restores the full list; no matches show an empty dropdown
+(the control does not break); `ItemsSource`, `SelectedItem`, `SelectedValue`,
+`DisplayMemberPath`, and `SelectedValuePath` continue to work as before.
+
+```csharp
+using com.example.Controls.Wpf.Selection;
+using com.example.Models.Ui;
+
+ModernComboBoxControl combo = new ModernComboBoxControl();
+combo.Title = "Country";
+combo.DisplayMemberPath = "Name";
+combo.SelectedValuePath = "Code";
+combo.FilterMode = ComboBoxFilterMode.Contains;   // or StartsWith (default)
+
+List<ComboBoxItemModel> items = new List<ComboBoxItemModel>();
+items.Add(new ComboBoxItemModel("KR", "South Korea"));
+items.Add(new ComboBoxItemModel("US", "United States"));
+combo.ItemsSource = items;
+```
+
+### Failure points — editable ComboBox filtering & binding
+
+1. **Editable mode needs `PART_EditableTextBox`.** An editable `ComboBox` requires a
+   `TextBox` named exactly `PART_EditableTextBox` in its `ControlTemplate`. If a custom
+   template omits it, the control throws / does not accept typing. This template
+   includes it and shows it via an `IsEditable` trigger.
+
+2. **Disable the built-in text search.** Leave `IsTextSearchEnabled="False"`. With it on,
+   WPF's own type-ahead fights the custom filter (auto-selecting/auto-completing items)
+   and produces flicker and wrong selections.
+
+3. **Keep the popup open while editing.** `StaysOpenOnEdit="True"` is required, otherwise
+   editing the text closes the dropdown and the suggestions never show.
+
+4. **Filter the `ICollectionView`, not `ComboBox.Items.Refresh()`.** Re-running the
+   predicate requires refreshing the collection view returned by
+   `CollectionViewSource.GetDefaultView(ItemsSource)`. Calling `ComboBox.Items.Refresh()`
+   with a cached predicate does **not** re-evaluate the filter — the list appears stuck
+   on the previous result.
+
+5. **First-keystroke selection reset.** If an item is already selected, filtering it out
+   of the view makes the editable ComboBox reset its text to empty, which re-triggers the
+   filter and restores the full list — so the *first* search silently fails. The control
+   clears `SelectedItem` when a real edit begins to prevent this. If you reimplement
+   filtering, reproduce this guard.
+
+6. **Selection echo.** Picking an item sets the editor text to that item's display text,
+   which raises `TextChanged`. The control ignores a change whose text equals the current
+   selection's display text, so the dropdown does not reopen after a selection.
+
+7. **`DisplayMemberPath` drives the filter text.** Matching uses the item's
+   `DisplayMemberPath` value (via reflection on a simple property name), falling back to
+   `ToString()`. Nested/complex paths are not resolved for filtering — expose a simple
+   string property (e.g. `Name`) or rely on `ToString()`.
+
+8. **Shared collection instances.** Filtering uses the source's *default* collection view.
+   If the **same** list instance is bound to another `ItemsControl`, the filter affects
+   both. Give each searchable combo its own collection instance.
+
+9. **`IsSynchronizedWithCurrentItem="False"`.** Set on the inner combo so selection is not
+   tied to the view's current item; otherwise refreshing the filtered view can move the
+   selection unexpectedly.
 ```

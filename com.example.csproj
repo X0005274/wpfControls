@@ -164,6 +164,7 @@
       <DependentUpon>ModernSearchBoxControl.xaml</DependentUpon>
     </Compile>
     <!-- Selection code-behind -->
+    <Compile Include="Controls\Wpf\Selection\ComboBoxFilterMode.cs" />
     <Compile Include="Controls\Wpf\Selection\ModernComboBoxControl.xaml.cs">
       <DependentUpon>ModernComboBoxControl.xaml</DependentUpon>
     </Compile>

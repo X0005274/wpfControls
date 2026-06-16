@@ -46,8 +46,7 @@ Desktop.ini
 .DS_Store
 
 # Demo capture artifacts
-Demo/demo_screenshot.png
-Demo/demo_scroll_*.png
+Demo/demo_*.png
 
 # Claude Code local (machine-specific) settings
 .claude/settings.local.json

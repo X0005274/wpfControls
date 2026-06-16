@@ -104,6 +104,22 @@
                                               ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                               ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" />
 
+                            <!-- Editable input area. The name PART_EditableTextBox is
+                                 required by the WPF ComboBox to wire up editable mode. -->
+                            <TextBox x:Name="PART_EditableTextBox"
+                                     Margin="9,0,32,0"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     Background="Transparent"
+                                     BorderThickness="0"
+                                     Padding="0"
+                                     FontSize="13"
+                                     Foreground="#FF1F2937"
+                                     CaretBrush="#FF1F2937"
+                                     Focusable="True"
+                                     IsReadOnly="{TemplateBinding IsReadOnly}"
+                                     Visibility="Hidden" />
+
                             <Popup x:Name="PART_Popup"
                                    Placement="Bottom"
                                    IsOpen="{TemplateBinding IsDropDownOpen}"
@@ -133,6 +149,10 @@
                             </Popup>
                         </Grid>
                         <ControlTemplate.Triggers>
+                            <Trigger Property="IsEditable" Value="True">
+                                <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden" />
+                            </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Opacity" Value="0.6" />
                             </Trigger>
@@ -158,6 +178,10 @@
 
         <ComboBox x:Name="InnerComboBox"
                   Style="{StaticResource ModernComboBoxStyle}"
+                  IsEditable="True"
+                  IsTextSearchEnabled="False"
+                  StaysOpenOnEdit="True"
+                  IsSynchronizedWithCurrentItem="False"
                   ItemsSource="{Binding ItemsSource, ElementName=RootControl}"
                   SelectedItem="{Binding SelectedItem, ElementName=RootControl, Mode=TwoWay}"
                   SelectedValue="{Binding SelectedValue, ElementName=RootControl, Mode=TwoWay}"
