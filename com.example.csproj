@@ -123,6 +123,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\Wpf\Data\MatteDataGridControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\Wpf\Data\ModernListViewControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -210,6 +214,9 @@
     <!-- Data code-behind -->
     <Compile Include="Controls\Wpf\Data\ModernDataGridControl.xaml.cs">
       <DependentUpon>ModernDataGridControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Data\MatteDataGridControl.xaml.cs">
+      <DependentUpon>MatteDataGridControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Wpf\Data\ModernListViewControl.xaml.cs">
       <DependentUpon>ModernListViewControl.xaml</DependentUpon>

@@ -225,6 +225,11 @@ namespace com.example.Demo
             ModernDataGridControl grid = new ModernDataGridControl();
             grid.ItemsSource = rows;
             grid.Height = 180;
+            grid.SelectedItem = rows[1];
+
+            MatteDataGridControl matteGrid = new MatteDataGridControl();
+            matteGrid.ItemsSource = SampleRows();
+            matteGrid.Height = 180;
 
             ModernListViewControl listView = new ModernListViewControl();
             listView.Columns.Add(NewColumn("Code", "Code", 120));
@@ -246,7 +251,7 @@ namespace com.example.Demo
             FrameworkElement tabHost = tab;
             tabHost.Height = 200;
 
-            return Section("Data", new UIElement[] { grid, listView, tree, tabHost });
+            return Section("Data", new UIElement[] { grid, matteGrid, listView, tree, tabHost });
         }
 
         // --------------------------------------------------------------- Layout
