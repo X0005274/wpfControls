@@ -101,6 +101,10 @@ namespace com.example.Controls.Wpf.Selection
                 TextBoxBase.TextChangedEvent,
                 new TextChangedEventHandler(this.InnerComboBox_TextChanged));
 
+            // Reconcile the filter when the dropdown opens so browsing the list (no
+            // active search) always shows every item, not just the selected one.
+            this.InnerComboBox.DropDownOpened += this.OnDropDownOpened;
+
             this.Loaded += this.OnLoaded;
         }
 
@@ -200,18 +204,20 @@ namespace com.example.Controls.Wpf.Selection
 
             string text = this.InnerComboBox.Text ?? string.Empty;
 
-            // Ignore the text change that merely echoes the current selection
-            // (i.e. the user picked an item). This prevents the dropdown from
-            // reopening after a selection while still treating real edits as searches.
+            // When the editor text merely echoes the current selection (the user
+            // picked an item), there is no active search: the effective filter is
+            // empty so the full list is shown next time the dropdown opens.
             object selected = this.InnerComboBox.SelectedItem;
-            if (selected != null &&
-                string.Equals(text, this.GetDisplayText(selected), StringComparison.Ordinal))
+            bool echoesSelection = selected != null &&
+                string.Equals(text, this.GetDisplayText(selected), StringComparison.Ordinal);
+            string desiredFilter = echoesSelection ? string.Empty : text;
+
+            if (string.Equals(desiredFilter, this.currentFilterText, StringComparison.Ordinal))
             {
-                this.currentFilterText = text;
                 return;
             }
 
-            this.currentFilterText = text;
+            this.currentFilterText = desiredFilter;
 
             this.suppressTextChanged = true;
             try
@@ -220,7 +226,7 @@ namespace com.example.Controls.Wpf.Selection
 
                 // If filtering removed the previously selected item, the ComboBox
                 // resets the editor text to empty; restore the in-progress search text.
-                if ((this.InnerComboBox.Text ?? string.Empty) != text)
+                if (!echoesSelection && (this.InnerComboBox.Text ?? string.Empty) != text)
                 {
                     this.InnerComboBox.Text = text;
                     if (this.editableTextBox != null)
@@ -234,10 +240,28 @@ namespace com.example.Controls.Wpf.Selection
                 this.suppressTextChanged = false;
             }
 
-            // Open the dropdown automatically as the user types.
-            if (!this.InnerComboBox.IsDropDownOpen)
+            // Open the dropdown automatically as the user types (but not when the
+            // change was just an item selection).
+            if (!echoesSelection && !this.InnerComboBox.IsDropDownOpen)
             {
                 this.InnerComboBox.IsDropDownOpen = true;
+            }
+        }
+
+        private void OnDropDownOpened(object sender, EventArgs e)
+        {
+            // Browsing the list (text reflects the current selection, or is empty)
+            // must show every item; only an active typed search should filter.
+            string text = this.InnerComboBox.Text ?? string.Empty;
+            object selected = this.InnerComboBox.SelectedItem;
+            bool echoesSelection = selected != null &&
+                string.Equals(text, this.GetDisplayText(selected), StringComparison.Ordinal);
+            string desiredFilter = echoesSelection ? string.Empty : text;
+
+            if (!string.Equals(desiredFilter, this.currentFilterText, StringComparison.Ordinal))
+            {
+                this.currentFilterText = desiredFilter;
+                this.ApplyFilter();
             }
         }
 
