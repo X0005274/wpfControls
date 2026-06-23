@@ -52,6 +52,12 @@
     <Compile Include="DemoForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WpfOnFormDemo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WpfOnFormDemo.Designer.cs">
+      <DependentUpon>WpfOnFormDemo.cs</DependentUpon>
+    </Compile>
     <Compile Include="GalleryBuilder.cs" />
     <Compile Include="DemoRow.cs" />
   </ItemGroup>

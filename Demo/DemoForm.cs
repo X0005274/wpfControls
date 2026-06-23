@@ -25,6 +25,7 @@ namespace com.example.Demo
         private Button approvalButton;
         private Button payrollButton;
         private Button browserButton;
+        private Button hostFormButton;
         private StatusStrip statusStrip;
         private ToolStripStatusLabel statusLabel;
 
@@ -82,9 +83,15 @@ namespace com.example.Demo
             this.browserButton = this.CreateNavButton("사원조회");
             this.browserButton.Click += this.OnBrowserButtonClick;
 
-            // Docked right; the last added docks right-most, so the visual order
-            // reads (left → right): 사원조회 | 대시보드 | 직원관리 | 승인·예외 | 급여계산 | 컨트롤 갤러리.
+            // Opens a separate WinForms Form that hosts individual WPF controls,
+            // each in its own ElementHost (combo / tree / grid).
+            this.hostFormButton = this.CreateNavButton("WPF on Form");
+            this.hostFormButton.Click += this.OnHostFormButtonClick;
+
+            // Docked right; the last added docks right-most. Visual order (left → right):
+            // WPF on Form | 사원조회 | 대시보드 | 직원관리 | 승인·예외 | 급여계산 | 컨트롤 갤러리.
             this.headerPanel.Controls.Add(this.headerLabel);
+            this.headerPanel.Controls.Add(this.hostFormButton);
             this.headerPanel.Controls.Add(this.browserButton);
             this.headerPanel.Controls.Add(this.dashboardButton);
             this.headerPanel.Controls.Add(this.employeeButton);
@@ -130,6 +137,15 @@ namespace com.example.Demo
         {
             this.wpfHost.Child = this.galleryView;
             this.statusLabel.Text = "컨트롤 갤러리";
+        }
+
+        private void OnHostFormButtonClick(object sender, EventArgs e)
+        {
+            // A separate top-level WinForms Form with WPF controls placed one-by-one
+            // via individual ElementHosts.
+            WpfOnFormDemo form = new WpfOnFormDemo();
+            form.Show(this);
+            this.statusLabel.Text = "WPF on Form 열림 (ElementHost x N: 콤보/트리/그리드)";
         }
 
         private void OnBrowserButtonClick(object sender, EventArgs e)
