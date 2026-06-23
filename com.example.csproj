@@ -161,6 +161,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\Wpf\Screens\EmployeeManagementScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Screens\ApprovalExceptionScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Screens\PayrollRunScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Screens\DashboardScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Screens\EmployeeBrowserScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Screens\EmployeeDetailWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <!-- Input code-behind -->
@@ -245,8 +269,34 @@
     <Compile Include="Controls\Wpf\Layout\ModernScrollSectionControl.xaml.cs">
       <DependentUpon>ModernScrollSectionControl.xaml</DependentUpon>
     </Compile>
+    <!-- Screens -->
+    <Compile Include="Controls\Wpf\Screens\EmployeeManagementScreen.xaml.cs">
+      <DependentUpon>EmployeeManagementScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Screens\ApprovalExceptionScreen.xaml.cs">
+      <DependentUpon>ApprovalExceptionScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Screens\PayrollRunScreen.xaml.cs">
+      <DependentUpon>PayrollRunScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Screens\DashboardScreen.xaml.cs">
+      <DependentUpon>DashboardScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Screens\EmployeeBrowserScreen.xaml.cs">
+      <DependentUpon>EmployeeBrowserScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Screens\EmployeeDetailWindow.xaml.cs">
+      <DependentUpon>EmployeeDetailWindow.xaml</DependentUpon>
+    </Compile>
     <!-- Models -->
+    <Compile Include="Models\Ui\AuditLogRow.cs" />
     <Compile Include="Models\Ui\ComboBoxItemModel.cs" />
+    <Compile Include="Models\Ui\DepartmentSummaryRow.cs" />
+    <Compile Include="Models\Ui\EmployeeBrowserRow.cs" />
+    <Compile Include="Models\Ui\EmployeeRow.cs" />
+    <Compile Include="Models\Ui\ExceptionItem.cs" />
+    <Compile Include="Models\Ui\PayrollLineRow.cs" />
+    <Compile Include="Models\Ui\PayrollResultRow.cs" />
     <Compile Include="Models\Ui\RadioButtonItemModel.cs" />
     <Compile Include="Models\Ui\TreeViewItemModel.cs" />
     <!-- Properties -->

@@ -1,0 +1,347 @@
+<UserControl x:Class="com.example.Controls.Wpf.Screens.DashboardScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             x:Name="RootControl"
+             FontFamily="Segoe UI"
+             d:DesignWidth="1040" d:DesignHeight="820">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="CardStyle" TargetType="Border">
+                <Setter Property="Background" Value="{StaticResource Brush.Surface}" />
+                <Setter Property="BorderBrush" Value="{StaticResource Brush.BorderSubtle}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="CornerRadius" Value="{StaticResource Radius.Lg}" />
+                <Setter Property="Padding" Value="16" />
+                <Setter Property="Margin" Value="0,0,0,16" />
+            </Style>
+
+            <Style x:Key="CardTitleStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
+                <Setter Property="Margin" Value="0,0,0,12" />
+            </Style>
+
+            <Style x:Key="BadgeStyle" TargetType="Border">
+                <Setter Property="CornerRadius" Value="{StaticResource Radius.Sm}" />
+                <Setter Property="Padding" Value="8,2" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="Background" Value="{StaticResource Brush.HeaderBackground}" />
+                <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.TextSecondary}" />
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="info">
+                        <Setter Property="Background" Value="{StaticResource Brush.InfoBackground}" />
+                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.Accent}" />
+                    </Trigger>
+                    <Trigger Property="Tag" Value="success">
+                        <Setter Property="Background" Value="{StaticResource Brush.SuccessBackground}" />
+                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.Success}" />
+                    </Trigger>
+                    <Trigger Property="Tag" Value="warning">
+                        <Setter Property="Background" Value="{StaticResource Brush.WarningBackground}" />
+                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.Warning}" />
+                    </Trigger>
+                    <Trigger Property="Tag" Value="danger">
+                        <Setter Property="Background" Value="{StaticResource Brush.ErrorBackground}" />
+                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.ErrorBorder}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!-- KPI card -->
+            <Style x:Key="KpiCardStyle" TargetType="Border">
+                <Setter Property="Background" Value="{StaticResource Brush.Surface}" />
+                <Setter Property="BorderBrush" Value="{StaticResource Brush.BorderSubtle}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="CornerRadius" Value="{StaticResource Radius.Lg}" />
+                <Setter Property="Padding" Value="18,16" />
+                <Setter Property="Margin" Value="0,0,12,0" />
+            </Style>
+            <Style x:Key="KpiLabelStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}" />
+                <Setter Property="Margin" Value="0,0,0,8" />
+            </Style>
+            <Style x:Key="KpiValueStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="22" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
+            </Style>
+
+            <!-- Recent exception list item: clickable card -->
+            <Style x:Key="ExceptionItemStyle" TargetType="ListBoxItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="Margin" Value="0,0,0,8" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <Border x:Name="Bd"
+                                    Background="{StaticResource Brush.Surface}"
+                                    BorderBrush="{StaticResource Brush.BorderSubtle}"
+                                    BorderThickness="1"
+                                    CornerRadius="{StaticResource Radius.Md}"
+                                    Padding="12,10">
+                                <ContentPresenter />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="{StaticResource Brush.HoverBackground}" />
+                                    <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Brush.BorderHover}" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="{StaticResource Brush.SelectedBackground}" />
+                                    <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Brush.Accent}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Department grid styles -->
+            <Style x:Key="GridHeaderStyle" TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="{StaticResource Brush.HeaderBackground}" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Height" Value="38" />
+                <Setter Property="Padding" Value="12,0" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                <Setter Property="BorderBrush" Value="{StaticResource Brush.BorderSubtle}" />
+                <Setter Property="BorderThickness" Value="0,0,1,1" />
+            </Style>
+            <Style x:Key="NumHeaderStyle" TargetType="DataGridColumnHeader" BasedOn="{StaticResource GridHeaderStyle}">
+                <Setter Property="HorizontalContentAlignment" Value="Right" />
+            </Style>
+            <Style x:Key="GridRowStyle" TargetType="DataGridRow">
+                <Setter Property="Background" Value="{StaticResource Brush.Surface}" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
+                <Style.Triggers>
+                    <Trigger Property="AlternationIndex" Value="1">
+                        <Setter Property="Background" Value="{StaticResource Brush.SurfaceAlt}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="GridCellStyle" TargetType="DataGridCell">
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding" Value="{StaticResource Pad.Item}" />
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="NumCellTextStyle" TargetType="TextBlock">
+                <Setter Property="HorizontalAlignment" Value="Right" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0"
+                   Text="대시보드"
+                   Margin="0,0,0,16"
+                   FontSize="22"
+                   FontWeight="SemiBold"
+                   Foreground="{StaticResource Brush.TextPrimary}" />
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel>
+
+                <!-- 1. KPI 카드 4개 -->
+                <UniformGrid Rows="1" Columns="4" Margin="0,0,0,16">
+                    <Border Style="{StaticResource KpiCardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="총 직원수" Style="{StaticResource KpiLabelStyle}" />
+                            <TextBlock x:Name="KpiTotalText" Text="0명" Style="{StaticResource KpiValueStyle}" />
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource KpiCardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="이번 달 지급예정액" Style="{StaticResource KpiLabelStyle}" />
+                            <TextBlock x:Name="KpiScheduledText" Text="₩0" Style="{StaticResource KpiValueStyle}" />
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource KpiCardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="승인대기 건수" Style="{StaticResource KpiLabelStyle}" />
+                            <TextBlock x:Name="KpiPendingText" Text="0건" Style="{StaticResource KpiValueStyle}" />
+                        </StackPanel>
+                    </Border>
+                    <Border x:Name="KpiExceptionCard" Style="{StaticResource KpiCardStyle}" Margin="0,0,0,0">
+                        <StackPanel>
+                            <TextBlock Text="오류/예외 건수" Style="{StaticResource KpiLabelStyle}" />
+                            <TextBlock x:Name="KpiExceptionText" Text="0건" Style="{StaticResource KpiValueStyle}" />
+                        </StackPanel>
+                    </Border>
+                </UniformGrid>
+
+                <!-- 2. 급여 주기 상태 / 오류·예외 -->
+                <Grid Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1.2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 급여 주기 상태 -->
+                    <Border Grid.Column="0" Style="{StaticResource CardStyle}" Margin="0,0,16,16">
+                        <StackPanel>
+                            <TextBlock Text="급여 주기 상태" Style="{StaticResource CardTitleStyle}" />
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                                <TextBlock Text="현재 상태"
+                                           VerticalAlignment="Center"
+                                           Margin="0,0,10,0"
+                                           FontSize="12"
+                                           Foreground="{StaticResource Brush.TextSecondary}" />
+                                <Border x:Name="CycleStatusBadge" Style="{StaticResource BadgeStyle}">
+                                    <TextBlock x:Name="CycleStatusText" FontSize="12" FontWeight="SemiBold" />
+                                </Border>
+                            </StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="최근 계산" FontSize="12" Foreground="{StaticResource Brush.TextSecondary}" Margin="0,0,0,4" />
+                                    <TextBlock x:Name="LastCalculatedText" FontSize="13" Foreground="{StaticResource Brush.TextPrimary}" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="지급 예정일" FontSize="12" Foreground="{StaticResource Brush.TextSecondary}" Margin="0,0,0,4" />
+                                    <TextBlock x:Name="ScheduledPayDateText" FontSize="13" Foreground="{StaticResource Brush.TextPrimary}" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 오류·예외 -->
+                    <Border Grid.Column="1" Style="{StaticResource CardStyle}" Margin="0,0,0,16">
+                        <StackPanel>
+                            <TextBlock Text="오류·예외" Style="{StaticResource CardTitleStyle}" />
+                            <ListBox x:Name="ExceptionListBox"
+                                     BorderThickness="0"
+                                     Background="Transparent"
+                                     HorizontalContentAlignment="Stretch"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                     MaxHeight="220"
+                                     ItemContainerStyle="{StaticResource ExceptionItemStyle}"
+                                     MouseDoubleClick="ExceptionListBox_MouseDoubleClick">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding NameWithId}"
+                                                           FontSize="13"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="{StaticResource Brush.TextPrimary}"
+                                                           TextTrimming="CharacterEllipsis" />
+                                                <TextBlock Text="{Binding TypeLabel}"
+                                                           FontSize="12"
+                                                           Margin="0,2,0,0"
+                                                           Foreground="{StaticResource Brush.TextSecondary}"
+                                                           TextTrimming="CharacterEllipsis" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                                <Border Style="{StaticResource BadgeStyle}" Tag="{Binding SeverityTone}">
+                                                    <TextBlock Text="{Binding SeverityLabel}" FontSize="11" FontWeight="Medium" />
+                                                </Border>
+                                                <Border Style="{StaticResource BadgeStyle}" Tag="{Binding StatusTone}" Margin="6,0,0,0">
+                                                    <TextBlock Text="{Binding StatusLabel}" FontSize="11" FontWeight="Medium" />
+                                                </Border>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- 3. 월별 인건비 추이 -->
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="월별 인건비 추이" Style="{StaticResource CardTitleStyle}" />
+                        <StackPanel x:Name="ChartHost"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Left"
+                                    Height="200" />
+                    </StackPanel>
+                </Border>
+
+                <!-- 4. 부서별 현황 -->
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="부서별 현황" Style="{StaticResource CardTitleStyle}" />
+                        <Border CornerRadius="{StaticResource Radius.Md}"
+                                BorderThickness="1"
+                                BorderBrush="{StaticResource Brush.BorderSubtle}"
+                                ClipToBounds="True">
+                            <DataGrid x:Name="DepartmentGrid"
+                                      AutoGenerateColumns="False"
+                                      HeadersVisibility="Column"
+                                      GridLinesVisibility="Horizontal"
+                                      HorizontalGridLinesBrush="{StaticResource Brush.BorderSubtle}"
+                                      BorderThickness="0"
+                                      Background="Transparent"
+                                      RowBackground="{StaticResource Brush.Surface}"
+                                      CanUserAddRows="False"
+                                      CanUserDeleteRows="False"
+                                      CanUserResizeRows="False"
+                                      IsReadOnly="True"
+                                      SelectionMode="Single"
+                                      SelectionUnit="FullRow"
+                                      AlternationCount="2"
+                                      ColumnHeaderStyle="{StaticResource GridHeaderStyle}"
+                                      RowStyle="{StaticResource GridRowStyle}"
+                                      CellStyle="{StaticResource GridCellStyle}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="부서" Binding="{Binding DepartmentName}" Width="*" />
+                                    <DataGridTextColumn Header="인원" Binding="{Binding EmployeeCountText}" Width="110"
+                                                        ElementStyle="{StaticResource NumCellTextStyle}"
+                                                        HeaderStyle="{StaticResource NumHeaderStyle}" />
+                                    <DataGridTextColumn Header="지급액" Binding="{Binding NetPayText}" Width="150"
+                                                        ElementStyle="{StaticResource NumCellTextStyle}"
+                                                        HeaderStyle="{StaticResource NumHeaderStyle}" />
+                                    <DataGridTextColumn Header="연장수당" Binding="{Binding OvertimeText}" Width="150"
+                                                        ElementStyle="{StaticResource NumCellTextStyle}"
+                                                        HeaderStyle="{StaticResource NumHeaderStyle}" />
+                                    <DataGridTextColumn Header="오류건수" Binding="{Binding ExceptionCountText}" Width="110"
+                                                        ElementStyle="{StaticResource NumCellTextStyle}"
+                                                        HeaderStyle="{StaticResource NumHeaderStyle}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

@@ -1,0 +1,232 @@
+<Window x:Class="com.example.Controls.Wpf.Screens.EmployeeDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d"
+        x:Name="RootWindow"
+        FontFamily="Segoe UI"
+        Title="사원 상세"
+        Width="460" Height="520"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        d:DesignWidth="460" d:DesignHeight="520">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource Brush.Accent}" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Height" Value="36" />
+                <Setter Property="Padding" Value="18,0" />
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="{StaticResource Radius.Md}" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="{StaticResource Brush.AccentHover}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="GhostButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource Brush.Surface}" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="FontWeight" Value="Medium" />
+                <Setter Property="Height" Value="36" />
+                <Setter Property="Padding" Value="18,0" />
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{StaticResource Brush.Border}" BorderThickness="1" CornerRadius="{StaticResource Radius.Md}" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="{StaticResource Brush.HoverBackground}" />
+                                    <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Brush.BorderHover}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Destructive (삭제): red text/border ghost -->
+            <Style x:Key="DangerButtonStyle" TargetType="Button" BasedOn="{StaticResource GhostButtonStyle}">
+                <Setter Property="Foreground" Value="{StaticResource Brush.ErrorBorder}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Bd" Background="{StaticResource Brush.Surface}" BorderBrush="{StaticResource Brush.ErrorBorder}" BorderThickness="1" CornerRadius="{StaticResource Radius.Md}" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="{StaticResource Brush.ErrorBackground}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="BadgeStyle" TargetType="Border">
+                <Setter Property="CornerRadius" Value="{StaticResource Radius.Sm}" />
+                <Setter Property="Padding" Value="10,3" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="Background" Value="{StaticResource Brush.HeaderBackground}" />
+                <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.TextSecondary}" />
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="info">
+                        <Setter Property="Background" Value="{StaticResource Brush.InfoBackground}" />
+                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.Accent}" />
+                    </Trigger>
+                    <Trigger Property="Tag" Value="success">
+                        <Setter Property="Background" Value="{StaticResource Brush.SuccessBackground}" />
+                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.Success}" />
+                    </Trigger>
+                    <Trigger Property="Tag" Value="warning">
+                        <Setter Property="Background" Value="{StaticResource Brush.WarningBackground}" />
+                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.Warning}" />
+                    </Trigger>
+                    <Trigger Property="Tag" Value="danger">
+                        <Setter Property="Background" Value="{StaticResource Brush.ErrorBackground}" />
+                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.ErrorBorder}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="KeyStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,14" />
+            </Style>
+            <Style x:Key="ValueStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="FontWeight" Value="Medium" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="TextWrapping" Value="Wrap" />
+                <Setter Property="Margin" Value="0,0,0,14" />
+            </Style>
+            <Style x:Key="EditBoxStyle" TargetType="TextBox">
+                <Setter Property="Height" Value="32" />
+                <Setter Property="Padding" Value="8,0" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="BorderBrush" Value="{StaticResource Brush.Border}" />
+                <Setter Property="Margin" Value="0,0,0,14" />
+            </Style>
+            <Style x:Key="EditComboStyle" TargetType="ComboBox">
+                <Setter Property="Height" Value="32" />
+                <Setter Property="Padding" Value="8,0" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="Margin" Value="0,0,0,14" />
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,16">
+            <TextBlock x:Name="HeaderName" FontSize="20" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextPrimary}" />
+            <TextBlock x:Name="HeaderSub" FontSize="13" Margin="0,4,0,0" Foreground="{StaticResource Brush.TextSecondary}" />
+        </StackPanel>
+
+        <!-- Detail card -->
+        <Border Grid.Row="1"
+                Background="{StaticResource Brush.Surface}"
+                BorderBrush="{StaticResource Brush.BorderSubtle}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource Radius.Lg}"
+                Padding="20"
+                VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="사번" Style="{StaticResource KeyStyle}" />
+                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="ValueId" Style="{StaticResource ValueStyle}" />
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="이름" Style="{StaticResource KeyStyle}" />
+                <TextBlock Grid.Row="1" Grid.Column="1" x:Name="ValueName" Style="{StaticResource ValueStyle}" />
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="부서" Style="{StaticResource KeyStyle}" />
+                <TextBlock Grid.Row="2" Grid.Column="1" x:Name="ValueDept" Style="{StaticResource ValueStyle}" />
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="직급/직책" Style="{StaticResource KeyStyle}" />
+                <TextBlock Grid.Row="3" Grid.Column="1" x:Name="ValuePosition" Style="{StaticResource ValueStyle}" />
+                <TextBox   Grid.Row="3" Grid.Column="1" x:Name="EditPosition" Style="{StaticResource EditBoxStyle}" Visibility="Collapsed" />
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="고용형태" Style="{StaticResource KeyStyle}" />
+                <TextBlock Grid.Row="4" Grid.Column="1" x:Name="ValueType" Style="{StaticResource ValueStyle}" />
+                <ComboBox  Grid.Row="4" Grid.Column="1" x:Name="EditType" Style="{StaticResource EditComboStyle}" Visibility="Collapsed">
+                    <ComboBoxItem Content="정규직" />
+                    <ComboBoxItem Content="계약직" />
+                    <ComboBoxItem Content="임시직" />
+                    <ComboBoxItem Content="시간제" />
+                </ComboBox>
+
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="입사일" Style="{StaticResource KeyStyle}" />
+                <TextBlock Grid.Row="5" Grid.Column="1" x:Name="ValueHireDate" Style="{StaticResource ValueStyle}" />
+
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="재직상태" Style="{StaticResource KeyStyle}" Margin="0" />
+                <Border    Grid.Row="6" Grid.Column="1" x:Name="StatusBadge" Style="{StaticResource BadgeStyle}">
+                    <TextBlock x:Name="StatusText" FontSize="12" FontWeight="Medium" />
+                </Border>
+                <ComboBox  Grid.Row="6" Grid.Column="1" x:Name="EditStatus" Style="{StaticResource EditComboStyle}" Margin="0" Visibility="Collapsed">
+                    <ComboBoxItem Content="재직" />
+                    <ComboBoxItem Content="휴직" />
+                    <ComboBoxItem Content="퇴직" />
+                </ComboBox>
+            </Grid>
+        </Border>
+
+        <!-- Footer: view-mode (수정/삭제/닫기) and edit-mode (취소/저장) -->
+        <Grid Grid.Row="2" Margin="0,16,0,0">
+            <DockPanel x:Name="ViewButtons" LastChildFill="False">
+                <Button x:Name="EditButton" DockPanel.Dock="Left" Style="{StaticResource GhostButtonStyle}" Content="수정" Click="EditButton_Click" />
+                <Button x:Name="DeleteButton" DockPanel.Dock="Left" Style="{StaticResource DangerButtonStyle}" Content="삭제" Margin="8,0,0,0" Click="DeleteButton_Click" />
+                <Button x:Name="CloseButton" DockPanel.Dock="Right" Style="{StaticResource PrimaryButtonStyle}" Content="닫기" Click="CloseButton_Click" />
+            </DockPanel>
+            <StackPanel x:Name="EditButtons" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="Collapsed">
+                <Button x:Name="CancelEditButton" Style="{StaticResource GhostButtonStyle}" Content="취소" Click="CancelEditButton_Click" />
+                <Button x:Name="SaveButton" Style="{StaticResource PrimaryButtonStyle}" Content="저장" Margin="8,0,0,0" Click="SaveButton_Click" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
