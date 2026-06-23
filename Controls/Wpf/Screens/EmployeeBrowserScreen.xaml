@@ -186,6 +186,7 @@
                               IsEditable="True"
                               IsTextSearchEnabled="False"
                               StaysOpenOnEdit="True"
+                              SelectedValuePath="Code"
                               SelectionChanged="NameCombo_SelectionChanged" />
                 </StackPanel>
                 <Button x:Name="SearchButton"

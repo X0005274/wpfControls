@@ -28,7 +28,8 @@ namespace com.example.Controls.Wpf.Screens
 
         private readonly List<EmployeeBrowserRow> employees;
         private readonly ObservableCollection<EmployeeBrowserRow> displayed;
-        private readonly ObservableCollection<string> allNames;
+        // Name combo carries code (사번) + display name, so selection yields a code.
+        private readonly ObservableCollection<ComboBoxItemModel> nameOptions;
         private ICollectionView namesView;
         private string nameFilterText;
         private bool suppressNameFilter;
@@ -41,7 +42,7 @@ namespace com.example.Controls.Wpf.Screens
             this.ApplyBackground();
             this.employees = new List<EmployeeBrowserRow>();
             this.displayed = new ObservableCollection<EmployeeBrowserRow>();
-            this.allNames = new ObservableCollection<string>();
+            this.nameOptions = new ObservableCollection<ComboBoxItemModel>();
             this.nameFilterText = string.Empty;
             this.suppressNameFilter = false;
             this.storePath = Path.Combine(
@@ -247,14 +248,15 @@ namespace com.example.Controls.Wpf.Screens
 
         private void PopulateNameCombo()
         {
-            this.allNames.Clear();
+            this.nameOptions.Clear();
             foreach (EmployeeBrowserRow row in this.employees)
             {
-                this.allNames.Add(row.Name);
+                // Code = 사번 (처리용), Name = 표시용. ToString() 이 Name 이라 편집/드롭다운 모두 이름 표시.
+                this.nameOptions.Add(new ComboBoxItemModel(row.EmployeeId, row.Name));
             }
 
-            this.NameCombo.ItemsSource = this.allNames;
-            this.namesView = CollectionViewSource.GetDefaultView(this.allNames);
+            this.NameCombo.ItemsSource = this.nameOptions;
+            this.namesView = CollectionViewSource.GetDefaultView(this.nameOptions);
             this.namesView.Filter = this.NameFilter;
         }
 
@@ -265,9 +267,9 @@ namespace com.example.Controls.Wpf.Screens
                 return true;
             }
 
-            string name = item as string;
-            return name != null
-                && name.IndexOf(this.nameFilterText, StringComparison.OrdinalIgnoreCase) >= 0;
+            ComboBoxItemModel option = item as ComboBoxItemModel;
+            return option != null
+                && option.Name.IndexOf(this.nameFilterText, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         private void NameCombo_TextChanged(object sender, TextChangedEventArgs e)
@@ -397,20 +399,23 @@ namespace com.example.Controls.Wpf.Screens
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             string query = this.CurrentNameText().Trim();
-            if (query.Length == 0)
+            EmployeeBrowserRow match = null;
+
+            // If an item was actually picked (its name matches the text), use its
+            // Code (사번) — this is the value the combo carries for processing.
+            ComboBoxItemModel selected = this.NameCombo.SelectedItem as ComboBoxItemModel;
+            if (selected != null && string.Equals(selected.Name, query, StringComparison.Ordinal))
+            {
+                match = this.FindByCode(selected.Code);
+            }
+            else if (query.Length == 0)
             {
                 this.SelectDepartmentNode(AllNode);
                 return;
             }
-
-            EmployeeBrowserRow match = null;
-            foreach (EmployeeBrowserRow row in this.employees)
+            else
             {
-                if (string.Equals(row.Name, query, StringComparison.OrdinalIgnoreCase))
-                {
-                    match = row;
-                    break;
-                }
+                match = this.FindByName(query);
             }
 
             if (match == null)
@@ -424,6 +429,32 @@ namespace com.example.Controls.Wpf.Screens
             // Select the matching department node (fills the list), then highlight the row.
             this.SelectDepartmentNode(match.Department);
             this.SelectEmployeeRow(match.EmployeeId);
+        }
+
+        private EmployeeBrowserRow FindByCode(string code)
+        {
+            foreach (EmployeeBrowserRow row in this.employees)
+            {
+                if (row.EmployeeId == code)
+                {
+                    return row;
+                }
+            }
+
+            return null;
+        }
+
+        private EmployeeBrowserRow FindByName(string name)
+        {
+            foreach (EmployeeBrowserRow row in this.employees)
+            {
+                if (string.Equals(row.Name, name, StringComparison.OrdinalIgnoreCase))
+                {
+                    return row;
+                }
+            }
+
+            return null;
         }
 
         private void SelectDepartmentNode(string department)
