@@ -283,11 +283,7 @@
                             </StackPanel>
                             <StackPanel Width="160" Margin="0,0,12,0">
                                 <TextBlock Text="계산구분" Style="{StaticResource FilterLabelStyle}" />
-                                <ComboBox x:Name="RunTypeCombo" Style="{StaticResource FilterComboStyle}" SelectedIndex="0">
-                                    <ComboBoxItem Content="정기" />
-                                    <ComboBoxItem Content="추가" />
-                                    <ComboBoxItem Content="정산" />
-                                </ComboBox>
+                                <ComboBox x:Name="RunTypeCombo" Style="{StaticResource FilterComboStyle}" SelectedValuePath="Code" />
                             </StackPanel>
                         </WrapPanel>
                         <Button Grid.Column="1"
@@ -637,11 +633,7 @@
                     </StackPanel>
                     <StackPanel Width="180" Margin="0,0,16,16">
                         <TextBlock Text="계산구분 *" Style="{StaticResource FilterLabelStyle}" />
-                        <ComboBox x:Name="NewRunTypeCombo" Style="{StaticResource FilterComboStyle}" SelectedIndex="0">
-                            <ComboBoxItem Content="정기" />
-                            <ComboBoxItem Content="추가" />
-                            <ComboBoxItem Content="정산" />
-                        </ComboBox>
+                        <ComboBox x:Name="NewRunTypeCombo" Style="{StaticResource FilterComboStyle}" SelectedValuePath="Code" />
                     </StackPanel>
                 </WrapPanel>
                 <TextBlock Text="등록 직후 상태는 '준비중'이며, 이후 액션(데이터마감 → 계산실행 …)으로 전이됩니다."

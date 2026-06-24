@@ -42,7 +42,29 @@ namespace com.example.Controls.Wpf.Screens
             this.results = new ObservableCollection<PayrollResultRow>();
             this.currentOrder = OrderReady;
             this.ResultGrid.ItemsSource = this.results;
+            this.PopulateRunTypeCombos();
             this.RefreshForStatus();
+        }
+
+        /// <summary>
+        /// Fills the 계산구분 combos with code (RunType) + label so the selection
+        /// yields a code (REGULAR/ADDITIONAL/SETTLEMENT) while displaying 정기/추가/정산.
+        /// </summary>
+        private void PopulateRunTypeCombos()
+        {
+            this.RunTypeCombo.ItemsSource = this.BuildRunTypeOptions();
+            this.RunTypeCombo.SelectedIndex = 0;
+            this.NewRunTypeCombo.ItemsSource = this.BuildRunTypeOptions();
+            this.NewRunTypeCombo.SelectedIndex = 0;
+        }
+
+        private List<ComboBoxItemModel> BuildRunTypeOptions()
+        {
+            List<ComboBoxItemModel> options = new List<ComboBoxItemModel>();
+            options.Add(new ComboBoxItemModel("REGULAR", "정기"));
+            options.Add(new ComboBoxItemModel("ADDITIONAL", "추가"));
+            options.Add(new ComboBoxItemModel("SETTLEMENT", "정산"));
+            return options;
         }
 
         /// <summary>Exposes the displayed result rows.</summary>
@@ -121,7 +143,8 @@ namespace com.example.Controls.Wpf.Screens
             // Apply the registered condition to the run condition bar and start a
             // fresh cycle in the 준비중(READY) state. (등록 직후 상태 = READY)
             this.PayrollGroupBox.Text = group;
-            this.RunTypeCombo.SelectedIndex = this.NewRunTypeCombo.SelectedIndex;
+            // Sync the registered 계산구분 by its code (RunType), not by index.
+            this.RunTypeCombo.SelectedValue = this.NewRunTypeCombo.SelectedValue;
             this.currentOrder = OrderReady;
             this.results.Clear();
             this.ShowDetail(null);
