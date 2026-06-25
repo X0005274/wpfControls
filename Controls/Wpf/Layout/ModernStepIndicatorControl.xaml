@@ -1,0 +1,24 @@
+<UserControl x:Class="com.example.Controls.Wpf.Layout.ModernStepIndicatorControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             TextOptions.TextFormattingMode="Display"
+             TextOptions.TextRenderingMode="ClearType"
+             UseLayoutRounding="True"
+             x:Name="RootControl"
+             HorizontalAlignment="Left"
+             FontFamily="{DynamicResource Font.Family}"
+             d:DesignWidth="400" d:DesignHeight="32">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!-- 단계 동그라미/선/라벨은 코드에서 만들어 이 패널에 채웁니다. -->
+    <StackPanel x:Name="StepsPanel" Orientation="Horizontal" />
+</UserControl>

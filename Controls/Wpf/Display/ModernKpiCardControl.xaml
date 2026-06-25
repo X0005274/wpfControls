@@ -1,0 +1,41 @@
+<UserControl x:Class="com.example.Controls.Wpf.Display.ModernKpiCardControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             TextOptions.TextFormattingMode="Display"
+             TextOptions.TextRenderingMode="ClearType"
+             UseLayoutRounding="True"
+             x:Name="RootControl"
+             FontFamily="{DynamicResource Font.Family}"
+             d:DesignWidth="200" d:DesignHeight="110">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!-- 대시보드용 숫자 카드: 항목 이름 + 큰 값 + 보조 설명 -->
+    <Border CornerRadius="{StaticResource Radius.Lg}"
+            Background="{StaticResource Brush.Surface}"
+            BorderBrush="{StaticResource Brush.BorderSubtle}"
+            BorderThickness="1"
+            Padding="16">
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock Style="{StaticResource Text.Label}"
+                       Text="{Binding Label, ElementName=RootControl}" />
+            <TextBlock Text="{Binding Value, ElementName=RootControl}"
+                       FontSize="28"
+                       FontWeight="SemiBold"
+                       Margin="0,4,0,0"
+                       Foreground="{StaticResource Brush.TextPrimary}" />
+            <TextBlock x:Name="CaptionText"
+                       Style="{StaticResource Text.Helper}"
+                       Margin="0,2,0,0"
+                       Text="{Binding Caption, ElementName=RootControl}" />
+        </StackPanel>
+    </Border>
+</UserControl>

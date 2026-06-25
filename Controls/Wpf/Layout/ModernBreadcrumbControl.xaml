@@ -1,0 +1,24 @@
+<UserControl x:Class="com.example.Controls.Wpf.Layout.ModernBreadcrumbControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             TextOptions.TextFormattingMode="Display"
+             TextOptions.TextRenderingMode="ClearType"
+             UseLayoutRounding="True"
+             x:Name="RootControl"
+             HorizontalAlignment="Left"
+             FontFamily="{DynamicResource Font.Family}"
+             d:DesignWidth="320" d:DesignHeight="24">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!-- 경로 조각들은 코드에서 만들어 이 패널에 채웁니다. -->
+    <StackPanel x:Name="SegmentsPanel" Orientation="Horizontal" />
+</UserControl>

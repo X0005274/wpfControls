@@ -1,0 +1,33 @@
+<UserControl x:Class="com.example.Controls.Wpf.Display.ModernAvatarControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             TextOptions.TextFormattingMode="Display"
+             TextOptions.TextRenderingMode="ClearType"
+             UseLayoutRounding="True"
+             x:Name="RootControl"
+             HorizontalAlignment="Left"
+             VerticalAlignment="Top"
+             FontFamily="{DynamicResource Font.Family}"
+             d:DesignWidth="40" d:DesignHeight="40">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!-- 원형 배경 + 가운데 이니셜(글자). 크기는 Diameter로 조절합니다. -->
+    <Grid x:Name="AvatarRoot" Width="40" Height="40">
+        <Ellipse Fill="{StaticResource Brush.Accent}" />
+        <TextBlock x:Name="InitialsText"
+                   Text="{Binding Text, ElementName=RootControl}"
+                   Foreground="White"
+                   FontWeight="SemiBold"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" />
+    </Grid>
+</UserControl>

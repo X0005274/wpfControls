@@ -1,0 +1,64 @@
+<UserControl x:Class="com.example.Controls.Wpf.Layout.ModernSegmentedControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             TextOptions.TextFormattingMode="Display"
+             TextOptions.TextRenderingMode="ClearType"
+             UseLayoutRounding="True"
+             x:Name="RootControl"
+             HorizontalAlignment="Left"
+             FontFamily="{DynamicResource Font.Family}"
+             d:DesignWidth="280" d:DesignHeight="36">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- 한 칸(보통) -->
+            <Style x:Key="SegmentButtonStyle" TargetType="Button">
+                <Setter Property="Height" Value="30" />
+                <Setter Property="Padding" Value="14,0" />
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Bg" CornerRadius="{StaticResource Radius.Sm}"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                  Margin="{TemplateBinding Padding}" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bg" Property="Background" Value="{StaticResource Brush.HoverBackground}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- 한 칸(선택됨) -->
+            <Style x:Key="SegmentButtonSelectedStyle" TargetType="Button" BasedOn="{StaticResource SegmentButtonStyle}">
+                <Setter Property="Background" Value="{StaticResource Brush.Surface}" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!-- 회색 바탕 안에 칸들을 나란히 둡니다(칸은 코드에서 생성). -->
+    <Border CornerRadius="{StaticResource Radius.Md}"
+            Background="{StaticResource Brush.SurfaceAlt}"
+            BorderBrush="{StaticResource Brush.BorderSubtle}"
+            BorderThickness="1"
+            Padding="3"
+            HorizontalAlignment="Left">
+        <StackPanel x:Name="SegmentsPanel" Orientation="Horizontal" />
+    </Border>
+</UserControl>

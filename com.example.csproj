@@ -155,6 +155,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\Wpf\Display\ModernDividerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Display\ModernAvatarControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Display\ModernChipControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Display\ModernCardControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Display\ModernKpiCardControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <!-- Data -->
     <Page Include="Controls\Wpf\Data\ModernDataGridControl.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -190,6 +210,26 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Wpf\Layout\ModernScrollSectionControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Layout\ModernPaginationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Layout\ModernBreadcrumbControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Layout\ModernPageHeaderControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Layout\ModernSegmentedControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Layout\ModernStepIndicatorControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -311,6 +351,21 @@
     <Compile Include="Controls\Wpf\Display\ModernDatePickerControl.xaml.cs">
       <DependentUpon>ModernDatePickerControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Wpf\Display\ModernDividerControl.xaml.cs">
+      <DependentUpon>ModernDividerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Display\ModernAvatarControl.xaml.cs">
+      <DependentUpon>ModernAvatarControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Display\ModernChipControl.xaml.cs">
+      <DependentUpon>ModernChipControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Display\ModernCardControl.xaml.cs">
+      <DependentUpon>ModernCardControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Display\ModernKpiCardControl.xaml.cs">
+      <DependentUpon>ModernKpiCardControl.xaml</DependentUpon>
+    </Compile>
     <!-- Data code-behind -->
     <Compile Include="Controls\Wpf\Data\ModernDataGridControl.xaml.cs">
       <DependentUpon>ModernDataGridControl.xaml</DependentUpon>
@@ -339,6 +394,21 @@
     </Compile>
     <Compile Include="Controls\Wpf\Layout\ModernScrollSectionControl.xaml.cs">
       <DependentUpon>ModernScrollSectionControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Layout\ModernPaginationControl.xaml.cs">
+      <DependentUpon>ModernPaginationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Layout\ModernBreadcrumbControl.xaml.cs">
+      <DependentUpon>ModernBreadcrumbControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Layout\ModernPageHeaderControl.xaml.cs">
+      <DependentUpon>ModernPageHeaderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Layout\ModernSegmentedControl.xaml.cs">
+      <DependentUpon>ModernSegmentedControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Layout\ModernStepIndicatorControl.xaml.cs">
+      <DependentUpon>ModernStepIndicatorControl.xaml</DependentUpon>
     </Compile>
     <!-- Feedback code-behind -->
     <Compile Include="Controls\Wpf\Feedback\MessageKind.cs" />

@@ -1,0 +1,70 @@
+using System.Windows;
+using System.Windows.Controls;
+
+namespace com.example.Controls.Wpf.Layout
+{
+    /// <summary>
+    /// 화면 상단 머리글입니다. 왼쪽에 제목/부제목, 오른쪽에 액션 영역(InnerContent)을
+    /// 배치합니다. 오른쪽에는 보통 버튼(예: "신규 등록")을 코드에서 넣습니다.
+    /// </summary>
+    public partial class ModernPageHeaderControl : UserControl
+    {
+        /// <summary>머리글 제목입니다.</summary>
+        public static readonly DependencyProperty TitleProperty =
+            DependencyProperty.Register(
+                "Title", typeof(string), typeof(ModernPageHeaderControl),
+                new PropertyMetadata(string.Empty));
+
+        /// <summary>제목 아래 부제목입니다(비우면 숨김).</summary>
+        public static readonly DependencyProperty SubtitleProperty =
+            DependencyProperty.Register(
+                "Subtitle", typeof(string), typeof(ModernPageHeaderControl),
+                new PropertyMetadata(string.Empty, OnSubtitleChanged));
+
+        /// <summary>오른쪽 액션 영역에 넣을 내용입니다(코드에서 설정).</summary>
+        public static readonly DependencyProperty InnerContentProperty =
+            DependencyProperty.Register(
+                "InnerContent", typeof(object), typeof(ModernPageHeaderControl),
+                new PropertyMetadata(null));
+
+        public ModernPageHeaderControl()
+        {
+            this.InitializeComponent();
+            this.Loaded += (sender, e) => this.UpdateSubtitleVisibility();
+        }
+
+        /// <summary>머리글 제목입니다.</summary>
+        public string Title
+        {
+            get { return (string)this.GetValue(TitleProperty); }
+            set { this.SetValue(TitleProperty, value); }
+        }
+
+        /// <summary>제목 아래 부제목입니다.</summary>
+        public string Subtitle
+        {
+            get { return (string)this.GetValue(SubtitleProperty); }
+            set { this.SetValue(SubtitleProperty, value); }
+        }
+
+        /// <summary>오른쪽 액션 영역에 넣을 내용입니다.</summary>
+        public object InnerContent
+        {
+            get { return this.GetValue(InnerContentProperty); }
+            set { this.SetValue(InnerContentProperty, value); }
+        }
+
+        private static void OnSubtitleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((ModernPageHeaderControl)d).UpdateSubtitleVisibility();
+        }
+
+        private void UpdateSubtitleVisibility()
+        {
+            if (this.SubtitleText != null)
+            {
+                this.SubtitleText.Visibility = string.IsNullOrEmpty(this.Subtitle) ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+    }
+}
