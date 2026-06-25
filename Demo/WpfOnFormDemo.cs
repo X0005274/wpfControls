@@ -80,7 +80,7 @@ namespace com.example.Demo
             this.nameCombo.IsTextSearchEnabled = false;
             this.nameCombo.StaysOpenOnEdit = true;
             this.nameCombo.SelectedValuePath = "Code";
-            this.nameCombo.FontFamily = new System.Windows.Media.FontFamily("Segoe UI");
+            this.nameCombo.FontFamily = (this.styles["Font.Family"] as System.Windows.Media.FontFamily);
             this.nameCombo.AddHandler(
                 System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent,
                 new System.Windows.Controls.TextChangedEventHandler(this.NameCombo_TextChanged));
@@ -91,7 +91,7 @@ namespace com.example.Demo
             this.searchButton = new System.Windows.Controls.Button();
             this.searchButton.Style = this.styles["Browser.PrimaryButton"] as System.Windows.Style;
             this.searchButton.Content = "조회";
-            this.searchButton.FontFamily = new System.Windows.Media.FontFamily("Segoe UI");
+            this.searchButton.FontFamily = (this.styles["Font.Family"] as System.Windows.Media.FontFamily);
             this.searchButton.Click += this.SearchButton_Click;
             this.searchButtonHost.Child = this.searchButton;
 
@@ -99,7 +99,7 @@ namespace com.example.Demo
             this.deptTree = new System.Windows.Controls.TreeView();
             this.deptTree.BorderThickness = new System.Windows.Thickness(0);
             this.deptTree.Background = System.Windows.Media.Brushes.Transparent;
-            this.deptTree.FontFamily = new System.Windows.Media.FontFamily("Segoe UI");
+            this.deptTree.FontFamily = (this.styles["Font.Family"] as System.Windows.Media.FontFamily);
             this.deptTree.ItemContainerStyle = this.styles["Browser.TreeItem"] as System.Windows.Style;
             this.deptTree.SelectedItemChanged += this.DeptTree_SelectedItemChanged;
             this.treeHost.Child = this.BuildCard("부서", this.deptTree);
@@ -112,7 +112,7 @@ namespace com.example.Demo
             this.grid.CanUserAddRows = false;
             this.grid.CanUserDeleteRows = false;
             this.grid.CanUserResizeRows = false;
-            this.grid.FontFamily = new System.Windows.Media.FontFamily("Segoe UI");
+            this.grid.FontFamily = (this.styles["Font.Family"] as System.Windows.Media.FontFamily);
             this.grid.SelectionMode = System.Windows.Controls.DataGridSelectionMode.Single;
             this.grid.SelectionUnit = System.Windows.Controls.DataGridSelectionUnit.FullRow;
             this.grid.GridLinesVisibility = System.Windows.Controls.DataGridGridLinesVisibility.Horizontal;

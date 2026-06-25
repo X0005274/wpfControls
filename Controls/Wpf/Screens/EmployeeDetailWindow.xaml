@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d"
         x:Name="RootWindow"
-        FontFamily="Segoe UI"
+        FontFamily="{StaticResource Font.Family}"
         Title="사원 상세"
         Width="460" Height="520"
         ResizeMode="NoResize"

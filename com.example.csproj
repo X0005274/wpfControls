@@ -306,5 +306,12 @@
     <!-- Properties -->
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <!-- Embedded UI fonts (본고딕 / Noto Sans KR). Wildcard: drop static .otf/.ttf
+         weight files into Assets\Fonts and they are embedded as resources.
+         Do NOT use variable fonts — WPF on .NET 4.8 ignores their weight axis. -->
+    <Resource Include="Assets\Fonts\*.otf" />
+    <Resource Include="Assets\Fonts\*.ttf" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

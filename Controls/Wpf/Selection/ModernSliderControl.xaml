@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              x:Name="RootControl"
-             FontFamily="Segoe UI"
+             FontFamily="{StaticResource Font.Family}"
              d:DesignWidth="320">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -116,7 +116,7 @@
             <TextBlock Style="{StaticResource Text.Label}"
                        HorizontalAlignment="Left"
                        Text="{Binding Title, ElementName=RootControl}" />
-            <TextBlock FontFamily="Segoe UI"
+            <TextBlock FontFamily="{StaticResource Font.Family}"
                        FontSize="13"
                        FontWeight="SemiBold"
                        Foreground="{StaticResource Brush.Accent}"
