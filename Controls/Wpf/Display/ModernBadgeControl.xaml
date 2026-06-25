@@ -4,8 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
+             TextOptions.TextFormattingMode="Display"
+             TextOptions.TextRenderingMode="ClearType"
+             UseLayoutRounding="True"
              x:Name="RootControl"
-             FontFamily="pack://application:,,,/com.example;component/Assets/Fonts/#Noto Sans KR, Segoe UI, Malgun Gothic"
+             FontFamily="pack://application:,,,/com.example;component/Assets/Fonts/#Pretendard, Segoe UI, Malgun Gothic"
              HorizontalAlignment="Left"
              VerticalAlignment="Center">
     <Border x:Name="BadgeBorder"

@@ -61,11 +61,11 @@
     <Color x:Key="Color.Accent">#FF2563EB</Color>
     <Color x:Key="Color.TrackOff">#FFC8CDD6</Color>
 
-    <!-- 3. Typography (본고딕 / Noto Sans KR — embedded as an assembly resource so
-         it renders even where the font is not installed system-wide. The pack URI
-         points at the static font files under Assets\Fonts; Segoe UI / Malgun Gothic
-         stay as fallbacks if the resource ever fails to load. -->
-    <FontFamily x:Key="Font.Family">pack://application:,,,/com.example;component/Assets/Fonts/#Noto Sans KR, Segoe UI, Malgun Gothic</FontFamily>
+    <!-- 3. Typography (Pretendard — embedded as an assembly resource so it renders
+         even where the font is not installed system-wide. The pack URI points at the
+         static font files under Assets\Fonts; Segoe UI / Malgun Gothic stay as
+         fallbacks if the resource ever fails to load. -->
+    <FontFamily x:Key="Font.Family">pack://application:,,,/com.example;component/Assets/Fonts/#Pretendard, Segoe UI, Malgun Gothic</FontFamily>
     <Style x:Key="Text.Title" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource Font.Family}" />
         <Setter Property="FontSize" Value="15" />
