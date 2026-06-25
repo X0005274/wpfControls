@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  com.example.Messaging.Rendezvous
+  ─────────────────────────────────────────────────────────────────────────────
+  TIBCO Rendezvous(RV)로 서버 Method를 Request/Reply 하는 통신 라이브러리입니다.
+  접속 정보는 Service / Network / Daemon, 메시지 주소는 Subject 로 지정합니다.
+
+  [중요] 이 프로젝트는 TIBCO Rendezvous .NET 어셈블리(TIBCO.Rendezvous.dll)가
+  설치된 PC에서만 빌드됩니다. 아래 환경변수가 필요합니다:
+     TIBRV_HOME = TIBCO RV 설치 폴더 (예: C:\TIBCO\tibrv\8.6)
+  그러면 $(TIBRV_HOME)\bin\TIBCO.Rendezvous.dll 을 참조합니다.
+  RV 미설치 PC에서는 이 프로젝트를 "언로드"해 두면 나머지 솔루션 빌드에 영향이 없습니다.
+-->
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D5F8B2C3-4E6A-4B7C-9D0E-1F2A3B4C5D6E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>com.example.Messaging.Rendezvous</RootNamespace>
+    <AssemblyName>com.example.Messaging.Rendezvous</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <LangVersion>7.3</LangVersion>
+    <!-- TIBCO RV .NET 어셈블리 경로(환경변수 TIBRV_HOME 기반). 필요 시 직접 경로로 바꿔도 됩니다. -->
+    <TibrvAssembly>$(TIBRV_HOME)\bin\TIBCO.Rendezvous.dll</TibrvAssembly>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <!-- TIBCO Rendezvous .NET API. CopyLocal=false: RV 런타임은 PC에 설치돼 있어야 합니다. -->
+    <Reference Include="TIBCO.Rendezvous">
+      <HintPath>$(TibrvAssembly)</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="**\*.cs" Exclude="obj\**\*.cs;bin\**\*.cs" />
+  </ItemGroup>
+  <!-- TIBCO 어셈블리가 없으면 빌드 초기에 한글 안내와 함께 멈춥니다. -->
+  <Target Name="CheckTibrv" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="!Exists('$(TibrvAssembly)')"
+           Text="TIBCO.Rendezvous.dll 을 찾을 수 없습니다. 환경변수 TIBRV_HOME 을 TIBCO RV 설치 폴더로 설정하거나, csproj의 &lt;TibrvAssembly&gt; 경로를 수정하세요. 현재 경로: $(TibrvAssembly)" />
+  </Target>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

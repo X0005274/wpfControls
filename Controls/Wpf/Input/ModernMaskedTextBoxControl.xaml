@@ -1,0 +1,64 @@
+<UserControl x:Class="com.example.Controls.Wpf.Input.ModernMaskedTextBoxControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             TextOptions.TextFormattingMode="Display"
+             TextOptions.TextRenderingMode="ClearType"
+             UseLayoutRounding="True"
+             x:Name="RootControl"
+             FontFamily="{DynamicResource Font.Family}"
+             d:DesignWidth="320">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <!-- 제목 줄(필수 표시 * 포함) -->
+        <StackPanel Orientation="Horizontal" Margin="{StaticResource Gap.Label}">
+            <TextBlock x:Name="TitleText"
+                       Style="{StaticResource Text.Label}"
+                       Text="{Binding Title, ElementName=RootControl}" />
+            <TextBlock x:Name="RequiredMark"
+                       Text="*"
+                       FontFamily="{DynamicResource Font.Family}"
+                       FontSize="12"
+                       FontWeight="Medium"
+                       Foreground="{StaticResource Brush.ErrorBorder}"
+                       Margin="3,0,0,0" />
+        </StackPanel>
+
+        <!-- 입력 박스 -->
+        <Border BorderBrush="{StaticResource Brush.Border}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource Radius.Md}"
+                Background="{StaticResource Brush.Surface}"
+                Height="{StaticResource Size.ControlHeight}">
+            <Grid>
+                <!-- 안내 문구(값이 비었을 때만 보임) -->
+                <TextBlock x:Name="Placeholder"
+                           Text="{Binding PlaceholderText, ElementName=RootControl}"
+                           Foreground="{StaticResource Brush.TextPlaceholder}"
+                           FontSize="13"
+                           IsHitTestVisible="False"
+                           VerticalAlignment="Center"
+                           Margin="12,0" />
+                <TextBox x:Name="InnerTextBox"
+                         VerticalContentAlignment="Center"
+                         Padding="12,0"
+                         BorderThickness="0"
+                         Background="Transparent"
+                         FontSize="13"
+                         Foreground="{StaticResource Brush.TextPrimary}"
+                         IsEnabled="{Binding IsEditorEnabled, ElementName=RootControl}"
+                         PreviewTextInput="InnerTextBox_PreviewTextInput"
+                         TextChanged="InnerTextBox_TextChanged" />
+            </Grid>
+        </Border>
+    </StackPanel>
+</UserControl>

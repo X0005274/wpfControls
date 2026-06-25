@@ -1,0 +1,55 @@
+<UserControl x:Class="com.example.Controls.Wpf.Input.ModernDateTimePickerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             TextOptions.TextFormattingMode="Display"
+             TextOptions.TextRenderingMode="ClearType"
+             UseLayoutRounding="True"
+             x:Name="RootControl"
+             FontFamily="{DynamicResource Font.Family}"
+             d:DesignWidth="340">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="{StaticResource Gap.Label}">
+            <TextBlock x:Name="TitleText"
+                       Style="{StaticResource Text.Label}"
+                       Text="{Binding Title, ElementName=RootControl}" />
+            <TextBlock x:Name="RequiredMark"
+                       Text="*"
+                       FontFamily="{DynamicResource Font.Family}"
+                       FontSize="12" FontWeight="Medium"
+                       Foreground="{StaticResource Brush.ErrorBorder}"
+                       Margin="3,0,0,0" />
+        </StackPanel>
+
+        <!-- 날짜 선택 + 시 : 분 -->
+        <StackPanel Orientation="Horizontal">
+            <DatePicker x:Name="InnerDatePicker"
+                        Width="150"
+                        Height="{StaticResource Size.ControlHeight}"
+                        VerticalContentAlignment="Center"
+                        FontSize="13"
+                        IsEnabled="{Binding IsEditorEnabled, ElementName=RootControl}"
+                        SelectedDateChanged="OnPartChanged" />
+            <ComboBox x:Name="HourCombo" Width="60" Margin="8,0,0,0"
+                      Height="{StaticResource Size.ControlHeight}" FontSize="13"
+                      IsEnabled="{Binding IsEditorEnabled, ElementName=RootControl}"
+                      SelectionChanged="OnPartChanged" />
+            <TextBlock Text=":" VerticalAlignment="Center" Margin="6,0"
+                       FontSize="14" Foreground="{StaticResource Brush.TextSecondary}" />
+            <ComboBox x:Name="MinuteCombo" Width="60"
+                      Height="{StaticResource Size.ControlHeight}" FontSize="13"
+                      IsEnabled="{Binding IsEditorEnabled, ElementName=RootControl}"
+                      SelectionChanged="OnPartChanged" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

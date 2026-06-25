@@ -77,6 +77,34 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\Wpf\Input\ModernButtonControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Input\ModernNumericUpDownControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Input\ModernMaskedTextBoxControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Input\ModernCurrencyBoxControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Input\ModernDateTimePickerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Input\ModernTimePickerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Input\ModernFilePickerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <!-- Selection -->
     <Page Include="Controls\Wpf\Selection\ModernComboBoxControl.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -203,6 +231,28 @@
     </Compile>
     <Compile Include="Controls\Wpf\Input\ModernSearchBoxControl.xaml.cs">
       <DependentUpon>ModernSearchBoxControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Input\ButtonKind.cs" />
+    <Compile Include="Controls\Wpf\Input\ModernButtonControl.xaml.cs">
+      <DependentUpon>ModernButtonControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Input\ModernNumericUpDownControl.xaml.cs">
+      <DependentUpon>ModernNumericUpDownControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Input\ModernMaskedTextBoxControl.xaml.cs">
+      <DependentUpon>ModernMaskedTextBoxControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Input\ModernCurrencyBoxControl.xaml.cs">
+      <DependentUpon>ModernCurrencyBoxControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Input\ModernDateTimePickerControl.xaml.cs">
+      <DependentUpon>ModernDateTimePickerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Input\ModernTimePickerControl.xaml.cs">
+      <DependentUpon>ModernTimePickerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Input\ModernFilePickerControl.xaml.cs">
+      <DependentUpon>ModernFilePickerControl.xaml</DependentUpon>
     </Compile>
     <!-- Selection code-behind -->
     <Compile Include="Controls\Wpf\Selection\ComboBoxFilterMode.cs" />

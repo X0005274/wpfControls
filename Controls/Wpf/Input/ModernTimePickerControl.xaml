@@ -1,0 +1,45 @@
+<UserControl x:Class="com.example.Controls.Wpf.Input.ModernTimePickerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             TextOptions.TextFormattingMode="Display"
+             TextOptions.TextRenderingMode="ClearType"
+             UseLayoutRounding="True"
+             x:Name="RootControl"
+             FontFamily="{DynamicResource Font.Family}"
+             d:DesignWidth="200">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <TextBlock x:Name="TitleText"
+                   Style="{StaticResource Text.Label}"
+                   Margin="{StaticResource Gap.Label}"
+                   Text="{Binding Title, ElementName=RootControl}" />
+
+        <!-- 시 : 분 콤보 두 개 -->
+        <StackPanel Orientation="Horizontal">
+            <ComboBox x:Name="HourCombo"
+                      Width="64"
+                      Height="{StaticResource Size.ControlHeight}"
+                      FontSize="13"
+                      IsEnabled="{Binding IsEditorEnabled, ElementName=RootControl}"
+                      SelectionChanged="OnTimePartChanged" />
+            <TextBlock Text=":" VerticalAlignment="Center" Margin="6,0"
+                       FontSize="14" Foreground="{StaticResource Brush.TextSecondary}" />
+            <ComboBox x:Name="MinuteCombo"
+                      Width="64"
+                      Height="{StaticResource Size.ControlHeight}"
+                      FontSize="13"
+                      IsEnabled="{Binding IsEditorEnabled, ElementName=RootControl}"
+                      SelectionChanged="OnTimePartChanged" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>
