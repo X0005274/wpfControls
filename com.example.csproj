@@ -193,6 +193,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <!-- Feedback (toast / loading / dialog) -->
+    <Page Include="Controls\Wpf\Feedback\ModernSpinnerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Feedback\ModernLoadingPanelControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Feedback\ModernDialogWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Wpf\Feedback\ModernToastWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\Wpf\Screens\EmployeeManagementScreen.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -323,6 +340,23 @@
     <Compile Include="Controls\Wpf\Layout\ModernScrollSectionControl.xaml.cs">
       <DependentUpon>ModernScrollSectionControl.xaml</DependentUpon>
     </Compile>
+    <!-- Feedback code-behind -->
+    <Compile Include="Controls\Wpf\Feedback\MessageKind.cs" />
+    <Compile Include="Controls\Wpf\Feedback\ModernSpinnerControl.xaml.cs">
+      <DependentUpon>ModernSpinnerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Feedback\ModernLoadingPanelControl.xaml.cs">
+      <DependentUpon>ModernLoadingPanelControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Feedback\LoadingOverlay.cs" />
+    <Compile Include="Controls\Wpf\Feedback\ModernDialogWindow.xaml.cs">
+      <DependentUpon>ModernDialogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Feedback\ModernDialog.cs" />
+    <Compile Include="Controls\Wpf\Feedback\ModernToastWindow.xaml.cs">
+      <DependentUpon>ModernToastWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Wpf\Feedback\ModernToast.cs" />
     <!-- Screens -->
     <Compile Include="Controls\Wpf\Screens\EmployeeManagementScreen.xaml.cs">
       <DependentUpon>EmployeeManagementScreen.xaml</DependentUpon>

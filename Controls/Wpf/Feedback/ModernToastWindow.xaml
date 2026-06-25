@@ -1,0 +1,44 @@
+<Window x:Class="com.example.Controls.Wpf.Feedback.ModernToastWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        UseLayoutRounding="True"
+        FontFamily="{DynamicResource Font.Family}"
+        Title="알림"
+        SizeToContent="WidthAndHeight"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ShowActivated="False"
+        ShowInTaskbar="False"
+        Topmost="True"
+        Opacity="0">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <!-- 둥근 색 막대 + 흰 글자. 색은 종류에 따라 코드에서 바꿉니다. -->
+    <Border x:Name="ToastBorder"
+            CornerRadius="{StaticResource Radius.Md}"
+            Background="{StaticResource Brush.Accent}"
+            Effect="{StaticResource Shadow.Popup}"
+            Margin="12"
+            MinWidth="220" MaxWidth="380">
+        <TextBlock x:Name="MessageText"
+                   Text=""
+                   Margin="16,12"
+                   FontSize="13"
+                   FontWeight="Medium"
+                   TextWrapping="Wrap"
+                   Foreground="White" />
+    </Border>
+</Window>
