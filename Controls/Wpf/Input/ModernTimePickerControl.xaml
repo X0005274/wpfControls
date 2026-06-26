@@ -29,15 +29,15 @@
             <ComboBox x:Name="HourCombo"
                       Width="64"
                       Height="{StaticResource Size.ControlHeight}"
-                      FontSize="13"
+                      FontSize="{StaticResource Font.Size.Body}"
                       IsEnabled="{Binding IsEditorEnabled, ElementName=RootControl}"
                       SelectionChanged="OnTimePartChanged" />
             <TextBlock Text=":" VerticalAlignment="Center" Margin="6,0"
-                       FontSize="14" Foreground="{StaticResource Brush.TextSecondary}" />
+                       FontSize="{StaticResource Font.Size.BodyLg}" Foreground="{StaticResource Brush.TextSecondary}" />
             <ComboBox x:Name="MinuteCombo"
                       Width="64"
                       Height="{StaticResource Size.ControlHeight}"
-                      FontSize="13"
+                      FontSize="{StaticResource Font.Size.Body}"
                       IsEnabled="{Binding IsEditorEnabled, ElementName=RootControl}"
                       SelectionChanged="OnTimePartChanged" />
         </StackPanel>

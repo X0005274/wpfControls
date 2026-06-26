@@ -8,19 +8,26 @@
              TextOptions.TextRenderingMode="ClearType"
              UseLayoutRounding="True"
              x:Name="RootControl"
-             FontFamily="pack://application:,,,/com.example;component/Assets/Fonts/#Pretendard, Segoe UI, Malgun Gothic"
+             FontFamily="{DynamicResource Font.Family}"
              HorizontalAlignment="Left"
              VerticalAlignment="Center">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Border x:Name="BadgeBorder"
             CornerRadius="10"
-            Background="#FFEFF6FF"
+            Background="{StaticResource Brush.NeutralBackground}"
             Padding="10,3"
             HorizontalAlignment="Left">
         <TextBlock x:Name="BadgeTextBlock"
                    Text="{Binding BadgeText, ElementName=RootControl}"
-                   FontSize="11"
+                   FontSize="{StaticResource Font.Size.Helper}"
                    FontWeight="SemiBold"
-                   Foreground="#FF1D4ED8"
+                   Foreground="{StaticResource Brush.NeutralText}"
                    VerticalAlignment="Center" />
     </Border>
 

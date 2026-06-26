@@ -222,10 +222,10 @@ namespace com.example.Controls.Wpf.Screens
 
             this.DetailName.Text = item.NameWithId;
             this.DetailType.Text = item.TypeLabel;
-            this.DetailSeverityText.Text = item.SeverityLabel;
-            this.DetailSeverityBadge.Tag = item.SeverityTone;
-            this.DetailStatusText.Text = item.StatusLabel;
-            this.DetailStatusBadge.Tag = item.StatusTone;
+            this.DetailSeverityBadge.BadgeText = item.SeverityLabel;
+            this.DetailSeverityBadge.BadgeType = item.SeverityTone;
+            this.DetailStatusBadge.BadgeText = item.StatusLabel;
+            this.DetailStatusBadge.BadgeType = item.StatusTone;
             this.DetailReason.Text = item.Reason;
             this.DetailBefore.Text = item.BeforeValue;
             this.DetailAfter.Text = item.AfterValue;

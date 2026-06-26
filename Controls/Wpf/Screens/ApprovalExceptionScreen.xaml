@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:display="clr-namespace:com.example.Controls.Wpf.Display"
              mc:Ignorable="d"
              TextOptions.TextFormattingMode="Display"
              TextOptions.TextRenderingMode="ClearType"
@@ -121,34 +122,6 @@
                 <Setter Property="Margin" Value="0,0,0,12" />
             </Style>
 
-            <!-- Status / severity badge. Tone is set via Tag; child text inherits
-                 colour through TextElement.Foreground. -->
-            <Style x:Key="BadgeStyle" TargetType="Border">
-                <Setter Property="CornerRadius" Value="{StaticResource Radius.Sm}" />
-                <Setter Property="Padding" Value="8,2" />
-                <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="Background" Value="{StaticResource Brush.HeaderBackground}" />
-                <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.TextSecondary}" />
-                <Style.Triggers>
-                    <Trigger Property="Tag" Value="info">
-                        <Setter Property="Background" Value="{StaticResource Brush.InfoBackground}" />
-                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.Accent}" />
-                    </Trigger>
-                    <Trigger Property="Tag" Value="success">
-                        <Setter Property="Background" Value="{StaticResource Brush.SuccessBackground}" />
-                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.Success}" />
-                    </Trigger>
-                    <Trigger Property="Tag" Value="warning">
-                        <Setter Property="Background" Value="{StaticResource Brush.WarningBackground}" />
-                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.Warning}" />
-                    </Trigger>
-                    <Trigger Property="Tag" Value="danger">
-                        <Setter Property="Background" Value="{StaticResource Brush.ErrorBackground}" />
-                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.ErrorBorder}" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-
             <!-- Exception list item container: selectable card -->
             <Style x:Key="ExceptionItemStyle" TargetType="ListBoxItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -254,7 +227,7 @@
             <TextBlock Grid.Column="0"
                        Text="승인·예외처리"
                        VerticalAlignment="Center"
-                       FontSize="22"
+                       FontSize="{StaticResource Font.Size.PageTitle}"
                        FontWeight="SemiBold"
                        Foreground="{StaticResource Brush.TextPrimary}" />
             <Button Grid.Column="1"
@@ -377,18 +350,15 @@
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Grid.Column="0"
                                                        Text="{Binding NameWithId}"
-                                                       FontSize="13"
+                                                       FontSize="{StaticResource Font.Size.Body}"
                                                        FontWeight="SemiBold"
                                                        Foreground="{StaticResource Brush.TextPrimary}"
                                                        VerticalAlignment="Center"
                                                        TextTrimming="CharacterEllipsis" />
-                                            <Border Grid.Column="1"
-                                                    Style="{StaticResource BadgeStyle}"
-                                                    Tag="{Binding SeverityTone}">
-                                                <TextBlock Text="{Binding SeverityLabel}"
-                                                           FontSize="11"
-                                                           FontWeight="Medium" />
-                                            </Border>
+                                            <display:ModernBadgeControl Grid.Column="1"
+                                                    BadgeText="{Binding SeverityLabel}"
+                                                    BadgeType="{Binding SeverityTone}"
+                                                    VerticalAlignment="Center" />
                                         </Grid>
                                         <Grid Margin="0,8,0,0">
                                             <Grid.ColumnDefinitions>
@@ -397,17 +367,14 @@
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Grid.Column="0"
                                                        Text="{Binding TypeLabel}"
-                                                       FontSize="12"
+                                                       FontSize="{StaticResource Font.Size.Label}"
                                                        Foreground="{StaticResource Brush.TextSecondary}"
                                                        VerticalAlignment="Center"
                                                        TextTrimming="CharacterEllipsis" />
-                                            <Border Grid.Column="1"
-                                                    Style="{StaticResource BadgeStyle}"
-                                                    Tag="{Binding StatusTone}">
-                                                <TextBlock Text="{Binding StatusLabel}"
-                                                           FontSize="11"
-                                                           FontWeight="Medium" />
-                                            </Border>
+                                            <display:ModernBadgeControl Grid.Column="1"
+                                                    BadgeText="{Binding StatusLabel}"
+                                                    BadgeType="{Binding StatusTone}"
+                                                    VerticalAlignment="Center" />
                                         </Grid>
                                     </StackPanel>
                                 </DataTemplate>
@@ -419,7 +386,7 @@
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Top"
                                    Margin="0,24,0,0"
-                                   FontSize="13"
+                                   FontSize="{StaticResource Font.Size.Body}"
                                    Foreground="{StaticResource Brush.TextSecondary}" />
                     </Grid>
                 </DockPanel>
@@ -441,12 +408,12 @@
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center">
                         <TextBlock Text="예외를 선택하세요."
-                                   FontSize="14"
+                                   FontSize="{StaticResource Font.Size.BodyLg}"
                                    FontWeight="SemiBold"
                                    HorizontalAlignment="Center"
                                    Foreground="{StaticResource Brush.TextPrimary}" />
                         <TextBlock Text="좌측 목록에서 처리할 예외를 선택하면 상세가 표시됩니다."
-                                   FontSize="12"
+                                   FontSize="{StaticResource Font.Size.Label}"
                                    Margin="0,6,0,0"
                                    TextWrapping="Wrap"
                                    TextAlignment="Center"
@@ -465,21 +432,17 @@
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                                     <TextBlock x:Name="DetailName"
-                                               FontSize="15"
+                                               FontSize="{StaticResource Font.Size.Title}"
                                                FontWeight="SemiBold"
                                                Foreground="{StaticResource Brush.TextPrimary}" />
                                     <TextBlock x:Name="DetailType"
-                                               FontSize="12"
+                                               FontSize="{StaticResource Font.Size.Label}"
                                                Margin="0,2,0,0"
                                                Foreground="{StaticResource Brush.TextSecondary}" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Border x:Name="DetailSeverityBadge" Style="{StaticResource BadgeStyle}">
-                                        <TextBlock x:Name="DetailSeverityText" FontSize="11" FontWeight="Medium" />
-                                    </Border>
-                                    <Border x:Name="DetailStatusBadge" Style="{StaticResource BadgeStyle}" Margin="6,0,0,0">
-                                        <TextBlock x:Name="DetailStatusText" FontSize="11" FontWeight="Medium" />
-                                    </Border>
+                                    <display:ModernBadgeControl x:Name="DetailSeverityBadge" VerticalAlignment="Center" />
+                                    <display:ModernBadgeControl x:Name="DetailStatusBadge" Margin="6,0,0,0" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Grid>
 
@@ -554,7 +517,7 @@
                                  Height="72"
                                  Margin="0,0,0,12"
                                  Padding="10,8"
-                                 FontSize="13"
+                                 FontSize="{StaticResource Font.Size.Body}"
                                  TextWrapping="Wrap"
                                  AcceptsReturn="True"
                                  VerticalScrollBarVisibility="Auto"

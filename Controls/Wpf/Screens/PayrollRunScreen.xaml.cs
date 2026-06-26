@@ -268,8 +268,8 @@ namespace com.example.Controls.Wpf.Screens
         private void RefreshForStatus()
         {
             // Current-status badge.
-            this.CurrentStatusText.Text = this.StatusLabel(this.currentOrder);
-            this.CurrentStatusBadge.Tag = this.currentOrder == OrderFinalized ? "success" : "info";
+            this.CurrentStatusBadge.BadgeText = this.StatusLabel(this.currentOrder);
+            this.CurrentStatusBadge.BadgeType = this.currentOrder == OrderFinalized ? "success" : "info";
 
             // Progress steps.
             this.SetStep(this.Step1Dot, this.Step1Label, this.currentOrder >= OrderInputClosed);

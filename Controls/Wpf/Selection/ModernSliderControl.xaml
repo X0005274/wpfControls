@@ -120,7 +120,7 @@
                        HorizontalAlignment="Left"
                        Text="{Binding Title, ElementName=RootControl}" />
             <TextBlock FontFamily="{DynamicResource Font.Family}"
-                       FontSize="13"
+                       FontSize="{StaticResource Font.Size.Body}"
                        FontWeight="SemiBold"
                        Foreground="{StaticResource Brush.Accent}"
                        HorizontalAlignment="Right"

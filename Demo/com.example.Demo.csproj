@@ -13,6 +13,7 @@
     <Deterministic>true</Deterministic>
     <LangVersion>7.3</LangVersion>
     <StartupObject>com.example.Demo.Program</StartupObject>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,24 +49,44 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="DemoForm.cs">
+    <Compile Include="LotSearchHostForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WpfOnFormDemo.cs">
+    <Compile Include="LotSearchHostForm.Designer.cs">
+      <DependentUpon>LotSearchHostForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ButtonSwapDemoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WpfOnFormDemo.Designer.cs">
-      <DependentUpon>WpfOnFormDemo.cs</DependentUpon>
+    <Compile Include="ButtonSwapDemoForm.Designer.cs">
+      <DependentUpon>ButtonSwapDemoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GalleryBuilder.cs" />
-    <Compile Include="DemoRow.cs" />
+    <Compile Include="LotGridRow.cs" />
+    <Compile Include="LotReceiveForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LotReceiveForm.Designer.cs">
+      <DependentUpon>LotReceiveForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\com.example.csproj">
       <Project>{8F2A1C3D-4B5E-4789-ABCD-1234567890AB}</Project>
       <Name>com.example</Name>
     </ProjectReference>
+    <ProjectReference Include="..\com.example.WinForms.Controls\com.example.WinForms.Controls.csproj">
+      <Project>{C4E7A1B2-3D5F-4A6B-8C9D-0E1F2A3B4C5D}</Project>
+      <Name>com.example.WinForms.Controls</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ButtonSwapDemoForm.resx">
+      <DependentUpon>ButtonSwapDemoForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -96,7 +96,7 @@
                     <TextBlock x:Name="PlaceholderLabel"
                                Text="{Binding PlaceholderText, ElementName=RootControl}"
                                Foreground="{StaticResource Brush.TextPlaceholder}"
-                               FontSize="13"
+                               FontSize="{StaticResource Font.Size.Body}"
                                VerticalAlignment="Center"
                                IsHitTestVisible="False">
                         <TextBlock.Style>
@@ -113,7 +113,7 @@
                     <TextBox x:Name="InnerTextBox"
                              BorderThickness="0"
                              Background="Transparent"
-                             FontSize="13"
+                             FontSize="{StaticResource Font.Size.Body}"
                              Foreground="{StaticResource Brush.TextPrimary}"
                              CaretBrush="{StaticResource Brush.TextPrimary}"
                              VerticalContentAlignment="Center"

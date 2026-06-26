@@ -234,7 +234,7 @@
                        Text="직원관리"
                        VerticalAlignment="Center"
                        FontFamily="{DynamicResource Font.Family}"
-                       FontSize="22"
+                       FontSize="{StaticResource Font.Size.PageTitle}"
                        FontWeight="SemiBold"
                        Foreground="{StaticResource Brush.TextPrimary}" />
 
@@ -337,9 +337,9 @@
 
         <!-- 3. Result count -->
         <TextBlock Grid.Row="2" Margin="2,0,0,8">
-            <Run Text="총 " Foreground="{StaticResource Brush.TextSecondary}" FontSize="13" />
-            <Run x:Name="TotalCountRun" Text="0" Foreground="{StaticResource Brush.TextPrimary}" FontSize="13" FontWeight="SemiBold" />
-            <Run Text="명" Foreground="{StaticResource Brush.TextSecondary}" FontSize="13" />
+            <Run Text="총 " Foreground="{StaticResource Brush.TextSecondary}" FontSize="{StaticResource Font.Size.Body}" />
+            <Run x:Name="TotalCountRun" Text="0" Foreground="{StaticResource Brush.TextPrimary}" FontSize="{StaticResource Font.Size.Body}" FontWeight="SemiBold" />
+            <Run Text="명" Foreground="{StaticResource Brush.TextSecondary}" FontSize="{StaticResource Font.Size.Body}" />
         </TextBlock>
 
         <!-- 4. Employee table -->
@@ -395,7 +395,7 @@
                        Text="1 / 1"
                        VerticalAlignment="Center"
                        Margin="16,0"
-                       FontSize="13"
+                       FontSize="{StaticResource Font.Size.Body}"
                        Foreground="{StaticResource Brush.TextSecondary}" />
             <Button x:Name="NextPageButton"
                     Style="{StaticResource GhostButtonStyle}"
@@ -417,7 +417,7 @@
         <TextBlock Grid.Row="0"
                    Text="직원 신규등록"
                    Margin="0,0,0,16"
-                   FontSize="22"
+                   FontSize="{StaticResource Font.Size.PageTitle}"
                    FontWeight="SemiBold"
                    Foreground="{StaticResource Brush.TextPrimary}" />
 
@@ -545,7 +545,7 @@
                                        Text="선택된 파일 없음"
                                        VerticalAlignment="Center"
                                        Margin="12,0,0,0"
-                                       FontSize="13"
+                                       FontSize="{StaticResource Font.Size.Body}"
                                        Foreground="{StaticResource Brush.TextSecondary}" />
                         </Grid>
                     </StackPanel>
@@ -554,7 +554,7 @@
                         <CheckBox x:Name="NewPayrollCheck"
                                   Content="급여대상 포함"
                                   IsChecked="True"
-                                  FontSize="13"
+                                  FontSize="{StaticResource Font.Size.Body}"
                                   Foreground="{StaticResource Brush.TextPrimary}"
                                   Margin="0,0,0,8" />
                     </StackPanel>

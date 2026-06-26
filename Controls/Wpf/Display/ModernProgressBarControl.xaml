@@ -25,7 +25,7 @@
                        Text="{Binding Title, ElementName=RootControl}" />
             <TextBlock x:Name="PercentTextBlock"
                        FontFamily="{DynamicResource Font.Family}"
-                       FontSize="12"
+                       FontSize="{StaticResource Font.Size.Label}"
                        FontWeight="SemiBold"
                        Foreground="{StaticResource Brush.Accent}"
                        HorizontalAlignment="Right"

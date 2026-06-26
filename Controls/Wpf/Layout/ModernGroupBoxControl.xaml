@@ -34,7 +34,7 @@
                     BorderThickness="0,0,0,1"
                     Padding="14,10">
                 <TextBlock Style="{StaticResource Text.Title}"
-                           FontSize="13"
+                           FontSize="{StaticResource Font.Size.Body}"
                            Text="{Binding HeaderText, ElementName=RootControl}" />
             </Border>
 

@@ -20,14 +20,14 @@
     </UserControl.Resources>
 
     <!-- 화면 전체를 살짝 어둡게 덮고, 가운데에 스피너와 안내 문구를 보여 줍니다. -->
-    <Grid Background="#66101828">
+    <Grid Background="{StaticResource Brush.Scrim}">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <feedback:ModernSpinnerControl HorizontalAlignment="Center" />
             <TextBlock x:Name="MessageText"
                        Text="처리 중..."
                        Margin="0,12,0,0"
                        HorizontalAlignment="Center"
-                       FontSize="13"
+                       FontSize="{StaticResource Font.Size.Body}"
                        FontWeight="Medium"
                        Foreground="White" />
         </StackPanel>

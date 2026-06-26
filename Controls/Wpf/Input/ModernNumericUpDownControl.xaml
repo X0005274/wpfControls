@@ -67,7 +67,7 @@
                          Padding="12,0"
                          BorderThickness="0"
                          Background="Transparent"
-                         FontSize="13"
+                         FontSize="{StaticResource Font.Size.Body}"
                          Foreground="{StaticResource Brush.TextPrimary}"
                          IsEnabled="{Binding IsEditorEnabled, ElementName=RootControl}"
                          PreviewTextInput="ValueTextBox_PreviewTextInput"

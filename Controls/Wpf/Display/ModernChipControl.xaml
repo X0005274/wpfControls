@@ -27,7 +27,7 @@
             HorizontalAlignment="Left">
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="{Binding Text, ElementName=RootControl}"
-                       FontSize="12"
+                       FontSize="{StaticResource Font.Size.Label}"
                        FontWeight="Medium"
                        VerticalAlignment="Center"
                        Foreground="{StaticResource Brush.SelectedText}" />
@@ -36,7 +36,7 @@
                     Margin="6,0,0,0"
                     Padding="0"
                     Width="14" Height="14"
-                    FontSize="9"
+                    FontSize="{StaticResource Font.Size.Micro}"
                     Cursor="Hand"
                     BorderThickness="0"
                     Background="Transparent"

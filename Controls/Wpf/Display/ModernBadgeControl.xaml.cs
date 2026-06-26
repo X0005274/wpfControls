@@ -8,6 +8,7 @@ namespace com.example.Controls.Wpf.Display
     /// <summary>
     /// Pill-shaped badge whose background and foreground are determined by
     /// <see cref="BadgeType"/> (Info, Success, Warning, Error, Neutral).
+    /// "Danger" is accepted as an alias for "Error" (common severity vocabulary).
     /// </summary>
     public partial class ModernBadgeControl : UserControl
     {
@@ -63,37 +64,50 @@ namespace com.example.Controls.Wpf.Display
 
             string type = this.BadgeType ?? "Neutral";
 
-            Color background;
-            Color foreground;
+            string backgroundKey;
+            string foregroundKey;
 
             if (string.Equals(type, "Info", StringComparison.OrdinalIgnoreCase))
             {
-                background = (Color)ColorConverter.ConvertFromString("#FFEFF6FF");
-                foreground = (Color)ColorConverter.ConvertFromString("#FF1D4ED8");
+                backgroundKey = "Brush.InfoBackground";
+                foregroundKey = "Brush.InfoText";
             }
             else if (string.Equals(type, "Success", StringComparison.OrdinalIgnoreCase))
             {
-                background = (Color)ColorConverter.ConvertFromString("#FFECFDF3");
-                foreground = (Color)ColorConverter.ConvertFromString("#FF15803D");
+                backgroundKey = "Brush.SuccessBackground";
+                foregroundKey = "Brush.SuccessText";
             }
             else if (string.Equals(type, "Warning", StringComparison.OrdinalIgnoreCase))
             {
-                background = (Color)ColorConverter.ConvertFromString("#FFFFFBEB");
-                foreground = (Color)ColorConverter.ConvertFromString("#FFB45309");
+                backgroundKey = "Brush.WarningBackground";
+                foregroundKey = "Brush.WarningText";
             }
-            else if (string.Equals(type, "Error", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(type, "Error", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(type, "Danger", StringComparison.OrdinalIgnoreCase))
             {
-                background = (Color)ColorConverter.ConvertFromString("#FFFEF2F2");
-                foreground = (Color)ColorConverter.ConvertFromString("#FFB91C1C");
+                backgroundKey = "Brush.ErrorBackground";
+                foregroundKey = "Brush.ErrorText";
             }
             else
             {
-                background = (Color)ColorConverter.ConvertFromString("#FFF3F4F6");
-                foreground = (Color)ColorConverter.ConvertFromString("#FF374151");
+                backgroundKey = "Brush.NeutralBackground";
+                foregroundKey = "Brush.NeutralText";
             }
 
-            this.BadgeBorder.Background = new SolidColorBrush(background);
-            this.BadgeTextBlock.Foreground = new SolidColorBrush(foreground);
+            this.BadgeBorder.Background = this.ResolveBrush(backgroundKey);
+            this.BadgeTextBlock.Foreground = this.ResolveBrush(foregroundKey);
+        }
+
+        private Brush ResolveBrush(string resourceKey)
+        {
+            object resource = this.TryFindResource(resourceKey);
+            SolidColorBrush brush = resource as SolidColorBrush;
+            if (brush != null)
+            {
+                return brush;
+            }
+
+            return Brushes.Transparent;
         }
     }
 }

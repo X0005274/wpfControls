@@ -82,8 +82,8 @@ namespace com.example.Controls.Wpf.Screens
         private void LoadCycleStatus()
         {
             // 승인대기(APPROVAL_REQUESTED) → tone warning.
-            this.CycleStatusText.Text = "승인대기";
-            this.CycleStatusBadge.Tag = "warning";
+            this.CycleStatusBadge.BadgeText = "승인대기";
+            this.CycleStatusBadge.BadgeType = "warning";
             this.LastCalculatedText.Text = "2026-06-23 09:15";
             this.ScheduledPayDateText.Text = "2026-06-25";
         }

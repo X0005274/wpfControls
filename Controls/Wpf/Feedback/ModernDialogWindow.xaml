@@ -92,7 +92,7 @@
                 <TextBlock x:Name="TitleText"
                            Text="알림"
                            Margin="24,20,24,0"
-                           FontSize="16" FontWeight="SemiBold"
+                           FontSize="{StaticResource Font.Size.Subtitle}" FontWeight="SemiBold"
                            Foreground="{StaticResource Brush.TextPrimary}" />
             </Border>
 
@@ -100,7 +100,7 @@
             <TextBlock x:Name="MessageText"
                        Text=""
                        Margin="24,10,24,20"
-                       FontSize="13"
+                       FontSize="{StaticResource Font.Size.Body}"
                        TextWrapping="Wrap"
                        Foreground="{StaticResource Brush.TextSecondary}" />
 

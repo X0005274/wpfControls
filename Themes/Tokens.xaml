@@ -32,9 +32,9 @@
     <SolidColorBrush x:Key="Brush.Surface" Color="#FFFFFFFF" />
     <SolidColorBrush x:Key="Brush.SurfaceAlt" Color="#FFF9FAFB" />
     <SolidColorBrush x:Key="Brush.HeaderBackground" Color="#FFF3F4F6" />
-    <SolidColorBrush x:Key="Brush.Border" Color="#FFC8CDD6" />
+    <SolidColorBrush x:Key="Brush.Border" Color="#FFD1D5DB" />
     <SolidColorBrush x:Key="Brush.BorderSubtle" Color="#FFE5E7EB" />
-    <SolidColorBrush x:Key="Brush.BorderHover" Color="#FF9AA2AE" />
+    <SolidColorBrush x:Key="Brush.BorderHover" Color="#FF9CA3AF" />
     <SolidColorBrush x:Key="Brush.TextPrimary" Color="#FF111827" />
     <SolidColorBrush x:Key="Brush.TextSecondary" Color="#FF6B7280" />
     <SolidColorBrush x:Key="Brush.TextPlaceholder" Color="#FF9CA3AF" />
@@ -42,51 +42,90 @@
     <SolidColorBrush x:Key="Brush.AccentHover" Color="#FF1D4ED8" />
     <SolidColorBrush x:Key="Brush.SelectedBackground" Color="#FFDBEAFE" />
     <SolidColorBrush x:Key="Brush.SelectedText" Color="#FF1E3A8A" />
-    <SolidColorBrush x:Key="Brush.HoverBackground" Color="#FFEEF1F5" />
+    <SolidColorBrush x:Key="Brush.HoverBackground" Color="#FFF3F4F6" />
     <SolidColorBrush x:Key="Brush.FocusBorder" Color="#FF2563EB" />
     <SolidColorBrush x:Key="Brush.FocusRing" Color="#332563EB" />
     <SolidColorBrush x:Key="Brush.DisabledBackground" Color="#FFF3F4F6" />
     <SolidColorBrush x:Key="Brush.DisabledText" Color="#FF9CA3AF" />
     <SolidColorBrush x:Key="Brush.ErrorBorder" Color="#FFDC2626" />
 
-    <!-- Semantic tints (status/badge) -->
+    <!-- Semantic tints (status/badge) — each role is a (background, text) pair so
+         status surfaces stay legible without controls re-deriving their own hex. -->
     <SolidColorBrush x:Key="Brush.InfoBackground" Color="#FFEFF6FF" />
+    <SolidColorBrush x:Key="Brush.InfoBorder" Color="#FFBFDBFE" />
+    <SolidColorBrush x:Key="Brush.InfoText" Color="#FF1D4ED8" />
     <SolidColorBrush x:Key="Brush.Success" Color="#FF16A34A" />
     <SolidColorBrush x:Key="Brush.SuccessBackground" Color="#FFECFDF3" />
+    <SolidColorBrush x:Key="Brush.SuccessText" Color="#FF15803D" />
     <SolidColorBrush x:Key="Brush.Warning" Color="#FFD97706" />
     <SolidColorBrush x:Key="Brush.WarningBackground" Color="#FFFFFBEB" />
+    <SolidColorBrush x:Key="Brush.WarningText" Color="#FFB45309" />
     <SolidColorBrush x:Key="Brush.ErrorBackground" Color="#FFFEF2F2" />
+    <SolidColorBrush x:Key="Brush.ErrorText" Color="#FFB91C1C" />
+    <SolidColorBrush x:Key="Brush.NeutralBackground" Color="#FFF3F4F6" />
+    <SolidColorBrush x:Key="Brush.NeutralText" Color="#FF374151" />
+
+    <!-- Overlay scrim for modal/loading backdrops (dark, semi-transparent). -->
+    <SolidColorBrush x:Key="Brush.Scrim" Color="#66101828" />
+
+    <!-- Matte data surface — a deliberately warm "stone" neutral set, kept
+         separate from the cool-gray core theme so the matte grid keeps its
+         distinct look. Roles mirror the core tokens (surface/border/text/...). -->
+    <SolidColorBrush x:Key="Matte.Surface" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="Matte.RowAlt" Color="#FFFAFAF9" />
+    <SolidColorBrush x:Key="Matte.RowHover" Color="#FFF5F5F4" />
+    <SolidColorBrush x:Key="Matte.HeaderBackground" Color="#FFF2F2F0" />
+    <SolidColorBrush x:Key="Matte.HeaderText" Color="#FF57534E" />
+    <SolidColorBrush x:Key="Matte.Border" Color="#FFE4E4E1" />
+    <SolidColorBrush x:Key="Matte.GridLine" Color="#FFEFEEEB" />
+    <SolidColorBrush x:Key="Matte.Text" Color="#FF44403C" />
+    <SolidColorBrush x:Key="Matte.SelectedBackground" Color="#FFE7E5E4" />
+    <SolidColorBrush x:Key="Matte.SelectedText" Color="#FF1C1917" />
 
     <!-- Raw colors for ColorAnimation targets (animations need Color, not Brush) -->
     <Color x:Key="Color.Accent">#FF2563EB</Color>
-    <Color x:Key="Color.TrackOff">#FFC8CDD6</Color>
+    <Color x:Key="Color.TrackOff">#FFD1D5DB</Color>
 
     <!-- 3. Typography (Pretendard — embedded as an assembly resource so it renders
          even where the font is not installed system-wide. The pack URI points at the
          static font files under Assets\Fonts; Segoe UI / Malgun Gothic stay as
          fallbacks if the resource ever fails to load. -->
-    <FontFamily x:Key="Font.Family">pack://application:,,,/com.example;component/Assets/Fonts/#Pretendard, Segoe UI, Malgun Gothic</FontFamily>
+    <FontFamily x:Key="Font.Family">Segoe UI, Malgun Gothic</FontFamily>
+
+    <!-- Type scale (device-independent sizes). Controls must reference these
+         instead of hardcoding numeric FontSize values. -->
+    <sys:Double x:Key="Font.Size.Micro">9</sys:Double>
+    <sys:Double x:Key="Font.Size.Helper">11</sys:Double>
+    <sys:Double x:Key="Font.Size.Label">12</sys:Double>
+    <sys:Double x:Key="Font.Size.Body">13</sys:Double>
+    <sys:Double x:Key="Font.Size.BodyLg">14</sys:Double>
+    <sys:Double x:Key="Font.Size.Title">15</sys:Double>
+    <sys:Double x:Key="Font.Size.Subtitle">16</sys:Double>
+    <sys:Double x:Key="Font.Size.Heading">20</sys:Double>
+    <sys:Double x:Key="Font.Size.PageTitle">22</sys:Double>
+    <sys:Double x:Key="Font.Size.Display">28</sys:Double>
+
     <Style x:Key="Text.Title" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource Font.Family}" />
-        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontSize" Value="{StaticResource Font.Size.Title}" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
     </Style>
     <Style x:Key="Text.Label" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource Font.Family}" />
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontSize" Value="{StaticResource Font.Size.Label}" />
         <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}" />
     </Style>
     <Style x:Key="Text.Body" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource Font.Family}" />
-        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontSize" Value="{StaticResource Font.Size.Body}" />
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
     </Style>
     <Style x:Key="Text.Helper" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource Font.Family}" />
-        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontSize" Value="{StaticResource Font.Size.Helper}" />
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}" />
         <Setter Property="TextWrapping" Value="Wrap" />

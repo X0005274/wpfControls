@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:display="clr-namespace:com.example.Controls.Wpf.Display"
              mc:Ignorable="d"
              TextOptions.TextFormattingMode="Display"
              TextOptions.TextRenderingMode="ClearType"
@@ -116,33 +117,6 @@
                 <Setter Property="Margin" Value="0,0,0,12" />
             </Style>
 
-            <!-- Status / calc badge -->
-            <Style x:Key="BadgeStyle" TargetType="Border">
-                <Setter Property="CornerRadius" Value="{StaticResource Radius.Sm}" />
-                <Setter Property="Padding" Value="8,2" />
-                <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="HorizontalAlignment" Value="Left" />
-                <Setter Property="Background" Value="{StaticResource Brush.HeaderBackground}" />
-                <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.TextSecondary}" />
-                <Style.Triggers>
-                    <Trigger Property="Tag" Value="info">
-                        <Setter Property="Background" Value="{StaticResource Brush.InfoBackground}" />
-                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.Accent}" />
-                    </Trigger>
-                    <Trigger Property="Tag" Value="success">
-                        <Setter Property="Background" Value="{StaticResource Brush.SuccessBackground}" />
-                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.Success}" />
-                    </Trigger>
-                    <Trigger Property="Tag" Value="warning">
-                        <Setter Property="Background" Value="{StaticResource Brush.WarningBackground}" />
-                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.Warning}" />
-                    </Trigger>
-                    <Trigger Property="Tag" Value="danger">
-                        <Setter Property="Background" Value="{StaticResource Brush.ErrorBackground}" />
-                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.ErrorBorder}" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
 
             <!-- KPI card -->
             <Style x:Key="KpiCardStyle" TargetType="Border">
@@ -254,7 +228,7 @@
             <TextBlock Grid.Column="0"
                        Text="급여계산"
                        VerticalAlignment="Center"
-                       FontSize="22"
+                       FontSize="{StaticResource Font.Size.PageTitle}"
                        FontWeight="SemiBold"
                        Foreground="{StaticResource Brush.TextPrimary}" />
             <Button Grid.Column="1"
@@ -306,36 +280,34 @@
                             <TextBlock Text="현재 상태"
                                        VerticalAlignment="Center"
                                        Margin="0,0,10,0"
-                                       FontSize="12"
+                                       FontSize="{StaticResource Font.Size.Label}"
                                        Foreground="{StaticResource Brush.TextSecondary}" />
-                            <Border x:Name="CurrentStatusBadge" Style="{StaticResource BadgeStyle}">
-                                <TextBlock x:Name="CurrentStatusText" FontSize="12" FontWeight="SemiBold" />
-                            </Border>
+                            <display:ModernBadgeControl x:Name="CurrentStatusBadge" VerticalAlignment="Center" />
                         </StackPanel>
                         <StackPanel x:Name="ProgressSteps" Orientation="Horizontal">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Ellipse x:Name="Step1Dot" Width="12" Height="12" />
-                                <TextBlock x:Name="Step1Label" Text="데이터마감" Margin="6,0,0,0" FontSize="12" VerticalAlignment="Center" />
+                                <TextBlock x:Name="Step1Label" Text="데이터마감" Margin="6,0,0,0" FontSize="{StaticResource Font.Size.Label}" VerticalAlignment="Center" />
                             </StackPanel>
                             <Rectangle Width="28" Height="2" Margin="10,0" VerticalAlignment="Center" Fill="{StaticResource Brush.BorderSubtle}" />
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Ellipse x:Name="Step2Dot" Width="12" Height="12" />
-                                <TextBlock x:Name="Step2Label" Text="계산완료" Margin="6,0,0,0" FontSize="12" VerticalAlignment="Center" />
+                                <TextBlock x:Name="Step2Label" Text="계산완료" Margin="6,0,0,0" FontSize="{StaticResource Font.Size.Label}" VerticalAlignment="Center" />
                             </StackPanel>
                             <Rectangle Width="28" Height="2" Margin="10,0" VerticalAlignment="Center" Fill="{StaticResource Brush.BorderSubtle}" />
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Ellipse x:Name="Step3Dot" Width="12" Height="12" />
-                                <TextBlock x:Name="Step3Label" Text="검토완료" Margin="6,0,0,0" FontSize="12" VerticalAlignment="Center" />
+                                <TextBlock x:Name="Step3Label" Text="검토완료" Margin="6,0,0,0" FontSize="{StaticResource Font.Size.Label}" VerticalAlignment="Center" />
                             </StackPanel>
                             <Rectangle Width="28" Height="2" Margin="10,0" VerticalAlignment="Center" Fill="{StaticResource Brush.BorderSubtle}" />
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Ellipse x:Name="Step4Dot" Width="12" Height="12" />
-                                <TextBlock x:Name="Step4Label" Text="승인요청" Margin="6,0,0,0" FontSize="12" VerticalAlignment="Center" />
+                                <TextBlock x:Name="Step4Label" Text="승인요청" Margin="6,0,0,0" FontSize="{StaticResource Font.Size.Label}" VerticalAlignment="Center" />
                             </StackPanel>
                             <Rectangle Width="28" Height="2" Margin="10,0" VerticalAlignment="Center" Fill="{StaticResource Brush.BorderSubtle}" />
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Ellipse x:Name="Step5Dot" Width="12" Height="12" />
-                                <TextBlock x:Name="Step5Label" Text="마감완료" Margin="6,0,0,0" FontSize="12" VerticalAlignment="Center" />
+                                <TextBlock x:Name="Step5Label" Text="마감완료" Margin="6,0,0,0" FontSize="{StaticResource Font.Size.Label}" VerticalAlignment="Center" />
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
@@ -423,9 +395,7 @@
                                         <DataGridTemplateColumn Header="계산상태" Width="100">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Border Style="{StaticResource BadgeStyle}" Tag="{Binding CalcStatusTone}">
-                                                        <TextBlock Text="{Binding CalcStatusLabel}" FontSize="11" FontWeight="Medium" />
-                                                    </Border>
+                                                    <display:ModernBadgeControl BadgeText="{Binding CalcStatusLabel}" BadgeType="{Binding CalcStatusTone}" VerticalAlignment="Center" />
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
@@ -437,7 +407,7 @@
                                        Visibility="Collapsed"
                                        HorizontalAlignment="Center"
                                        Margin="0,40,0,40"
-                                       FontSize="13"
+                                       FontSize="{StaticResource Font.Size.Body}"
                                        Foreground="{StaticResource Brush.TextSecondary}" />
                         </Grid>
                     </StackPanel>
@@ -452,7 +422,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="급여 명세 (항목별 내역)" VerticalAlignment="Center"
-                                       FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextPrimary}" />
+                                       FontSize="{StaticResource Font.Size.BodyLg}" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextPrimary}" />
                             <StackPanel Grid.Column="1" Orientation="Horizontal">
                                 <Button x:Name="PdfButton"
                                         Style="{StaticResource GhostButtonStyle}"
@@ -472,12 +442,12 @@
 
                         <TextBlock x:Name="DetailHint"
                                    Text="결과 행을 선택하면 지급/공제 항목별 내역(4대보험·세금 포함)이 표시됩니다."
-                                   FontSize="13"
+                                   FontSize="{StaticResource Font.Size.Body}"
                                    Foreground="{StaticResource Brush.TextSecondary}" />
 
                         <StackPanel x:Name="DetailPanel" Visibility="Collapsed">
                             <TextBlock x:Name="DetailSubjectText"
-                                       FontSize="14"
+                                       FontSize="{StaticResource Font.Size.BodyLg}"
                                        FontWeight="SemiBold"
                                        Margin="0,0,0,12"
                                        Foreground="{StaticResource Brush.TextPrimary}" />
@@ -498,8 +468,8 @@
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" Text="지급 항목" Padding="12,8" FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextSecondary}" />
-                                            <TextBlock Grid.Column="1" Text="금액" Padding="12,8" FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextSecondary}" />
+                                            <TextBlock Grid.Column="0" Text="지급 항목" Padding="12,8" FontSize="{StaticResource Font.Size.Label}" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextSecondary}" />
+                                            <TextBlock Grid.Column="1" Text="금액" Padding="12,8" FontSize="{StaticResource Font.Size.Label}" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextSecondary}" />
                                         </Grid>
                                         <ItemsControl x:Name="EarningsItems">
                                             <ItemsControl.ItemTemplate>
@@ -521,8 +491,8 @@
                                                     <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="합계" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextPrimary}" />
-                                                <TextBlock Grid.Column="1" x:Name="EarningTotalText" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Right" Foreground="{StaticResource Brush.TextPrimary}" />
+                                                <TextBlock Grid.Column="0" Text="합계" FontSize="{StaticResource Font.Size.Body}" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextPrimary}" />
+                                                <TextBlock Grid.Column="1" x:Name="EarningTotalText" FontSize="{StaticResource Font.Size.Body}" FontWeight="SemiBold" HorizontalAlignment="Right" Foreground="{StaticResource Brush.TextPrimary}" />
                                             </Grid>
                                         </Border>
                                     </StackPanel>
@@ -539,8 +509,8 @@
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" Text="공제 항목" Padding="12,8" FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextSecondary}" />
-                                            <TextBlock Grid.Column="1" Text="금액" Padding="12,8" FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextSecondary}" />
+                                            <TextBlock Grid.Column="0" Text="공제 항목" Padding="12,8" FontSize="{StaticResource Font.Size.Label}" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextSecondary}" />
+                                            <TextBlock Grid.Column="1" Text="금액" Padding="12,8" FontSize="{StaticResource Font.Size.Label}" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextSecondary}" />
                                         </Grid>
                                         <ItemsControl x:Name="DeductionsItems">
                                             <ItemsControl.ItemTemplate>
@@ -562,8 +532,8 @@
                                                     <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="합계" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextPrimary}" />
-                                                <TextBlock Grid.Column="1" x:Name="DeductionTotalText" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Right" Foreground="{StaticResource Brush.TextPrimary}" />
+                                                <TextBlock Grid.Column="0" Text="합계" FontSize="{StaticResource Font.Size.Body}" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextPrimary}" />
+                                                <TextBlock Grid.Column="1" x:Name="DeductionTotalText" FontSize="{StaticResource Font.Size.Body}" FontWeight="SemiBold" HorizontalAlignment="Right" Foreground="{StaticResource Brush.TextPrimary}" />
                                             </Grid>
                                         </Border>
                                     </StackPanel>
@@ -578,8 +548,8 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="실지급액" VerticalAlignment="Center" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextPrimary}" />
-                                    <TextBlock Grid.Column="1" x:Name="DetailNetText" FontSize="16" FontWeight="SemiBold" Foreground="{StaticResource Brush.Accent}" />
+                                    <TextBlock Grid.Column="0" Text="실지급액" VerticalAlignment="Center" FontSize="{StaticResource Font.Size.Body}" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextPrimary}" />
+                                    <TextBlock Grid.Column="1" x:Name="DetailNetText" FontSize="{StaticResource Font.Size.Subtitle}" FontWeight="SemiBold" Foreground="{StaticResource Brush.Accent}" />
                                 </Grid>
                             </Border>
                         </StackPanel>
@@ -617,7 +587,7 @@
         <TextBlock Grid.Row="0"
                    Text="급여 회차 등록"
                    Margin="0,0,0,16"
-                   FontSize="22"
+                   FontSize="{StaticResource Font.Size.PageTitle}"
                    FontWeight="SemiBold"
                    Foreground="{StaticResource Brush.TextPrimary}" />
 
@@ -640,7 +610,7 @@
                     </StackPanel>
                 </WrapPanel>
                 <TextBlock Text="등록 직후 상태는 '준비중'이며, 이후 액션(데이터마감 → 계산실행 …)으로 전이됩니다."
-                           FontSize="12"
+                           FontSize="{StaticResource Font.Size.Label}"
                            Foreground="{StaticResource Brush.TextSecondary}"
                            TextWrapping="Wrap" />
             </StackPanel>

@@ -270,6 +270,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\Wpf\Screens\LotSearchScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\Wpf\Screens\EmployeeDetailWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -443,6 +447,9 @@
     <Compile Include="Controls\Wpf\Screens\EmployeeBrowserScreen.xaml.cs">
       <DependentUpon>EmployeeBrowserScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Wpf\Screens\LotSearchScreen.xaml.cs">
+      <DependentUpon>LotSearchScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Wpf\Screens\EmployeeDetailWindow.xaml.cs">
       <DependentUpon>EmployeeDetailWindow.xaml</DependentUpon>
     </Compile>
@@ -453,6 +460,7 @@
     <Compile Include="Models\Ui\EmployeeBrowserRow.cs" />
     <Compile Include="Models\Ui\EmployeeRow.cs" />
     <Compile Include="Models\Ui\ExceptionItem.cs" />
+    <Compile Include="Models\Ui\LotInfo.cs" />
     <Compile Include="Models\Ui\PayrollLineRow.cs" />
     <Compile Include="Models\Ui\PayrollResultRow.cs" />
     <Compile Include="Models\Ui\RadioButtonItemModel.cs" />

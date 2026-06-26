@@ -1,9 +1,8 @@
-<UserControl x:Class="com.example.Controls.Wpf.Screens.EmployeeBrowserScreen"
+<UserControl x:Class="com.example.Controls.Wpf.Screens.LotSearchScreen"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:display="clr-namespace:com.example.Controls.Wpf.Display"
              mc:Ignorable="d"
              TextOptions.TextFormattingMode="Display"
              TextOptions.TextRenderingMode="ClearType"
@@ -20,7 +19,7 @@
             <Style x:Key="PrimaryButtonStyle" TargetType="Button">
                 <Setter Property="Background" Value="{StaticResource Brush.Accent}" />
                 <Setter Property="Foreground" Value="White" />
-                <Setter Property="FontSize" Value="13" />
+                <Setter Property="FontSize" Value="{StaticResource Font.Size.Body}" />
                 <Setter Property="FontWeight" Value="SemiBold" />
                 <Setter Property="Height" Value="36" />
                 <Setter Property="Padding" Value="16,0" />
@@ -52,11 +51,14 @@
                 <Setter Property="Margin" Value="{StaticResource Gap.Label}" />
             </Style>
 
-            <Style x:Key="FilterComboStyle" TargetType="ComboBox">
+            <Style x:Key="FilterTextBoxStyle" TargetType="TextBox">
                 <Setter Property="Height" Value="36" />
                 <Setter Property="Padding" Value="10,0" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
-                <Setter Property="FontSize" Value="13" />
+                <Setter Property="FontSize" Value="{StaticResource Font.Size.Body}" />
+                <Setter Property="BorderBrush" Value="{StaticResource Brush.Border}" />
+                <Setter Property="Background" Value="{StaticResource Brush.Surface}" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
             </Style>
 
             <Style x:Key="CardStyle" TargetType="Border">
@@ -68,26 +70,16 @@
             </Style>
 
             <Style x:Key="CardTitleStyle" TargetType="TextBlock">
-                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontSize" Value="{StaticResource Font.Size.BodyLg}" />
                 <Setter Property="FontWeight" Value="SemiBold" />
                 <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
                 <Setter Property="Margin" Value="0,0,0,12" />
             </Style>
 
-
-            <!-- Department tree item: clean, padded, accent selection. -->
-            <Style x:Key="TreeItemStyle" TargetType="TreeViewItem">
-                <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
-                <Setter Property="FontSize" Value="13" />
-                <Setter Property="Padding" Value="4,3" />
-                <Setter Property="Margin" Value="0,1,0,1" />
-            </Style>
-
-            <!-- Result grid styles -->
             <Style x:Key="GridHeaderStyle" TargetType="DataGridColumnHeader">
                 <Setter Property="Background" Value="{StaticResource Brush.HeaderBackground}" />
                 <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}" />
-                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontSize" Value="{StaticResource Font.Size.Label}" />
                 <Setter Property="FontWeight" Value="SemiBold" />
                 <Setter Property="Height" Value="38" />
                 <Setter Property="Padding" Value="12,0" />
@@ -115,7 +107,7 @@
             <Style x:Key="GridCellStyle" TargetType="DataGridCell">
                 <Setter Property="BorderThickness" Value="0" />
                 <Setter Property="Padding" Value="{StaticResource Pad.Item}" />
-                <Setter Property="FontSize" Value="13" />
+                <Setter Property="FontSize" Value="{StaticResource Font.Size.Body}" />
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
                 <Setter Property="Template">
@@ -143,102 +135,84 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!-- Header -->
         <TextBlock Grid.Row="0"
-                   Text="사원 조회"
+                   Text="Lot 조회"
                    Margin="0,0,0,16"
                    FontSize="{StaticResource Font.Size.PageTitle}"
                    FontWeight="SemiBold"
                    Foreground="{StaticResource Brush.TextPrimary}" />
 
-        <!-- 조회 조건 -->
+        <!-- 조회영역 -->
         <Border Grid.Row="1" Style="{StaticResource CardStyle}" Margin="0,0,0,16">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
-                <StackPanel Width="260" Margin="0,0,12,0">
-                    <TextBlock Text="이름" Style="{StaticResource FilterLabelStyle}" />
-                    <ComboBox x:Name="NameCombo"
-                              Style="{StaticResource FilterComboStyle}"
-                              IsEditable="True"
-                              IsTextSearchEnabled="False"
-                              StaysOpenOnEdit="True"
-                              SelectedValuePath="Code"
-                              SelectionChanged="NameCombo_SelectionChanged" />
+                <StackPanel Width="280" Margin="0,0,12,0">
+                    <TextBlock Text="Lot ID" Style="{StaticResource FilterLabelStyle}" />
+                    <TextBox x:Name="LotIdTextBox"
+                             Style="{StaticResource FilterTextBoxStyle}"
+                             KeyDown="LotIdTextBox_KeyDown" />
                 </StackPanel>
                 <Button x:Name="SearchButton"
                         Style="{StaticResource PrimaryButtonStyle}"
-                        Content="조회"
+                        Content="Search"
                         VerticalAlignment="Bottom"
                         Click="SearchButton_Click" />
             </StackPanel>
         </Border>
 
-        <!-- Board: 부서 트리 / 사원 목록 -->
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="260" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <!-- 부서 -->
-            <Border Grid.Column="0" Style="{StaticResource CardStyle}" Margin="0,0,16,0">
-                <DockPanel>
-                    <TextBlock DockPanel.Dock="Top" Text="부서" Style="{StaticResource CardTitleStyle}" />
-                    <TreeView x:Name="DepartmentTree"
+        <!-- 그리드영역 -->
+        <Border Grid.Row="2" Style="{StaticResource CardStyle}">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Top" Text="Lot 목록" Style="{StaticResource CardTitleStyle}" />
+                <Border CornerRadius="{StaticResource Radius.Md}"
+                        BorderThickness="1"
+                        BorderBrush="{StaticResource Brush.BorderSubtle}"
+                        ClipToBounds="True">
+                    <DataGrid x:Name="LotGrid"
+                              AutoGenerateColumns="False"
+                              HeadersVisibility="Column"
+                              GridLinesVisibility="Horizontal"
+                              HorizontalGridLinesBrush="{StaticResource Brush.BorderSubtle}"
                               BorderThickness="0"
                               Background="Transparent"
-                              ItemContainerStyle="{StaticResource TreeItemStyle}"
-                              SelectedItemChanged="DepartmentTree_SelectedItemChanged" />
-                </DockPanel>
-            </Border>
+                              RowBackground="{StaticResource Brush.Surface}"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False"
+                              IsReadOnly="True"
+                              SelectionMode="Single"
+                              SelectionUnit="FullRow"
+                              EnableRowVirtualization="True"
+                              AlternationCount="2"
+                              ColumnHeaderStyle="{StaticResource GridHeaderStyle}"
+                              RowStyle="{StaticResource GridRowStyle}"
+                              CellStyle="{StaticResource GridCellStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="LotId" Binding="{Binding LotId}" Width="140" />
+                            <DataGridTextColumn Header="ProdId" Binding="{Binding ProdId}" Width="100" />
+                            <DataGridTextColumn Header="ProduceType" Binding="{Binding ProduceType}" Width="110" />
+                            <DataGridTextColumn Header="ProdType" Binding="{Binding ProdType}" Width="100" />
+                            <DataGridTextColumn Header="SubProdType" Binding="{Binding SubProdType}" Width="110" />
+                            <DataGridTextColumn Header="LastEventTime" Binding="{Binding LastEventTime, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" Width="160" />
+                            <DataGridTextColumn Header="LastEventCd" Binding="{Binding LastEventCd}" Width="120" />
+                            <DataGridTextColumn Header="OperId" Binding="{Binding OperId}" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+            </DockPanel>
+        </Border>
 
-            <!-- 사원 목록 -->
-            <Border Grid.Column="1" Style="{StaticResource CardStyle}">
-                <DockPanel>
-                    <TextBlock DockPanel.Dock="Top" Text="사원 목록" Style="{StaticResource CardTitleStyle}" />
-                    <Border CornerRadius="{StaticResource Radius.Md}"
-                            BorderThickness="1"
-                            BorderBrush="{StaticResource Brush.BorderSubtle}"
-                            ClipToBounds="True">
-                        <DataGrid x:Name="EmployeeGrid"
-                                  AutoGenerateColumns="False"
-                                  HeadersVisibility="Column"
-                                  GridLinesVisibility="Horizontal"
-                                  HorizontalGridLinesBrush="{StaticResource Brush.BorderSubtle}"
-                                  BorderThickness="0"
-                                  Background="Transparent"
-                                  RowBackground="{StaticResource Brush.Surface}"
-                                  CanUserAddRows="False"
-                                  CanUserDeleteRows="False"
-                                  CanUserResizeRows="False"
-                                  IsReadOnly="True"
-                                  SelectionMode="Single"
-                                  SelectionUnit="FullRow"
-                                  EnableRowVirtualization="True"
-                                  AlternationCount="2"
-                                  ColumnHeaderStyle="{StaticResource GridHeaderStyle}"
-                                  RowStyle="{StaticResource GridRowStyle}"
-                                  CellStyle="{StaticResource GridCellStyle}"
-                                  MouseDoubleClick="EmployeeGrid_MouseDoubleClick">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="사번" Binding="{Binding EmployeeId}" Width="90" />
-                                <DataGridTextColumn Header="이름" Binding="{Binding Name}" Width="100" />
-                                <DataGridTextColumn Header="직급/직책" Binding="{Binding Position}" Width="*" />
-                                <DataGridTextColumn Header="고용형태" Binding="{Binding EmploymentType}" Width="110" />
-                                <DataGridTextColumn Header="입사일" Binding="{Binding HireDate}" Width="120" />
-                                <DataGridTemplateColumn Header="재직상태" Width="110">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <display:ModernBadgeControl BadgeText="{Binding StatusLabel}" BadgeType="{Binding StatusTone}" VerticalAlignment="Center" />
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Border>
-                </DockPanel>
-            </Border>
+        <!-- 실행영역 -->
+        <Grid Grid.Row="3" Margin="0,16,0,0">
+            <Button x:Name="ReceiveLotButton"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Content="Receive Lot"
+                    MinWidth="138"
+                    HorizontalAlignment="Right"
+                    Click="ReceiveLotButton_Click" />
         </Grid>
     </Grid>
 </UserControl>
