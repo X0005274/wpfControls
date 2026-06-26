@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using com.example.Controls.Wpf.Data;
 using com.example.Controls.Wpf.Display;
+using com.example.Controls.Wpf.Feedback;
 using com.example.Controls.Wpf.Input;
 using com.example.Controls.Wpf.Layout;
 using com.example.Controls.Wpf.Selection;
@@ -37,6 +38,7 @@ namespace com.example.Demo
             root.Children.Add(BuildDisplaySection());
             root.Children.Add(BuildDataSection());
             root.Children.Add(BuildLayoutSection());
+            root.Children.Add(BuildFeedbackSection());
 
             ScrollViewer scroller = new ScrollViewer();
             scroller.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
@@ -80,7 +82,46 @@ namespace com.example.Demo
                 };
             }
 
-            return Section("Input", new UIElement[] { name, employeeId, password, notes, search });
+            // 버튼 3종(Primary/Secondary/Danger)을 한 줄에 배치합니다.
+            WrapPanel buttonRow = new WrapPanel();
+            buttonRow.Children.Add(NewButton("저장", ButtonKind.Primary));
+            buttonRow.Children.Add(NewButton("취소", ButtonKind.Secondary));
+            buttonRow.Children.Add(NewButton("삭제", ButtonKind.Danger));
+
+            ModernNumericUpDownControl numeric = new ModernNumericUpDownControl();
+            numeric.Title = "나이";
+            numeric.Minimum = 0;
+            numeric.Maximum = 120;
+            numeric.Value = 30;
+
+            ModernMaskedTextBoxControl masked = new ModernMaskedTextBoxControl();
+            masked.Title = "주민등록번호";
+            masked.Mask = "000000-0000000";
+            masked.PlaceholderText = "앞 6자리 - 뒤 7자리";
+
+            ModernCurrencyBoxControl currency = new ModernCurrencyBoxControl();
+            currency.Title = "기본급";
+            currency.Value = 3500000m;
+
+            ModernDateTimePickerControl dateTime = new ModernDateTimePickerControl();
+            dateTime.Title = "출근 일시";
+            dateTime.SelectedDateTime = DateTime.Now;
+
+            ModernTimePickerControl timePicker = new ModernTimePickerControl();
+            timePicker.Title = "근무 시작 시각";
+            timePicker.SelectedTime = new TimeSpan(9, 0, 0);
+
+            ModernFilePickerControl filePicker = new ModernFilePickerControl();
+            filePicker.Title = "증빙 파일";
+            filePicker.Filter = "모든 파일|*.*";
+
+            return Section(
+                "Input",
+                new UIElement[]
+                {
+                    name, employeeId, password, notes, search,
+                    buttonRow, numeric, masked, currency, dateTime, timePicker, filePicker
+                });
         }
 
         // ------------------------------------------------------------ Selection
@@ -211,9 +252,37 @@ namespace com.example.Demo
             datePicker.SelectedDate = DateTime.Today;
             datePicker.IsRequired = true;
 
+            ModernDividerControl divider = new ModernDividerControl();
+            divider.Text = "추가 정보";
+
+            ModernAvatarControl avatar = new ModernAvatarControl();
+            avatar.Text = "한";
+            avatar.Diameter = 48;
+
+            // 태그(칩) 여러 개를 한 줄에 배치합니다(마지막은 삭제 가능).
+            WrapPanel chipRow = new WrapPanel();
+            chipRow.Children.Add(NewChip("관리자", false));
+            chipRow.Children.Add(NewChip("정규직", false));
+            chipRow.Children.Add(NewChip("개발팀", true));
+
+            ModernCardControl card = new ModernCardControl();
+            card.Title = "공지";
+            card.Subtitle = "2026년 정기 인사";
+            card.InnerContent = MakeText("카드 컨테이너 안에는 어떤 내용이든 넣을 수 있습니다.");
+
+            // KPI 카드 3개를 한 줄에 배치합니다(대시보드용).
+            WrapPanel kpiRow = new WrapPanel();
+            kpiRow.Children.Add(NewKpi("총 직원", "1,234", "지난달 대비 +5"));
+            kpiRow.Children.Add(NewKpi("재직", "1,180", "95.6%"));
+            kpiRow.Children.Add(NewKpi("휴직", "54", "4.4%"));
+
             return Section(
                 "Display",
-                new UIElement[] { label, progress, indeterminate, info, success, warning, error, badges, datePicker });
+                new UIElement[]
+                {
+                    label, progress, indeterminate, info, success, warning, error, badges, datePicker,
+                    divider, avatar, chipRow, card, kpiRow
+                });
         }
 
         // ----------------------------------------------------------------- Data
@@ -294,9 +363,84 @@ namespace com.example.Demo
             }
             scrollSection.InnerContent = terms;
 
+            ModernPageHeaderControl pageHeader = new ModernPageHeaderControl();
+            pageHeader.Title = "직원 관리";
+            pageHeader.Subtitle = "전체 1,234명";
+            ModernButtonControl headerAction = new ModernButtonControl();
+            headerAction.Text = "신규 등록";
+            pageHeader.InnerContent = headerAction;
+
+            ModernBreadcrumbControl breadcrumb = new ModernBreadcrumbControl();
+            breadcrumb.Path = "홈/직원관리/상세";
+
+            ModernSegmentedControl segmented = new ModernSegmentedControl();
+            List<string> segments = new List<string>();
+            segments.Add("전체");
+            segments.Add("재직");
+            segments.Add("휴직");
+            segmented.ItemsSource = segments;
+            segmented.SelectedIndex = 0;
+
+            ModernStepIndicatorControl steps = new ModernStepIndicatorControl();
+            List<string> stepList = new List<string>();
+            stepList.Add("신청");
+            stepList.Add("승인");
+            stepList.Add("완료");
+            steps.ItemsSource = stepList;
+            steps.CurrentStep = 1;
+
+            ModernPaginationControl pagination = new ModernPaginationControl();
+            pagination.TotalPages = 10;
+            pagination.CurrentPage = 3;
+
             return Section(
                 "Layout",
-                new UIElement[] { expander, groupBox, formSection, scrollSection });
+                new UIElement[]
+                {
+                    pageHeader, breadcrumb, segmented, steps,
+                    expander, groupBox, formSection, scrollSection, pagination
+                });
+        }
+
+        // ------------------------------------------------------------- Feedback
+
+        private static UIElement BuildFeedbackSection()
+        {
+            // 토스트/대화상자를 띄우는 데모 버튼들입니다.
+            WrapPanel buttons = new WrapPanel();
+
+            ModernButtonControl toastInfo = NewButton("정보 토스트", ButtonKind.Secondary);
+            toastInfo.Click += delegate { ModernToast.Show("정보 알림입니다.", MessageKind.Info); };
+            buttons.Children.Add(toastInfo);
+
+            ModernButtonControl toastSuccess = NewButton("성공 토스트", ButtonKind.Primary);
+            toastSuccess.Click += delegate { ModernToast.Show("저장되었습니다.", MessageKind.Success); };
+            buttons.Children.Add(toastSuccess);
+
+            ModernButtonControl toastError = NewButton("오류 토스트", ButtonKind.Danger);
+            toastError.Click += delegate { ModernToast.Show("오류가 발생했습니다.", MessageKind.Error); };
+            buttons.Children.Add(toastError);
+
+            ModernButtonControl confirm = NewButton("확인 대화상자", ButtonKind.Secondary);
+            confirm.Click += delegate
+            {
+                bool ok = ModernDialog.Confirm("삭제 확인", "선택한 항목을 삭제할까요?");
+                ModernToast.Show(
+                    ok ? "삭제를 진행합니다." : "취소했습니다.",
+                    ok ? MessageKind.Success : MessageKind.Info);
+            };
+            buttons.Children.Add(confirm);
+
+            ModernButtonControl alert = NewButton("알림 대화상자", ButtonKind.Secondary);
+            alert.Click += delegate { ModernDialog.Alert("안내", "처리가 완료되었습니다.", MessageKind.Success); };
+            buttons.Children.Add(alert);
+
+            TextBlock note = MakeText(
+                "토스트·대화상자는 폼에 올리는 컨트롤이 아니라 코드에서 호출하는 헬퍼입니다. "
+                + "(로딩 오버레이는 WinForms 폼을 대상으로 하므로 이 WPF 갤러리에서는 생략했습니다.)");
+            note.Margin = new Thickness(0, 8, 0, 0);
+
+            return Section("Feedback (토스트 · 대화상자)", new UIElement[] { buttons, note });
         }
 
         // -------------------------------------------------------------- Helpers
@@ -340,6 +484,35 @@ namespace com.example.Demo
             badge.BadgeType = type;
             badge.Margin = new Thickness(0, 0, 8, 0);
             return badge;
+        }
+
+        private static ModernButtonControl NewButton(string text, ButtonKind kind)
+        {
+            ModernButtonControl button = new ModernButtonControl();
+            button.Text = text;
+            button.Kind = kind;
+            button.Margin = new Thickness(0, 0, 8, 0);
+            return button;
+        }
+
+        private static ModernChipControl NewChip(string text, bool removable)
+        {
+            ModernChipControl chip = new ModernChipControl();
+            chip.Text = text;
+            chip.IsRemovable = removable;
+            chip.Margin = new Thickness(0, 0, 8, 0);
+            return chip;
+        }
+
+        private static ModernKpiCardControl NewKpi(string label, string value, string caption)
+        {
+            ModernKpiCardControl kpi = new ModernKpiCardControl();
+            kpi.Label = label;
+            kpi.Value = value;
+            kpi.Caption = caption;
+            kpi.Width = 180;
+            kpi.Margin = new Thickness(0, 0, 12, 0);
+            return kpi;
         }
 
         private static GridViewColumn NewColumn(string header, string path, double width)
