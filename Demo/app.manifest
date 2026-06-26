@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
+  <assemblyIdentity version="1.0.0.0" name="com.example.Demo.app" />
+
+  <!-- Windows 10 / 11 지원 선언 (PerMonitorV2 dpiAwareness 인식에 필요) -->
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />
+    </application>
+  </compatibility>
+
+  <!-- DPI 인식: 고DPI에서 OS의 비트맵 확대(흐릿함)를 끄고, WPF(ElementHost)와
+       WinForms가 모니터별 실제 DPI로 또렷하게 렌더되도록 합니다.
+       PerMonitorV2 → (구형 OS 폴백) PerMonitor → true/PM 순으로 적용됩니다. -->
+  <application xmlns="urn:schemas-microsoft-com:asm.v3">
+    <windowsSettings>
+      <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">true/PM</dpiAware>
+      <dpiAwareness xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">PerMonitorV2, PerMonitor</dpiAwareness>
+    </windowsSettings>
+  </application>
+</assembly>

@@ -17,7 +17,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <Style x:Key="ModernColumnHeaderStyle" TargetType="DataGridColumnHeader">
-                <Setter Property="Background" Value="{StaticResource Brush.HeaderBackground}" />
+                <Setter Property="Background" Value="{StaticResource Brush.GridHeaderBackground}" />
                 <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}" />
                 <Setter Property="FontSize" Value="12" />
                 <Setter Property="FontWeight" Value="SemiBold" />
@@ -70,7 +70,6 @@
                     <Trigger Property="IsSelected" Value="True">
                         <Setter Property="Background" Value="{StaticResource Brush.SelectedBackground}" />
                         <Setter Property="Foreground" Value="{StaticResource Brush.SelectedText}" />
-                        <Setter Property="FontWeight" Value="SemiBold" />
                     </Trigger>
                 </Style.Triggers>
             </Style>

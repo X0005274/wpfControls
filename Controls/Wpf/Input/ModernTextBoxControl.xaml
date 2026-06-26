@@ -52,7 +52,7 @@
                        Text="{Binding Title, ElementName=RootControl}" />
             <TextBlock Text="*"
                        FontFamily="{DynamicResource Font.Family}"
-                       FontSize="12"
+                       FontSize="{StaticResource Font.Size.Label}"
                        FontWeight="Medium"
                        Foreground="{StaticResource Brush.ErrorBorder}"
                        Margin="3,0,0,0"
@@ -104,8 +104,8 @@
                 <Grid>
                     <TextBlock x:Name="PlaceholderLabel"
                                Text="{Binding PlaceholderText, ElementName=RootControl}"
-                               Foreground="{StaticResource Brush.TextPlaceholder}"
-                               FontSize="13"
+                               Foreground="{StaticResource Brush.TextPlaceholder}" FontStyle="Italic"
+                               FontSize="{StaticResource Font.Size.Body}"
                                VerticalAlignment="Center"
                                IsHitTestVisible="False">
                         <TextBlock.Style>

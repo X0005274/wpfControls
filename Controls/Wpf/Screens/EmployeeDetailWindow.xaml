@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:display="clr-namespace:com.example.Controls.Wpf.Display"
         mc:Ignorable="d"
              TextOptions.TextFormattingMode="Display"
              TextOptions.TextRenderingMode="ClearType"
@@ -24,7 +25,7 @@
                 <Setter Property="Background" Value="{StaticResource Brush.Accent}" />
                 <Setter Property="Foreground" Value="White" />
                 <Setter Property="FontSize" Value="13" />
-                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="FontWeight" Value="Medium" />
                 <Setter Property="Height" Value="36" />
                 <Setter Property="Padding" Value="18,0" />
                 <Setter Property="Cursor" Value="Hand" />
@@ -88,31 +89,6 @@
                 </Setter>
             </Style>
 
-            <Style x:Key="BadgeStyle" TargetType="Border">
-                <Setter Property="CornerRadius" Value="{StaticResource Radius.Sm}" />
-                <Setter Property="Padding" Value="10,3" />
-                <Setter Property="HorizontalAlignment" Value="Left" />
-                <Setter Property="Background" Value="{StaticResource Brush.HeaderBackground}" />
-                <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.TextSecondary}" />
-                <Style.Triggers>
-                    <Trigger Property="Tag" Value="info">
-                        <Setter Property="Background" Value="{StaticResource Brush.InfoBackground}" />
-                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.Accent}" />
-                    </Trigger>
-                    <Trigger Property="Tag" Value="success">
-                        <Setter Property="Background" Value="{StaticResource Brush.SuccessBackground}" />
-                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.Success}" />
-                    </Trigger>
-                    <Trigger Property="Tag" Value="warning">
-                        <Setter Property="Background" Value="{StaticResource Brush.WarningBackground}" />
-                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.Warning}" />
-                    </Trigger>
-                    <Trigger Property="Tag" Value="danger">
-                        <Setter Property="Background" Value="{StaticResource Brush.ErrorBackground}" />
-                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.ErrorBorder}" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
 
             <Style x:Key="KeyStyle" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="13" />
@@ -155,8 +131,8 @@
 
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="0,0,0,16">
-            <TextBlock x:Name="HeaderName" FontSize="20" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextPrimary}" />
-            <TextBlock x:Name="HeaderSub" FontSize="13" Margin="0,4,0,0" Foreground="{StaticResource Brush.TextSecondary}" />
+            <TextBlock x:Name="HeaderName" FontSize="{StaticResource Font.Size.Heading}" FontWeight="Medium" Foreground="{StaticResource Brush.TextPrimary}" />
+            <TextBlock x:Name="HeaderSub" FontSize="{StaticResource Font.Size.Body}" Margin="0,4,0,0" Foreground="{StaticResource Brush.TextSecondary}" />
         </StackPanel>
 
         <!-- Detail card -->
@@ -208,9 +184,7 @@
                 <TextBlock Grid.Row="5" Grid.Column="1" x:Name="ValueHireDate" Style="{StaticResource ValueStyle}" />
 
                 <TextBlock Grid.Row="6" Grid.Column="0" Text="재직상태" Style="{StaticResource KeyStyle}" Margin="0" />
-                <Border    Grid.Row="6" Grid.Column="1" x:Name="StatusBadge" Style="{StaticResource BadgeStyle}">
-                    <TextBlock x:Name="StatusText" FontSize="12" FontWeight="Medium" />
-                </Border>
+                <display:ModernBadgeControl Grid.Row="6" Grid.Column="1" x:Name="StatusBadge" HorizontalAlignment="Left" VerticalAlignment="Center" />
                 <ComboBox  Grid.Row="6" Grid.Column="1" x:Name="EditStatus" Style="{StaticResource EditComboStyle}" Margin="0" Visibility="Collapsed">
                     <ComboBoxItem Content="재직" />
                     <ComboBoxItem Content="휴직" />

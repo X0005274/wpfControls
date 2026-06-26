@@ -36,7 +36,7 @@
         <TextBlock x:Name="MessageText"
                    Text=""
                    Margin="16,12"
-                   FontSize="13"
+                   FontSize="{StaticResource Font.Size.Body}"
                    FontWeight="Medium"
                    TextWrapping="Wrap"
                    Foreground="White" />

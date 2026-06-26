@@ -19,7 +19,7 @@
             <Style x:Key="ModernTabItemStyle" TargetType="TabItem">
                 <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}" />
                 <Setter Property="FontSize" Value="13" />
-                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="FontWeight" Value="Medium" />
                 <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="Template">
                     <Setter.Value>

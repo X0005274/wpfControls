@@ -31,7 +31,7 @@
                        Text="{Binding Title, ElementName=RootControl}" />
             <TextBlock Text="*"
                        FontFamily="{DynamicResource Font.Family}"
-                       FontSize="12"
+                       FontSize="{StaticResource Font.Size.Label}"
                        FontWeight="Medium"
                        Foreground="{StaticResource Brush.ErrorBorder}"
                        Margin="3,0,0,0"
@@ -82,7 +82,7 @@
                 <RichTextBox x:Name="InnerRichTextBox"
                              BorderThickness="0"
                              Background="Transparent"
-                             FontSize="13"
+                             FontSize="{StaticResource Font.Size.Body}"
                              Foreground="{StaticResource Brush.TextPrimary}"
                              CaretBrush="{StaticResource Brush.TextPrimary}"
                              Padding="8"

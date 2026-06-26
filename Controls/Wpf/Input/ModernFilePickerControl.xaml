@@ -26,7 +26,7 @@
             <TextBlock x:Name="RequiredMark"
                        Text="*"
                        FontFamily="{DynamicResource Font.Family}"
-                       FontSize="12" FontWeight="Medium"
+                       FontSize="{StaticResource Font.Size.Label}" FontWeight="Medium"
                        Foreground="{StaticResource Brush.ErrorBorder}"
                        Margin="3,0,0,0" />
         </StackPanel>
@@ -47,8 +47,8 @@
                 <Grid>
                     <TextBlock x:Name="Placeholder"
                                Text="{Binding PlaceholderText, ElementName=RootControl}"
-                               Foreground="{StaticResource Brush.TextPlaceholder}"
-                               FontSize="13" IsHitTestVisible="False"
+                               Foreground="{StaticResource Brush.TextPlaceholder}" FontStyle="Italic"
+                               FontSize="{StaticResource Font.Size.Body}" IsHitTestVisible="False"
                                VerticalAlignment="Center" Margin="12,0" />
                     <TextBox x:Name="PathTextBox"
                              IsReadOnly="True"
@@ -56,7 +56,7 @@
                              Padding="12,0"
                              BorderThickness="0"
                              Background="Transparent"
-                             FontSize="13"
+                             FontSize="{StaticResource Font.Size.Body}"
                              Foreground="{StaticResource Brush.TextPrimary}"
                              Text="{Binding FilePath, ElementName=RootControl, Mode=OneWay}" />
                 </Grid>
@@ -68,7 +68,7 @@
                     Margin="8,0,0,0"
                     Padding="14,0"
                     Height="{StaticResource Size.ControlHeight}"
-                    FontSize="13"
+                    FontSize="{StaticResource Font.Size.Body}"
                     Cursor="Hand"
                     Background="{StaticResource Brush.Surface}"
                     Foreground="{StaticResource Brush.TextPrimary}"

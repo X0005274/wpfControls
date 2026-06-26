@@ -59,8 +59,8 @@ namespace com.example.Controls.Wpf.Screens
             this.ValuePosition.Text = source.Position;
             this.ValueType.Text = source.EmploymentType;
             this.ValueHireDate.Text = source.HireDate;
-            this.StatusText.Text = source.StatusLabel;
-            this.StatusBadge.Tag = source.StatusTone;
+            this.StatusBadge.BadgeText = source.StatusLabel;
+            this.StatusBadge.BadgeType = source.StatusTone;
         }
 
         // ----- View / edit mode -----

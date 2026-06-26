@@ -20,18 +20,18 @@
     <Border x:Name="StatusBorder"
             CornerRadius="{StaticResource Radius.Md}"
             BorderThickness="1"
-            BorderBrush="#FFBFDBFE"
+            BorderBrush="{StaticResource Brush.InfoBorder}"
             Background="{StaticResource Brush.InfoBackground}"
             Padding="12,8"
             MinHeight="36">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
             <Ellipse x:Name="Indicator"
                      Width="10" Height="10"
-                     Fill="#FF2563EB"
+                     Fill="{StaticResource Brush.Accent}"
                      VerticalAlignment="Center" />
             <TextBlock x:Name="MessageText"
                        Text="{Binding StatusText, ElementName=RootControl}"
-                       FontSize="13"
+                       FontSize="{StaticResource Font.Size.Body}"
                        Foreground="{StaticResource Brush.TextPrimary}"
                        VerticalAlignment="Center"
                        TextWrapping="Wrap"

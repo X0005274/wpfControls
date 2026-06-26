@@ -26,7 +26,7 @@
         <TextBlock x:Name="InitialsText"
                    Text="{Binding Text, ElementName=RootControl}"
                    Foreground="White"
-                   FontWeight="SemiBold"
+                   FontWeight="Medium"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center" />
     </Grid>

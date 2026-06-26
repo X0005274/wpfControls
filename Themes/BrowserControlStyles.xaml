@@ -14,7 +14,7 @@
         <Setter Property="Background" Value="{StaticResource Brush.Accent}" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="FontSize" Value="13" />
-        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="Height" Value="36" />
         <Setter Property="Padding" Value="16,0" />
         <Setter Property="Cursor" Value="Hand" />
@@ -47,7 +47,7 @@
 
     <Style x:Key="Browser.CardTitle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
         <Setter Property="Margin" Value="0,0,0,12" />
     </Style>
@@ -91,7 +91,7 @@
         <Setter Property="Background" Value="{StaticResource Brush.HeaderBackground}" />
         <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}" />
         <Setter Property="FontSize" Value="12" />
-        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="Height" Value="38" />
         <Setter Property="Padding" Value="12,0" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -136,7 +136,7 @@
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Background" Value="{StaticResource Brush.SelectedBackground}" />
                 <Setter Property="Foreground" Value="{StaticResource Brush.SelectedText}" />
-                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="FontWeight" Value="Medium" />
             </Trigger>
         </Style.Triggers>
     </Style>

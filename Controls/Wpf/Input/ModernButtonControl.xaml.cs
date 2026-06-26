@@ -27,6 +27,14 @@ namespace com.example.Controls.Wpf.Input
                 typeof(ModernButtonControl),
                 new PropertyMetadata(ButtonKind.Primary));
 
+        /// <summary>버튼 글자 앞에 표시할 아이콘 글리프(Segoe MDL2 Assets). 비우면 숨김.</summary>
+        public static readonly DependencyProperty IconGlyphProperty =
+            DependencyProperty.Register(
+                "IconGlyph",
+                typeof(string),
+                typeof(ModernButtonControl),
+                new PropertyMetadata(string.Empty));
+
         /// <summary>
         /// 버튼을 클릭했을 때 발생하는 이벤트입니다.
         /// 내부 버튼의 Click을 바깥으로 그대로 전달합니다.
@@ -50,6 +58,13 @@ namespace com.example.Controls.Wpf.Input
         {
             get { return (ButtonKind)this.GetValue(KindProperty); }
             set { this.SetValue(KindProperty, value); }
+        }
+
+        /// <summary>버튼 글자 앞 아이콘 글리프(Segoe MDL2 Assets)입니다.</summary>
+        public string IconGlyph
+        {
+            get { return (string)this.GetValue(IconGlyphProperty); }
+            set { this.SetValue(IconGlyphProperty, value); }
         }
 
         // 내부 버튼이 눌리면 바깥쪽 Click 이벤트를 발생시킵니다.

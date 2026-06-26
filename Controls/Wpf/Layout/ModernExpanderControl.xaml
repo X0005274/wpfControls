@@ -50,7 +50,7 @@
 
                     <TextBlock Grid.Column="1"
                                Style="{StaticResource Text.Title}"
-                               FontSize="13"
+                               FontSize="{StaticResource Font.Size.Body}"
                                Text="{Binding HeaderText, ElementName=RootControl}"
                                VerticalAlignment="Center" />
                 </Grid>

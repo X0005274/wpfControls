@@ -27,7 +27,7 @@
                 HorizontalAlignment="Center">
             <TextBlock x:Name="LabelText"
                        Text="{Binding Text, ElementName=RootControl}"
-                       FontSize="11"
+                       FontSize="{StaticResource Font.Size.Helper}"
                        Foreground="{StaticResource Brush.TextSecondary}" />
         </Border>
     </Grid>

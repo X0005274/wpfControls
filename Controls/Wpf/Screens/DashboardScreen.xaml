@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:display="clr-namespace:com.example.Controls.Wpf.Display"
              mc:Ignorable="d"
              TextOptions.TextFormattingMode="Display"
              TextOptions.TextRenderingMode="ClearType"
@@ -27,37 +28,11 @@
 
             <Style x:Key="CardTitleStyle" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="14" />
-                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="FontWeight" Value="Medium" />
                 <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
                 <Setter Property="Margin" Value="0,0,0,12" />
             </Style>
 
-            <Style x:Key="BadgeStyle" TargetType="Border">
-                <Setter Property="CornerRadius" Value="{StaticResource Radius.Sm}" />
-                <Setter Property="Padding" Value="8,2" />
-                <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="HorizontalAlignment" Value="Left" />
-                <Setter Property="Background" Value="{StaticResource Brush.HeaderBackground}" />
-                <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.TextSecondary}" />
-                <Style.Triggers>
-                    <Trigger Property="Tag" Value="info">
-                        <Setter Property="Background" Value="{StaticResource Brush.InfoBackground}" />
-                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.Accent}" />
-                    </Trigger>
-                    <Trigger Property="Tag" Value="success">
-                        <Setter Property="Background" Value="{StaticResource Brush.SuccessBackground}" />
-                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.Success}" />
-                    </Trigger>
-                    <Trigger Property="Tag" Value="warning">
-                        <Setter Property="Background" Value="{StaticResource Brush.WarningBackground}" />
-                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.Warning}" />
-                    </Trigger>
-                    <Trigger Property="Tag" Value="danger">
-                        <Setter Property="Background" Value="{StaticResource Brush.ErrorBackground}" />
-                        <Setter Property="TextElement.Foreground" Value="{StaticResource Brush.ErrorBorder}" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
 
             <!-- KPI card -->
             <Style x:Key="KpiCardStyle" TargetType="Border">
@@ -75,7 +50,7 @@
             </Style>
             <Style x:Key="KpiValueStyle" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="22" />
-                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="FontWeight" Value="Medium" />
                 <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
             </Style>
 
@@ -115,7 +90,7 @@
                 <Setter Property="Background" Value="{StaticResource Brush.HeaderBackground}" />
                 <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}" />
                 <Setter Property="FontSize" Value="12" />
-                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="FontWeight" Value="Medium" />
                 <Setter Property="Height" Value="38" />
                 <Setter Property="Padding" Value="12,0" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -167,8 +142,8 @@
         <TextBlock Grid.Row="0"
                    Text="대시보드"
                    Margin="0,0,0,16"
-                   FontSize="22"
-                   FontWeight="SemiBold"
+                   FontSize="{StaticResource Font.Size.PageTitle}"
+                   FontWeight="Medium"
                    Foreground="{StaticResource Brush.TextPrimary}" />
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
@@ -217,11 +192,9 @@
                                 <TextBlock Text="현재 상태"
                                            VerticalAlignment="Center"
                                            Margin="0,0,10,0"
-                                           FontSize="12"
+                                           FontSize="{StaticResource Font.Size.Label}"
                                            Foreground="{StaticResource Brush.TextSecondary}" />
-                                <Border x:Name="CycleStatusBadge" Style="{StaticResource BadgeStyle}">
-                                    <TextBlock x:Name="CycleStatusText" FontSize="12" FontWeight="SemiBold" />
-                                </Border>
+                                <display:ModernBadgeControl x:Name="CycleStatusBadge" VerticalAlignment="Center" />
                             </StackPanel>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -229,12 +202,12 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock Text="최근 계산" FontSize="12" Foreground="{StaticResource Brush.TextSecondary}" Margin="0,0,0,4" />
-                                    <TextBlock x:Name="LastCalculatedText" FontSize="13" Foreground="{StaticResource Brush.TextPrimary}" />
+                                    <TextBlock Text="최근 계산" FontSize="{StaticResource Font.Size.Label}" Foreground="{StaticResource Brush.TextSecondary}" Margin="0,0,0,4" />
+                                    <TextBlock x:Name="LastCalculatedText" FontSize="{StaticResource Font.Size.Body}" Foreground="{StaticResource Brush.TextPrimary}" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1">
-                                    <TextBlock Text="지급 예정일" FontSize="12" Foreground="{StaticResource Brush.TextSecondary}" Margin="0,0,0,4" />
-                                    <TextBlock x:Name="ScheduledPayDateText" FontSize="13" Foreground="{StaticResource Brush.TextPrimary}" />
+                                    <TextBlock Text="지급 예정일" FontSize="{StaticResource Font.Size.Label}" Foreground="{StaticResource Brush.TextSecondary}" Margin="0,0,0,4" />
+                                    <TextBlock x:Name="ScheduledPayDateText" FontSize="{StaticResource Font.Size.Body}" Foreground="{StaticResource Brush.TextPrimary}" />
                                 </StackPanel>
                             </Grid>
                         </StackPanel>
@@ -261,23 +234,19 @@
                                             </Grid.ColumnDefinitions>
                                             <StackPanel Grid.Column="0" VerticalAlignment="Center">
                                                 <TextBlock Text="{Binding NameWithId}"
-                                                           FontSize="13"
-                                                           FontWeight="SemiBold"
+                                                           FontSize="{StaticResource Font.Size.Body}"
+                                                           FontWeight="Medium"
                                                            Foreground="{StaticResource Brush.TextPrimary}"
                                                            TextTrimming="CharacterEllipsis" />
                                                 <TextBlock Text="{Binding TypeLabel}"
-                                                           FontSize="12"
+                                                           FontSize="{StaticResource Font.Size.Label}"
                                                            Margin="0,2,0,0"
                                                            Foreground="{StaticResource Brush.TextSecondary}"
                                                            TextTrimming="CharacterEllipsis" />
                                             </StackPanel>
                                             <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                                                <Border Style="{StaticResource BadgeStyle}" Tag="{Binding SeverityTone}">
-                                                    <TextBlock Text="{Binding SeverityLabel}" FontSize="11" FontWeight="Medium" />
-                                                </Border>
-                                                <Border Style="{StaticResource BadgeStyle}" Tag="{Binding StatusTone}" Margin="6,0,0,0">
-                                                    <TextBlock Text="{Binding StatusLabel}" FontSize="11" FontWeight="Medium" />
-                                                </Border>
+                                                <display:ModernBadgeControl BadgeText="{Binding SeverityLabel}" BadgeType="{Binding SeverityTone}" VerticalAlignment="Center" />
+                                                <display:ModernBadgeControl BadgeText="{Binding StatusLabel}" BadgeType="{Binding StatusTone}" Margin="6,0,0,0" VerticalAlignment="Center" />
                                             </StackPanel>
                                         </Grid>
                                     </DataTemplate>

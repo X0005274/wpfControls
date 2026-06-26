@@ -26,7 +26,7 @@
             <TextBlock x:Name="RequiredMark"
                        Text="*"
                        FontFamily="{DynamicResource Font.Family}"
-                       FontSize="12" FontWeight="Medium"
+                       FontSize="{StaticResource Font.Size.Label}" FontWeight="Medium"
                        Foreground="{StaticResource Brush.ErrorBorder}"
                        Margin="3,0,0,0" />
         </StackPanel>
@@ -37,17 +37,17 @@
                         Width="150"
                         Height="{StaticResource Size.ControlHeight}"
                         VerticalContentAlignment="Center"
-                        FontSize="13"
+                        FontSize="{StaticResource Font.Size.Body}"
                         IsEnabled="{Binding IsEditorEnabled, ElementName=RootControl}"
                         SelectedDateChanged="OnPartChanged" />
             <ComboBox x:Name="HourCombo" Width="60" Margin="8,0,0,0"
-                      Height="{StaticResource Size.ControlHeight}" FontSize="13"
+                      Height="{StaticResource Size.ControlHeight}" FontSize="{StaticResource Font.Size.Body}"
                       IsEnabled="{Binding IsEditorEnabled, ElementName=RootControl}"
                       SelectionChanged="OnPartChanged" />
             <TextBlock Text=":" VerticalAlignment="Center" Margin="6,0"
-                       FontSize="14" Foreground="{StaticResource Brush.TextSecondary}" />
+                       FontSize="{StaticResource Font.Size.BodyLg}" Foreground="{StaticResource Brush.TextSecondary}" />
             <ComboBox x:Name="MinuteCombo" Width="60"
-                      Height="{StaticResource Size.ControlHeight}" FontSize="13"
+                      Height="{StaticResource Size.ControlHeight}" FontSize="{StaticResource Font.Size.Body}"
                       IsEnabled="{Binding IsEditorEnabled, ElementName=RootControl}"
                       SelectionChanged="OnPartChanged" />
         </StackPanel>
