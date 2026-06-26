@@ -65,12 +65,12 @@ namespace com.example.Demo
             this.queryPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.queryPanel.Location = new System.Drawing.Point(0, 3);
             this.queryPanel.Name = "queryPanel";
-            this.queryPanel.Size = new System.Drawing.Size(840, 104);
+            this.queryPanel.Size = new System.Drawing.Size(1920, 104);
             this.queryPanel.TabIndex = 1;
 
             // lotIdBox (ModernTextBox) — "Lot ID" is the field label, not a region title
             this.lotIdBox.BackColor = System.Drawing.Color.White;
-            this.lotIdBox.Location = new System.Drawing.Point(20, 16);
+            this.lotIdBox.Location = new System.Drawing.Point(300, 16);
             this.lotIdBox.Name = "lotIdBox";
             this.lotIdBox.PlaceholderText = "Enter Lot ID";
             this.lotIdBox.Size = new System.Drawing.Size(280, 72);
@@ -79,7 +79,7 @@ namespace com.example.Demo
 
             // stateCombo (Lot State multi-select filter)
             this.stateCombo.BackColor = System.Drawing.Color.White;
-            this.stateCombo.Location = new System.Drawing.Point(316, 16);
+            this.stateCombo.Location = new System.Drawing.Point(596, 16);
             this.stateCombo.Name = "stateCombo";
             this.stateCombo.PlaceholderText = "All states";
             this.stateCombo.Size = new System.Drawing.Size(200, 72);
@@ -90,7 +90,7 @@ namespace com.example.Demo
             this.searchButton.BackColor = System.Drawing.Color.White;
             this.searchButton.IconGlyph = "\uE721";
             this.searchButton.Kind = com.example.Controls.Wpf.Input.ButtonKind.Secondary;
-            this.searchButton.Location = new System.Drawing.Point(532, 44);
+            this.searchButton.Location = new System.Drawing.Point(812, 44);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(104, 40);
             this.searchButton.TabIndex = 2;
@@ -102,7 +102,7 @@ namespace com.example.Demo
             this.querySeparator.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.querySeparator.Location = new System.Drawing.Point(0, 103);
             this.querySeparator.Name = "querySeparator";
-            this.querySeparator.Size = new System.Drawing.Size(840, 1);
+            this.querySeparator.Size = new System.Drawing.Size(1920, 1);
             this.querySeparator.TabIndex = 2;
 
             // ===== gridPanel (center, gray canvas with floating grid card) =====
@@ -111,8 +111,8 @@ namespace com.example.Demo
             this.gridPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridPanel.Location = new System.Drawing.Point(0, 107);
             this.gridPanel.Name = "gridPanel";
-            this.gridPanel.Padding = new System.Windows.Forms.Padding(20);
-            this.gridPanel.Size = new System.Drawing.Size(840, 418);
+            this.gridPanel.Padding = new System.Windows.Forms.Padding(300, 16, 300, 16);
+            this.gridPanel.Size = new System.Drawing.Size(1920, 418);
             this.gridPanel.TabIndex = 2;
 
             // lotGrid (ModernDataGrid) — renders as a white rounded card
@@ -131,7 +131,7 @@ namespace com.example.Demo
             this.execPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.execPanel.Location = new System.Drawing.Point(0, 525);
             this.execPanel.Name = "execPanel";
-            this.execPanel.Size = new System.Drawing.Size(840, 72);
+            this.execPanel.Size = new System.Drawing.Size(1920, 72);
             this.execPanel.TabIndex = 3;
 
             // execSeparator
@@ -139,14 +139,14 @@ namespace com.example.Demo
             this.execSeparator.Dock = System.Windows.Forms.DockStyle.Top;
             this.execSeparator.Location = new System.Drawing.Point(0, 0);
             this.execSeparator.Name = "execSeparator";
-            this.execSeparator.Size = new System.Drawing.Size(840, 1);
+            this.execSeparator.Size = new System.Drawing.Size(1920, 1);
             this.execSeparator.TabIndex = 0;
 
             // statusLabel (row count) — secondary meta text shown in italic
             this.statusLabel.AutoSize = true;
             this.statusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
             this.statusLabel.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
-            this.statusLabel.Location = new System.Drawing.Point(20, 28);
+            this.statusLabel.Location = new System.Drawing.Point(300, 28);
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(40, 15);
             this.statusLabel.TabIndex = 1;
@@ -157,7 +157,7 @@ namespace com.example.Demo
             this.receiveButton.BackColor = System.Drawing.Color.White;
             this.receiveButton.IconGlyph = "\uE896";
             this.receiveButton.Kind = com.example.Controls.Wpf.Input.ButtonKind.Primary;
-            this.receiveButton.Location = new System.Drawing.Point(670, 14);
+            this.receiveButton.Location = new System.Drawing.Point(1470, 14);
             this.receiveButton.Name = "receiveButton";
             this.receiveButton.Size = new System.Drawing.Size(150, 44);
             this.receiveButton.TabIndex = 2;
@@ -169,14 +169,14 @@ namespace com.example.Demo
             this.accentStrip.Dock = System.Windows.Forms.DockStyle.Top;
             this.accentStrip.Location = new System.Drawing.Point(0, 0);
             this.accentStrip.Name = "accentStrip";
-            this.accentStrip.Size = new System.Drawing.Size(840, 3);
+            this.accentStrip.Size = new System.Drawing.Size(1920, 3);
             this.accentStrip.TabIndex = 0;
 
             // ===== LotReceiveForm =====
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(236, 238, 241);
-            this.ClientSize = new System.Drawing.Size(840, 597);
+            this.ClientSize = new System.Drawing.Size(1920, 768);
             this.Controls.Add(this.gridPanel);
             this.Controls.Add(this.execPanel);
             this.Controls.Add(this.queryPanel);

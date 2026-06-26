@@ -38,7 +38,7 @@
                             <Grid Grid.Column="0" Margin="12,0,2,0">
                                 <TextBlock x:Name="Placeholder"
                                            Text="{Binding PlaceholderText, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                           Foreground="{StaticResource Brush.TextPlaceholder}"
+                                           Foreground="{StaticResource Brush.TextPlaceholder}" FontStyle="Italic"
                                            FontSize="{StaticResource Font.Size.Body}"
                                            VerticalAlignment="Center"
                                            IsHitTestVisible="False"

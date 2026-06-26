@@ -43,7 +43,7 @@
                 <!-- 안내 문구(값이 비었을 때만 보임) -->
                 <TextBlock x:Name="Placeholder"
                            Text="{Binding PlaceholderText, ElementName=RootControl}"
-                           Foreground="{StaticResource Brush.TextPlaceholder}"
+                           Foreground="{StaticResource Brush.TextPlaceholder}" FontStyle="Italic"
                            FontSize="{StaticResource Font.Size.Body}"
                            IsHitTestVisible="False"
                            VerticalAlignment="Center"

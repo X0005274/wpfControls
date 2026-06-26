@@ -104,7 +104,7 @@
                 <Grid>
                     <TextBlock x:Name="PlaceholderLabel"
                                Text="{Binding PlaceholderText, ElementName=RootControl}"
-                               Foreground="{StaticResource Brush.TextPlaceholder}"
+                               Foreground="{StaticResource Brush.TextPlaceholder}" FontStyle="Italic"
                                FontSize="{StaticResource Font.Size.Body}"
                                VerticalAlignment="Center"
                                IsHitTestVisible="False">

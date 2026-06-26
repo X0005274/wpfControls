@@ -13,5 +13,23 @@ namespace com.example.Demo
 
         /// <summary>Badge tone for LotState (success / neutral / danger).</summary>
         public string LotStateTone { get; set; }
+
+        public string Event { get; set; }
+
+        public string EventTime { get; set; }
+
+        public string ProductId { get; set; }
+
+        public string SubProductId { get; set; }
+
+        public string FlowId { get; set; }
+
+        public string OperId { get; set; }
+
+        public string CarrierId { get; set; }
+
+        public string EqpId { get; set; }
+
+        public string StkId { get; set; }
     }
 }

@@ -33,8 +33,17 @@ namespace com.example.Demo
 
         private void ConfigureColumns()
         {
-            this.lotGrid.AddTextColumn("Lot Id", "LotId", "*");
-            this.lotGrid.AddBadgeColumn("Lot State", "LotState", "LotStateTone", "220");
+            this.lotGrid.AddTextColumn("Lot Id", "LotId", "130");
+            this.lotGrid.AddBadgeColumn("Lot State", "LotState", "LotStateTone", "120");
+            this.lotGrid.AddTextColumn("Event", "Event", "110");
+            this.lotGrid.AddTextColumn("Event Time", "EventTime", "160");
+            this.lotGrid.AddTextColumn("Product Id", "ProductId", "120");
+            this.lotGrid.AddTextColumn("Sub Product Id", "SubProductId", "140");
+            this.lotGrid.AddTextColumn("Flow Id", "FlowId", "110");
+            this.lotGrid.AddTextColumn("Oper Id", "OperId", "100");
+            this.lotGrid.AddTextColumn("Carrier Id", "CarrierId", "120");
+            this.lotGrid.AddTextColumn("Eqp Id", "EqpId", "100");
+            this.lotGrid.AddTextColumn("Stk Id", "StkId", "*");
         }
 
         private List<LotGridRow> BuildSampleData()
@@ -50,19 +59,42 @@ namespace com.example.Demo
             for (int index = 0; index < states.Length; index++)
             {
                 string lotId = "TH" + (10001 + index).ToString();
-                rows.Add(this.NewRow(lotId, states[index]));
+                rows.Add(this.NewRow(lotId, states[index], index));
             }
 
             return rows;
         }
 
-        private LotGridRow NewRow(string lotId, string lotState)
+        private LotGridRow NewRow(string lotId, string lotState, int index)
         {
             LotGridRow row = new LotGridRow();
             row.LotId = lotId;
             row.LotState = lotState;
             row.LotStateTone = this.ToneForState(lotState);
+            row.Event = this.EventForState(lotState);
+            row.EventTime = new DateTime(2026, 6, 27, 8, 0, 0).AddMinutes(index * 37).ToString("yyyy-MM-dd HH:mm:ss");
+            row.ProductId = "PRD-" + (100 + index).ToString();
+            row.SubProductId = "SUB-" + (index + 1).ToString("D2");
+            row.FlowId = "FLOW-" + ((index % 3) + 1).ToString();
+            row.OperId = "OP" + (1010 + index * 10).ToString();
+            row.CarrierId = "CAR" + (200 + index).ToString();
+            row.EqpId = "EQP" + (10 + index).ToString();
+            row.StkId = "STK" + (5 + index).ToString();
             return row;
+        }
+
+        private string EventForState(string lotState)
+        {
+            if (lotState == "Created")
+            {
+                return "Create";
+            }
+            if (lotState == "Scrapped")
+            {
+                return "Scrap";
+            }
+
+            return "Release";
         }
 
         private string ToneForState(string lotState)

@@ -32,6 +32,7 @@
     <SolidColorBrush x:Key="Brush.Surface" Color="#FFFFFFFF" />
     <SolidColorBrush x:Key="Brush.SurfaceAlt" Color="#FFF9FAFB" />
     <SolidColorBrush x:Key="Brush.HeaderBackground" Color="#FFF3F4F6" />
+    <SolidColorBrush x:Key="Brush.GridHeaderBackground" Color="#FFEFF3FA" />
     <SolidColorBrush x:Key="Brush.Border" Color="#FFD1D5DB" />
     <SolidColorBrush x:Key="Brush.BorderSubtle" Color="#FFE5E7EB" />
     <SolidColorBrush x:Key="Brush.BorderHover" Color="#FF9CA3AF" />
@@ -110,13 +111,13 @@
     <Style x:Key="Text.Title" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource Font.Family}" />
         <Setter Property="FontSize" Value="{StaticResource Font.Size.Title}" />
-        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
     </Style>
     <Style x:Key="Text.Label" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource Font.Family}" />
         <Setter Property="FontSize" Value="{StaticResource Font.Size.Label}" />
-        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}" />
     </Style>
     <Style x:Key="Text.Body" TargetType="TextBlock">

@@ -26,7 +26,8 @@
         <TextBlock x:Name="BadgeTextBlock"
                    Text="{Binding BadgeText, ElementName=RootControl}"
                    FontSize="{StaticResource Font.Size.Helper}"
-                   FontWeight="Medium"
+                   FontWeight="Normal"
+                   FontStyle="Italic"
                    Foreground="{StaticResource Brush.NeutralText}"
                    VerticalAlignment="Center" />
     </Border>
