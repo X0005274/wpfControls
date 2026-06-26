@@ -374,6 +374,7 @@
     <Compile Include="Controls\Wpf\Data\ModernDataGridControl.xaml.cs">
       <DependentUpon>ModernDataGridControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Wpf\Data\ModernDataGridColumn.cs" />
     <Compile Include="Controls\Wpf\Data\MatteDataGridControl.xaml.cs">
       <DependentUpon>MatteDataGridControl.xaml</DependentUpon>
     </Compile>

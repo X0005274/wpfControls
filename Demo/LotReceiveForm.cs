@@ -12,55 +12,105 @@ namespace com.example.Demo
     public partial class LotReceiveForm : Form
     {
         private readonly List<LotGridRow> allRows;
+        private List<LotGridRow> shownRows;
 
         public LotReceiveForm()
         {
             this.InitializeComponent();
+            this.ConfigureColumns();
+            this.ConfigureStateFilter();
+            this.lotGrid.SelectionChanged += this.LotGrid_SelectionChanged;
             this.allRows = this.BuildSampleData();
             this.ShowRows(this.allRows);
         }
 
+        private void ConfigureStateFilter()
+        {
+            List<string> states = new List<string> { "All", "Created", "Released", "Scrapped" };
+            this.stateCombo.ItemsSource = states;
+            this.stateCombo.SelectedItem = "All";
+        }
+
+        private void ConfigureColumns()
+        {
+            this.lotGrid.AddTextColumn("Lot Id", "LotId", "*");
+            this.lotGrid.AddBadgeColumn("Lot State", "LotState", "LotStateTone", "220");
+        }
+
         private List<LotGridRow> BuildSampleData()
         {
+            // TH10001 ~ TH10010, with a mix of the three states.
+            string[] states = new string[]
+            {
+                "Created", "Released", "Released", "Scrapped", "Created",
+                "Released", "Created", "Scrapped", "Released", "Created"
+            };
+
             List<LotGridRow> rows = new List<LotGridRow>();
-            rows.Add(this.NewRow("LOT240601001", "PRD-A100", "WAFER", "MEMORY", "DRAM", "2026-06-25 09:12:33", "TRACK_IN", "OP1010"));
-            rows.Add(this.NewRow("LOT240601002", "PRD-A101", "WAFER", "MEMORY", "NAND", "2026-06-25 14:05:07", "TRACK_OUT", "OP1020"));
-            rows.Add(this.NewRow("LOT240602010", "PRD-B200", "PACKAGE", "LOGIC", "AP", "2026-06-26 08:41:19", "HOLD", "OP2030"));
-            rows.Add(this.NewRow("LOT240602011", "PRD-B201", "PACKAGE", "LOGIC", "MODEM", "2026-06-26 10:27:58", "RELEASE", "OP2031"));
-            rows.Add(this.NewRow("LOT240603022", "PRD-C300", "TEST", "SENSOR", "CIS", "2026-06-26 16:03:44", "TRACK_IN", "OP3040"));
+            for (int index = 0; index < states.Length; index++)
+            {
+                string lotId = "TH" + (10001 + index).ToString();
+                rows.Add(this.NewRow(lotId, states[index]));
+            }
+
             return rows;
         }
 
-        private LotGridRow NewRow(
-            string lotId,
-            string prodId,
-            string produceType,
-            string prodType,
-            string subProdType,
-            string lastEventTime,
-            string lastEventCd,
-            string operId)
+        private LotGridRow NewRow(string lotId, string lotState)
         {
             LotGridRow row = new LotGridRow();
             row.LotId = lotId;
-            row.ProdId = prodId;
-            row.ProduceType = produceType;
-            row.ProdType = prodType;
-            row.SubProdType = subProdType;
-            row.LastEventTime = lastEventTime;
-            row.LastEventCd = lastEventCd;
-            row.OperId = operId;
+            row.LotState = lotState;
+            row.LotStateTone = this.ToneForState(lotState);
             return row;
+        }
+
+        private string ToneForState(string lotState)
+        {
+            if (lotState == "Created")
+            {
+                return "success";
+            }
+            if (lotState == "Scrapped")
+            {
+                return "danger";
+            }
+
+            // Released → default (neutral).
+            return "neutral";
         }
 
         private void ShowRows(List<LotGridRow> rows)
         {
             // Reassign a fresh list so the grid regenerates its rows.
+            this.shownRows = rows;
             this.lotGrid.ItemsSource = null;
             this.lotGrid.ItemsSource = rows;
+            this.UpdateExecutionState();
+        }
 
+        private void LotGrid_SelectionChanged(object sender, EventArgs e)
+        {
+            this.UpdateExecutionState();
+        }
+
+        /// <summary>
+        /// Drives the execution area: when a row is selected, show the selected lot
+        /// and enable Receive Lot; otherwise show the row count and disable it.
+        /// </summary>
+        private void UpdateExecutionState()
+        {
+            LotGridRow selected = this.lotGrid.SelectedItem as LotGridRow;
+            if (selected != null)
+            {
+                this.receiveButton.IsButtonEnabled = true;
+                this.statusLabel.Text = "Selected: " + selected.LotId + " (" + selected.LotState + ")";
+                return;
+            }
+
+            this.receiveButton.IsButtonEnabled = false;
             int total = this.allRows.Count;
-            int shown = rows.Count;
+            int shown = this.shownRows == null ? 0 : this.shownRows.Count;
             if (shown == total)
             {
                 this.statusLabel.Text = total + " lots";
@@ -74,16 +124,19 @@ namespace com.example.Demo
         private void SearchButton_Click(object sender, EventArgs e)
         {
             string keyword = (this.lotIdBox.Text ?? string.Empty).Trim();
-            if (keyword.Length == 0)
+            string state = this.stateCombo.SelectedItem as string;
+            if (string.IsNullOrEmpty(state))
             {
-                this.ShowRows(this.allRows);
-                return;
+                state = "All";
             }
 
             List<LotGridRow> matched = new List<LotGridRow>();
             foreach (LotGridRow row in this.allRows)
             {
-                if (row.LotId != null && row.LotId.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0)
+                bool lotIdOk = keyword.Length == 0
+                    || (row.LotId != null && row.LotId.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0);
+                bool stateOk = state == "All" || row.LotState == state;
+                if (lotIdOk && stateOk)
                 {
                     matched.Add(row);
                 }

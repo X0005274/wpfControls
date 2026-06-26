@@ -29,7 +29,7 @@
                        Text="{Binding Label, ElementName=RootControl}" />
             <TextBlock Text="{Binding Value, ElementName=RootControl}"
                        FontSize="{StaticResource Font.Size.Display}"
-                       FontWeight="SemiBold"
+                       FontWeight="Medium"
                        Margin="0,4,0,0"
                        Foreground="{StaticResource Brush.TextPrimary}" />
             <TextBlock x:Name="CaptionText"

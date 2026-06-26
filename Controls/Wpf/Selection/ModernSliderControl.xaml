@@ -121,7 +121,7 @@
                        Text="{Binding Title, ElementName=RootControl}" />
             <TextBlock FontFamily="{DynamicResource Font.Family}"
                        FontSize="{StaticResource Font.Size.Body}"
-                       FontWeight="SemiBold"
+                       FontWeight="Medium"
                        Foreground="{StaticResource Brush.Accent}"
                        HorizontalAlignment="Right"
                        Text="{Binding Value, ElementName=RootControl, StringFormat={}{0:0.##}}" />

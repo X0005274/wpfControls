@@ -28,7 +28,7 @@
         <StackPanel Grid.Column="0" VerticalAlignment="Center">
             <TextBlock Text="{Binding Title, ElementName=RootControl}"
                        FontSize="{StaticResource Font.Size.Heading}"
-                       FontWeight="SemiBold"
+                       FontWeight="Medium"
                        Foreground="{StaticResource Brush.TextPrimary}" />
             <TextBlock x:Name="SubtitleText"
                        Style="{StaticResource Text.Helper}"

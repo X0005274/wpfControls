@@ -16,6 +16,7 @@ namespace com.example.Demo
         private System.Windows.Forms.Panel queryPanel;
         private com.example.WinForms.Controls.Input.ModernTextBox lotIdBox;
         private com.example.WinForms.Controls.Input.ModernButton searchButton;
+        private com.example.WinForms.Controls.Selection.ModernComboBox stateCombo;
         private System.Windows.Forms.Panel querySeparator;
 
         private System.Windows.Forms.Panel gridPanel;
@@ -42,6 +43,7 @@ namespace com.example.Demo
             this.queryPanel = new System.Windows.Forms.Panel();
             this.lotIdBox = new com.example.WinForms.Controls.Input.ModernTextBox();
             this.searchButton = new com.example.WinForms.Controls.Input.ModernButton();
+            this.stateCombo = new com.example.WinForms.Controls.Selection.ModernComboBox();
             this.querySeparator = new System.Windows.Forms.Panel();
             this.gridPanel = new System.Windows.Forms.Panel();
             this.lotGrid = new com.example.WinForms.Controls.Data.ModernDataGrid();
@@ -57,6 +59,7 @@ namespace com.example.Demo
             // ===== queryPanel (top toolbar) =====
             this.queryPanel.BackColor = System.Drawing.Color.White;
             this.queryPanel.Controls.Add(this.searchButton);
+            this.queryPanel.Controls.Add(this.stateCombo);
             this.queryPanel.Controls.Add(this.lotIdBox);
             this.queryPanel.Controls.Add(this.querySeparator);
             this.queryPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -70,17 +73,25 @@ namespace com.example.Demo
             this.lotIdBox.Location = new System.Drawing.Point(20, 16);
             this.lotIdBox.Name = "lotIdBox";
             this.lotIdBox.PlaceholderText = "Enter Lot ID";
-            this.lotIdBox.Size = new System.Drawing.Size(300, 72);
+            this.lotIdBox.Size = new System.Drawing.Size(280, 72);
             this.lotIdBox.TabIndex = 0;
             this.lotIdBox.Title = "Lot ID";
+
+            // stateCombo (Lot State filter)
+            this.stateCombo.BackColor = System.Drawing.Color.White;
+            this.stateCombo.Location = new System.Drawing.Point(316, 16);
+            this.stateCombo.Name = "stateCombo";
+            this.stateCombo.Size = new System.Drawing.Size(200, 72);
+            this.stateCombo.TabIndex = 1;
+            this.stateCombo.Title = "Lot State";
 
             // searchButton (Secondary)
             this.searchButton.BackColor = System.Drawing.Color.White;
             this.searchButton.Kind = com.example.Controls.Wpf.Input.ButtonKind.Secondary;
-            this.searchButton.Location = new System.Drawing.Point(336, 44);
+            this.searchButton.Location = new System.Drawing.Point(532, 44);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(96, 40);
-            this.searchButton.TabIndex = 1;
+            this.searchButton.TabIndex = 2;
             this.searchButton.Text = "Search";
             this.searchButton.Click += new System.EventHandler(this.SearchButton_Click);
 
@@ -129,8 +140,9 @@ namespace com.example.Demo
             this.execSeparator.Size = new System.Drawing.Size(840, 1);
             this.execSeparator.TabIndex = 0;
 
-            // statusLabel (row count)
+            // statusLabel (row count) — secondary meta text shown in italic
             this.statusLabel.AutoSize = true;
+            this.statusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
             this.statusLabel.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
             this.statusLabel.Location = new System.Drawing.Point(20, 28);
             this.statusLabel.Name = "statusLabel";

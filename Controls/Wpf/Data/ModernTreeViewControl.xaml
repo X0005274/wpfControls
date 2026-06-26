@@ -102,7 +102,7 @@
                                 <Trigger Property="IsSelected" Value="True">
                                     <Setter TargetName="HeaderBorder" Property="Background" Value="{StaticResource Brush.SelectedBackground}" />
                                     <Setter Property="Foreground" Value="{StaticResource Brush.SelectedText}" />
-                                    <Setter Property="FontWeight" Value="SemiBold" />
+                                    <Setter Property="FontWeight" Value="Medium" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>

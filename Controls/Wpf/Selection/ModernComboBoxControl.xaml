@@ -64,7 +64,7 @@
                                     <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource Brush.SelectedBackground}" />
                                     <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
                                     <Setter Property="Foreground" Value="{StaticResource Brush.SelectedText}" />
-                                    <Setter Property="FontWeight" Value="SemiBold" />
+                                    <Setter Property="FontWeight" Value="Medium" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>

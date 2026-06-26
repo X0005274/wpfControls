@@ -94,7 +94,7 @@
 
         <StackPanel Grid.Column="0" VerticalAlignment="Center">
             <TextBlock Style="{StaticResource Text.Body}"
-                       FontWeight="SemiBold"
+                       FontWeight="Medium"
                        Text="{Binding Title, ElementName=RootControl}" />
             <TextBlock Style="{StaticResource Text.Helper}"
                        Margin="0,2,0,0"

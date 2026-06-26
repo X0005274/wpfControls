@@ -108,7 +108,7 @@
     <Style x:Key="Text.Title" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource Font.Family}" />
         <Setter Property="FontSize" Value="{StaticResource Font.Size.Title}" />
-        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
     </Style>
     <Style x:Key="Text.Label" TargetType="TextBlock">

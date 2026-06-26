@@ -29,7 +29,7 @@
                 <Setter Property="Padding" Value="18,0" />
                 <Setter Property="MinWidth" Value="76" />
                 <Setter Property="FontSize" Value="13" />
-                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="FontWeight" Value="Medium" />
                 <Setter Property="Foreground" Value="White" />
                 <Setter Property="Background" Value="{StaticResource Brush.Accent}" />
                 <Setter Property="Cursor" Value="Hand" />
@@ -92,7 +92,7 @@
                 <TextBlock x:Name="TitleText"
                            Text="알림"
                            Margin="24,20,24,0"
-                           FontSize="{StaticResource Font.Size.Subtitle}" FontWeight="SemiBold"
+                           FontSize="{StaticResource Font.Size.Subtitle}" FontWeight="Medium"
                            Foreground="{StaticResource Brush.TextPrimary}" />
             </Border>
 

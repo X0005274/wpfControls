@@ -22,7 +22,7 @@
                 <Setter Property="Background" Value="{StaticResource Brush.Accent}" />
                 <Setter Property="Foreground" Value="White" />
                 <Setter Property="FontSize" Value="13" />
-                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="FontWeight" Value="Medium" />
                 <Setter Property="Height" Value="36" />
                 <Setter Property="Padding" Value="16,0" />
                 <Setter Property="Cursor" Value="Hand" />
@@ -117,7 +117,7 @@
             <!-- Card title -->
             <Style x:Key="CardTitleStyle" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="14" />
-                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="FontWeight" Value="Medium" />
                 <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
                 <Setter Property="Margin" Value="0,0,0,12" />
             </Style>
@@ -173,7 +173,7 @@
                 <Setter Property="Background" Value="{StaticResource Brush.HeaderBackground}" />
                 <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}" />
                 <Setter Property="FontSize" Value="12" />
-                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="FontWeight" Value="Medium" />
                 <Setter Property="Height" Value="38" />
                 <Setter Property="Padding" Value="12,0" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -228,7 +228,7 @@
                        Text="승인·예외처리"
                        VerticalAlignment="Center"
                        FontSize="{StaticResource Font.Size.PageTitle}"
-                       FontWeight="SemiBold"
+                       FontWeight="Medium"
                        Foreground="{StaticResource Brush.TextPrimary}" />
             <Button Grid.Column="1"
                     x:Name="CreateButton"
@@ -351,7 +351,7 @@
                                             <TextBlock Grid.Column="0"
                                                        Text="{Binding NameWithId}"
                                                        FontSize="{StaticResource Font.Size.Body}"
-                                                       FontWeight="SemiBold"
+                                                       FontWeight="Medium"
                                                        Foreground="{StaticResource Brush.TextPrimary}"
                                                        VerticalAlignment="Center"
                                                        TextTrimming="CharacterEllipsis" />
@@ -409,7 +409,7 @@
                                 HorizontalAlignment="Center">
                         <TextBlock Text="예외를 선택하세요."
                                    FontSize="{StaticResource Font.Size.BodyLg}"
-                                   FontWeight="SemiBold"
+                                   FontWeight="Medium"
                                    HorizontalAlignment="Center"
                                    Foreground="{StaticResource Brush.TextPrimary}" />
                         <TextBlock Text="좌측 목록에서 처리할 예외를 선택하면 상세가 표시됩니다."
@@ -433,7 +433,7 @@
                                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                                     <TextBlock x:Name="DetailName"
                                                FontSize="{StaticResource Font.Size.Title}"
-                                               FontWeight="SemiBold"
+                                               FontWeight="Medium"
                                                Foreground="{StaticResource Brush.TextPrimary}" />
                                     <TextBlock x:Name="DetailType"
                                                FontSize="{StaticResource Font.Size.Label}"

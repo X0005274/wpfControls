@@ -38,5 +38,14 @@ namespace com.example.WinForms.Controls.Input
             get { return this.Wpf.Kind; }
             set { this.Wpf.Kind = value; }
         }
+
+        /// <summary>버튼 활성/비활성. 비활성이면 흐려지고 클릭되지 않습니다.</summary>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool IsButtonEnabled
+        {
+            get { return this.Wpf.IsEnabled; }
+            set { this.Wpf.IsEnabled = value; }
+        }
     }
 }

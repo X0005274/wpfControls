@@ -47,7 +47,7 @@
             <Style x:Key="SegmentButtonSelectedStyle" TargetType="Button" BasedOn="{StaticResource SegmentButtonStyle}">
                 <Setter Property="Background" Value="{StaticResource Brush.Surface}" />
                 <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
-                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="FontWeight" Value="Medium" />
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
