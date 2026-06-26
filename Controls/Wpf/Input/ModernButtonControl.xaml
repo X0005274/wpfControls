@@ -21,7 +21,7 @@
             <Style x:Key="ModernButtonStyle" TargetType="Button">
                 <Setter Property="FontFamily" Value="{DynamicResource Font.Family}" />
                 <Setter Property="FontSize" Value="13" />
-                <Setter Property="FontWeight" Value="Medium" />
+                <Setter Property="FontWeight" Value="Normal" />
                 <Setter Property="Height" Value="{StaticResource Size.ControlHeight}" />
                 <Setter Property="Padding" Value="16,0" />
                 <Setter Property="Cursor" Value="Hand" />
@@ -43,10 +43,6 @@
                                                   Margin="{TemplateBinding Padding}" />
                             </Border>
                             <ControlTemplate.Triggers>
-                                <!-- 마우스를 올리면 살짝 어두운 강조색으로 -->
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="Bg" Property="Opacity" Value="0.92" />
-                                </Trigger>
                                 <!-- 비활성 상태: 흐리게 -->
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter TargetName="Bg" Property="Opacity" Value="0.5" />
@@ -69,14 +65,88 @@
                         <Setter Property="Foreground" Value="White" />
                         <Setter Property="BorderBrush" Value="{StaticResource Brush.ErrorBorder}" />
                     </DataTrigger>
+
+                    <!-- Primary: 호버=진한 파랑, 클릭=더 진한 파랑 -->
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Kind, ElementName=RootControl}" Value="Primary" />
+                            <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Background" Value="{StaticResource Brush.AccentHover}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource Brush.AccentHover}" />
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Kind, ElementName=RootControl}" Value="Primary" />
+                            <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Background" Value="{StaticResource Brush.AccentPressed}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource Brush.AccentPressed}" />
+                    </MultiDataTrigger>
+
+                    <!-- Secondary: 호버=옅은 파란 톤 + 파란 글자/테두리(포인트), 클릭=약간 더 진한 파랑 톤 -->
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Kind, ElementName=RootControl}" Value="Secondary" />
+                            <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Background" Value="{StaticResource Brush.InfoBackground}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource Brush.Accent}" />
+                        <Setter Property="Foreground" Value="{StaticResource Brush.Accent}" />
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Kind, ElementName=RootControl}" Value="Secondary" />
+                            <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Background" Value="{StaticResource Brush.SelectedBackground}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource Brush.AccentHover}" />
+                        <Setter Property="Foreground" Value="{StaticResource Brush.AccentHover}" />
+                    </MultiDataTrigger>
+
+                    <!-- Danger: 호버/클릭 시 더 진한 빨강 -->
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Kind, ElementName=RootControl}" Value="Danger" />
+                            <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Background" Value="{StaticResource Brush.ErrorText}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource Brush.ErrorText}" />
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Kind, ElementName=RootControl}" Value="Danger" />
+                            <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Background" Value="{StaticResource Brush.DangerPressed}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource Brush.DangerPressed}" />
+                    </MultiDataTrigger>
                 </Style.Triggers>
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <!-- 실제 버튼: 표시 글자(Text)와 클릭 이벤트를 바깥으로 노출합니다. -->
+    <!-- 실제 버튼: 아이콘(선택) + 표시 글자(Text), 클릭 이벤트를 바깥으로 노출합니다. -->
     <Button x:Name="InnerButton"
             Style="{StaticResource ModernButtonStyle}"
-            Content="{Binding Text, ElementName=RootControl}"
-            Click="InnerButton_Click" />
+            Click="InnerButton_Click">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <TextBlock FontFamily="Segoe MDL2 Assets"
+                       FontSize="14"
+                       VerticalAlignment="Center"
+                       Margin="0,0,8,0"
+                       Text="{Binding IconGlyph, ElementName=RootControl}">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IconGlyph, ElementName=RootControl}" Value="">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <TextBlock Text="{Binding Text, ElementName=RootControl}" VerticalAlignment="Center" />
+        </StackPanel>
+    </Button>
 </UserControl>

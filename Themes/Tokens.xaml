@@ -40,6 +40,8 @@
     <SolidColorBrush x:Key="Brush.TextPlaceholder" Color="#FF9CA3AF" />
     <SolidColorBrush x:Key="Brush.Accent" Color="#FF2563EB" />
     <SolidColorBrush x:Key="Brush.AccentHover" Color="#FF1D4ED8" />
+    <SolidColorBrush x:Key="Brush.AccentPressed" Color="#FF1E40AF" />
+    <SolidColorBrush x:Key="Brush.DangerPressed" Color="#FF991B1B" />
     <SolidColorBrush x:Key="Brush.SelectedBackground" Color="#FFDBEAFE" />
     <SolidColorBrush x:Key="Brush.SelectedText" Color="#FF1E3A8A" />
     <SolidColorBrush x:Key="Brush.HoverBackground" Color="#FFF3F4F6" />

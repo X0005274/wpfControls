@@ -26,9 +26,9 @@ namespace com.example.Demo
 
         private void ConfigureStateFilter()
         {
-            List<string> states = new List<string> { "All", "Created", "Released", "Scrapped" };
+            // Multi-select check combo; nothing checked = no state filter (all states).
+            List<string> states = new List<string> { "Created", "Released", "Scrapped" };
             this.stateCombo.ItemsSource = states;
-            this.stateCombo.SelectedItem = "All";
         }
 
         private void ConfigureColumns()
@@ -124,10 +124,18 @@ namespace com.example.Demo
         private void SearchButton_Click(object sender, EventArgs e)
         {
             string keyword = (this.lotIdBox.Text ?? string.Empty).Trim();
-            string state = this.stateCombo.SelectedItem as string;
-            if (string.IsNullOrEmpty(state))
+
+            HashSet<string> selectedStates = new HashSet<string>();
+            System.Collections.IList checkedItems = this.stateCombo.SelectedItems;
+            if (checkedItems != null)
             {
-                state = "All";
+                foreach (object item in checkedItems)
+                {
+                    if (item != null)
+                    {
+                        selectedStates.Add(item.ToString());
+                    }
+                }
             }
 
             List<LotGridRow> matched = new List<LotGridRow>();
@@ -135,7 +143,7 @@ namespace com.example.Demo
             {
                 bool lotIdOk = keyword.Length == 0
                     || (row.LotId != null && row.LotId.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0);
-                bool stateOk = state == "All" || row.LotState == state;
+                bool stateOk = selectedStates.Count == 0 || selectedStates.Contains(row.LotState);
                 if (lotIdOk && stateOk)
                 {
                     matched.Add(row);

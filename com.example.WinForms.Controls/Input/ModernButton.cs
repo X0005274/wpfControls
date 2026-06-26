@@ -47,5 +47,15 @@ namespace com.example.WinForms.Controls.Input
             get { return this.Wpf.IsEnabled; }
             set { this.Wpf.IsEnabled = value; }
         }
+
+        /// <summary>버튼 글자 앞 아이콘 글리프(Segoe MDL2 Assets). 예: ""(검색).</summary>
+        [Category("모던 컨트롤")]
+        [Description("버튼 글자 앞 아이콘 글리프(Segoe MDL2 Assets)")]
+        [DefaultValue("")]
+        public string IconGlyph
+        {
+            get { return this.Wpf.IconGlyph; }
+            set { this.Wpf.IconGlyph = value; }
+        }
     }
 }

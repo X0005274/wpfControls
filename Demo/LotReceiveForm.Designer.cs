@@ -16,7 +16,7 @@ namespace com.example.Demo
         private System.Windows.Forms.Panel queryPanel;
         private com.example.WinForms.Controls.Input.ModernTextBox lotIdBox;
         private com.example.WinForms.Controls.Input.ModernButton searchButton;
-        private com.example.WinForms.Controls.Selection.ModernComboBox stateCombo;
+        private com.example.WinForms.Controls.Selection.ModernMultiSelectComboBox stateCombo;
         private System.Windows.Forms.Panel querySeparator;
 
         private System.Windows.Forms.Panel gridPanel;
@@ -43,7 +43,7 @@ namespace com.example.Demo
             this.queryPanel = new System.Windows.Forms.Panel();
             this.lotIdBox = new com.example.WinForms.Controls.Input.ModernTextBox();
             this.searchButton = new com.example.WinForms.Controls.Input.ModernButton();
-            this.stateCombo = new com.example.WinForms.Controls.Selection.ModernComboBox();
+            this.stateCombo = new com.example.WinForms.Controls.Selection.ModernMultiSelectComboBox();
             this.querySeparator = new System.Windows.Forms.Panel();
             this.gridPanel = new System.Windows.Forms.Panel();
             this.lotGrid = new com.example.WinForms.Controls.Data.ModernDataGrid();
@@ -77,20 +77,22 @@ namespace com.example.Demo
             this.lotIdBox.TabIndex = 0;
             this.lotIdBox.Title = "Lot ID";
 
-            // stateCombo (Lot State filter)
+            // stateCombo (Lot State multi-select filter)
             this.stateCombo.BackColor = System.Drawing.Color.White;
             this.stateCombo.Location = new System.Drawing.Point(316, 16);
             this.stateCombo.Name = "stateCombo";
+            this.stateCombo.PlaceholderText = "All states";
             this.stateCombo.Size = new System.Drawing.Size(200, 72);
             this.stateCombo.TabIndex = 1;
             this.stateCombo.Title = "Lot State";
 
-            // searchButton (Secondary)
+            // searchButton (Secondary, with search icon)
             this.searchButton.BackColor = System.Drawing.Color.White;
+            this.searchButton.IconGlyph = "\uE721";
             this.searchButton.Kind = com.example.Controls.Wpf.Input.ButtonKind.Secondary;
             this.searchButton.Location = new System.Drawing.Point(532, 44);
             this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(96, 40);
+            this.searchButton.Size = new System.Drawing.Size(104, 40);
             this.searchButton.TabIndex = 2;
             this.searchButton.Text = "Search";
             this.searchButton.Click += new System.EventHandler(this.SearchButton_Click);
@@ -153,6 +155,7 @@ namespace com.example.Demo
             // receiveButton (Primary, right-aligned)
             this.receiveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.receiveButton.BackColor = System.Drawing.Color.White;
+            this.receiveButton.IconGlyph = "\uE896";
             this.receiveButton.Kind = com.example.Controls.Wpf.Input.ButtonKind.Primary;
             this.receiveButton.Location = new System.Drawing.Point(670, 14);
             this.receiveButton.Name = "receiveButton";
