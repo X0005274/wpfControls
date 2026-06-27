@@ -136,16 +136,18 @@ namespace com.example.Demo
             this.searchButton.BackColor = System.Drawing.Color.White;
             this.searchButton.IconGlyph = "\uE721";
             this.searchButton.Kind = com.example.Controls.Wpf.Input.ButtonKind.Secondary;
+            // Y=40 lines up with the input field boxes (label 24 + control top 16);
+            // height 32 matches the field height (Size.ControlHeight) so the row aligns.
             this.searchButton.Location = new System.Drawing.Point(688, 40);
             this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(104, 40);
+            this.searchButton.Size = new System.Drawing.Size(104, 32);
             this.searchButton.TabIndex = 3;
             this.searchButton.Text = "Search";
             this.searchButton.Click += new System.EventHandler(this.SearchButton_Click);
 
             // ===== gridSplit (Lot | Wafer — 가운데 스플리터로 넓이 조절) =====
             this.gridSplit.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.gridSplit.BackColor = System.Drawing.Color.FromArgb(225, 229, 235);
+            // Splitter gutter colour is owned by FocuslessSplitContainer (blends with canvas).
             this.gridSplit.Location = new System.Drawing.Point(16, 136);
             this.gridSplit.Name = "gridSplit";
             this.gridSplit.Size = new System.Drawing.Size(1888, 520);

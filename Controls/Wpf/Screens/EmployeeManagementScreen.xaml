@@ -235,7 +235,7 @@
                        VerticalAlignment="Center"
                        FontFamily="{DynamicResource Font.Family}"
                        FontSize="{StaticResource Font.Size.PageTitle}"
-                       FontWeight="Medium"
+                       FontWeight="SemiBold"
                        Foreground="{StaticResource Brush.TextPrimary}" />
 
             <StackPanel Grid.Column="1" Orientation="Horizontal">
@@ -338,7 +338,7 @@
         <!-- 3. Result count -->
         <TextBlock Grid.Row="2" Margin="2,0,0,8">
             <Run Text="총 " Foreground="{StaticResource Brush.TextSecondary}" FontSize="{StaticResource Font.Size.Body}" />
-            <Run x:Name="TotalCountRun" Text="0" Foreground="{StaticResource Brush.TextPrimary}" FontSize="{StaticResource Font.Size.Body}" FontWeight="Medium" />
+            <Run x:Name="TotalCountRun" Text="0" Foreground="{StaticResource Brush.TextPrimary}" FontSize="{StaticResource Font.Size.Body}" FontWeight="SemiBold" />
             <Run Text="명" Foreground="{StaticResource Brush.TextSecondary}" FontSize="{StaticResource Font.Size.Body}" />
         </TextBlock>
 
@@ -418,7 +418,7 @@
                    Text="직원 신규등록"
                    Margin="0,0,0,16"
                    FontSize="{StaticResource Font.Size.PageTitle}"
-                   FontWeight="Medium"
+                   FontWeight="SemiBold"
                    Foreground="{StaticResource Brush.TextPrimary}" />
 
         <!-- Form -->

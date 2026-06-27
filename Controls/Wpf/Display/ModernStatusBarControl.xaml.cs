@@ -63,38 +63,53 @@ namespace com.example.Controls.Wpf.Display
 
             string type = this.StatusType ?? "Info";
 
-            Color background;
-            Color border;
-            Color accent;
+            string backgroundKey;
+            string borderKey;
+            string accentKey;
 
             if (string.Equals(type, "Success", StringComparison.OrdinalIgnoreCase))
             {
-                background = (Color)ColorConverter.ConvertFromString("#FFECFDF3");
-                border = (Color)ColorConverter.ConvertFromString("#FFA6F4C5");
-                accent = (Color)ColorConverter.ConvertFromString("#FF16A34A");
+                backgroundKey = "Brush.SuccessBackground";
+                borderKey = "Brush.SuccessBorder";
+                accentKey = "Brush.Success";
             }
             else if (string.Equals(type, "Warning", StringComparison.OrdinalIgnoreCase))
             {
-                background = (Color)ColorConverter.ConvertFromString("#FFFFFBEB");
-                border = (Color)ColorConverter.ConvertFromString("#FFFDE68A");
-                accent = (Color)ColorConverter.ConvertFromString("#FFD97706");
+                backgroundKey = "Brush.WarningBackground";
+                borderKey = "Brush.WarningBorder";
+                accentKey = "Brush.Warning";
             }
             else if (string.Equals(type, "Error", StringComparison.OrdinalIgnoreCase))
             {
-                background = (Color)ColorConverter.ConvertFromString("#FFFEF2F2");
-                border = (Color)ColorConverter.ConvertFromString("#FFFECACA");
-                accent = (Color)ColorConverter.ConvertFromString("#FFDC2626");
+                backgroundKey = "Brush.ErrorBackground";
+                borderKey = "Brush.ErrorBorderSoft";
+                accentKey = "Brush.ErrorBorder";
             }
             else
             {
-                background = (Color)ColorConverter.ConvertFromString("#FFEFF6FF");
-                border = (Color)ColorConverter.ConvertFromString("#FFBFDBFE");
-                accent = (Color)ColorConverter.ConvertFromString("#FF2563EB");
+                backgroundKey = "Brush.InfoBackground";
+                borderKey = "Brush.InfoBorder";
+                accentKey = "Brush.Accent";
             }
 
-            this.StatusBorder.Background = new SolidColorBrush(background);
-            this.StatusBorder.BorderBrush = new SolidColorBrush(border);
-            this.Indicator.Fill = new SolidColorBrush(accent);
+            Brush background = this.TryFindResource(backgroundKey) as Brush;
+            Brush border = this.TryFindResource(borderKey) as Brush;
+            Brush accent = this.TryFindResource(accentKey) as Brush;
+
+            if (background != null)
+            {
+                this.StatusBorder.Background = background;
+            }
+
+            if (border != null)
+            {
+                this.StatusBorder.BorderBrush = border;
+            }
+
+            if (accent != null)
+            {
+                this.Indicator.Fill = accent;
+            }
         }
     }
 }

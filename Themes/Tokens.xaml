@@ -5,30 +5,51 @@
     <!-- ============================================================= -->
     <!-- Design tokens — modern, conservative enterprise desktop theme. -->
     <!-- Controls must consume these and never hardcode hex/px/weights.  -->
+    <!--                                                                 -->
+    <!-- Palette is reduced to three families:                          -->
+    <!--   Primary  — one Fluent accent ramp (actions, selection, focus) -->
+    <!--   Neutral  — one cool-gray ramp (text, surface, border, state)  -->
+    <!--   Semantic — Success / Warning / Error / Info status pairs      -->
     <!-- ============================================================= -->
 
-    <!-- 2. Spacing scale (4-based) -->
+    <!-- 1. Spacing scale (4px grid). Layout gaps/padding use these; never off-grid. -->
     <sys:Double x:Key="Space.Xs">4</sys:Double>
     <sys:Double x:Key="Space.Sm">8</sys:Double>
     <sys:Double x:Key="Space.Md">12</sys:Double>
     <sys:Double x:Key="Space.Lg">16</sys:Double>
     <sys:Double x:Key="Space.Xl">24</sys:Double>
 
-    <!-- Derived layout tokens -->
-    <sys:Double x:Key="Size.ControlHeight">40</sys:Double>
+    <!-- 2. Sizing — one density: Compact (32). Inputs, buttons and grid rows share
+         the same control height so a row of fields/buttons aligns to the grid. -->
+    <sys:Double x:Key="Size.ControlHeight">32</sys:Double>
+    <sys:Double x:Key="Size.RowHeight">32</sys:Double>
+    <sys:Double x:Key="Size.GridHeaderHeight">36</sys:Double>
     <sys:Double x:Key="Size.FocusThickness">1.5</sys:Double>
+
+    <!-- Derived layout tokens -->
     <Thickness x:Key="Pad.Field">12,0</Thickness>
-    <Thickness x:Key="Pad.Item">12,8</Thickness>
+    <Thickness x:Key="Pad.Item">12,6</Thickness>
+    <Thickness x:Key="Pad.Button">16,0</Thickness>
     <Thickness x:Key="Gap.Label">0,0,0,8</Thickness>
     <Thickness x:Key="Gap.Helper">0,4,0,0</Thickness>
 
-    <!-- 4. Corner radius -->
+    <!-- 3. Corner radius (Fluent). Sm/Md intentionally share 4 (controls); cards 8. -->
     <CornerRadius x:Key="Radius.Sm">4</CornerRadius>
     <CornerRadius x:Key="Radius.Md">4</CornerRadius>
     <CornerRadius x:Key="Radius.Lg">8</CornerRadius>
     <CornerRadius x:Key="Radius.Pill">10</CornerRadius>
 
-    <!-- 1. Color roles -->
+    <!-- 4. Color — Primary (accent) -->
+    <SolidColorBrush x:Key="Brush.Accent" Color="#FF0078D4" />
+    <SolidColorBrush x:Key="Brush.AccentHover" Color="#FF106EBE" />
+    <SolidColorBrush x:Key="Brush.AccentPressed" Color="#FF005A9E" />
+    <SolidColorBrush x:Key="Brush.OnAccent" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="Brush.SelectedBackground" Color="#FFCFE4F7" />
+    <SolidColorBrush x:Key="Brush.SelectedText" Color="#FF005A9E" />
+    <SolidColorBrush x:Key="Brush.FocusBorder" Color="#FF0078D4" />
+    <SolidColorBrush x:Key="Brush.FocusRing" Color="#330078D4" />
+
+    <!-- Color — Neutral (surface / border / text / interaction state) -->
     <SolidColorBrush x:Key="Brush.Background" Color="#FFF7F8FA" />
     <SolidColorBrush x:Key="Brush.Surface" Color="#FFFFFFFF" />
     <SolidColorBrush x:Key="Brush.SurfaceAlt" Color="#FFF9FAFB" />
@@ -40,68 +61,53 @@
     <SolidColorBrush x:Key="Brush.TextPrimary" Color="#FF111827" />
     <SolidColorBrush x:Key="Brush.TextSecondary" Color="#FF6B7280" />
     <SolidColorBrush x:Key="Brush.TextPlaceholder" Color="#FF9CA3AF" />
-    <SolidColorBrush x:Key="Brush.Accent" Color="#FF0078D4" />
-    <SolidColorBrush x:Key="Brush.AccentHover" Color="#FF106EBE" />
-    <SolidColorBrush x:Key="Brush.AccentPressed" Color="#FF005A9E" />
-    <SolidColorBrush x:Key="Brush.DangerPressed" Color="#FF991B1B" />
-    <SolidColorBrush x:Key="Brush.SelectedBackground" Color="#FFCFE4F7" />
-    <SolidColorBrush x:Key="Brush.SelectedText" Color="#FF005A9E" />
     <SolidColorBrush x:Key="Brush.HoverBackground" Color="#FFF3F4F6" />
-    <SolidColorBrush x:Key="Brush.FocusBorder" Color="#FF0078D4" />
-    <SolidColorBrush x:Key="Brush.FocusRing" Color="#330078D4" />
     <SolidColorBrush x:Key="Brush.DisabledBackground" Color="#FFF3F4F6" />
     <SolidColorBrush x:Key="Brush.DisabledText" Color="#FF9CA3AF" />
-    <SolidColorBrush x:Key="Brush.ErrorBorder" Color="#FFDC2626" />
 
-    <!-- Semantic tints (status/badge) — each role is a (background, text) pair so
-         status surfaces stay legible without controls re-deriving their own hex. -->
+    <!-- Color — Semantic. Each role is a (background, border, text) set so status
+         surfaces stay legible without controls re-deriving their own hex.
+         ErrorBorder is the strong red used for Danger buttons / required marks. -->
     <SolidColorBrush x:Key="Brush.InfoBackground" Color="#FFEFF6FF" />
     <SolidColorBrush x:Key="Brush.InfoBorder" Color="#FFBFDBFE" />
     <SolidColorBrush x:Key="Brush.InfoText" Color="#FF1D4ED8" />
     <SolidColorBrush x:Key="Brush.Success" Color="#FF16A34A" />
     <SolidColorBrush x:Key="Brush.SuccessBackground" Color="#FFECFDF3" />
+    <SolidColorBrush x:Key="Brush.SuccessBorder" Color="#FFA6F4C5" />
     <SolidColorBrush x:Key="Brush.SuccessText" Color="#FF15803D" />
     <SolidColorBrush x:Key="Brush.Warning" Color="#FFD97706" />
     <SolidColorBrush x:Key="Brush.WarningBackground" Color="#FFFFFBEB" />
+    <SolidColorBrush x:Key="Brush.WarningBorder" Color="#FFFDE68A" />
     <SolidColorBrush x:Key="Brush.WarningText" Color="#FFB45309" />
+    <!-- ErrorBorder is the strong red (Danger buttons / required marks);
+         ErrorBorderSoft is the pale border for error status surfaces. -->
+    <SolidColorBrush x:Key="Brush.ErrorBorder" Color="#FFDC2626" />
+    <SolidColorBrush x:Key="Brush.ErrorBorderSoft" Color="#FFFECACA" />
     <SolidColorBrush x:Key="Brush.ErrorBackground" Color="#FFFEF2F2" />
     <SolidColorBrush x:Key="Brush.ErrorText" Color="#FFB91C1C" />
+    <SolidColorBrush x:Key="Brush.DangerPressed" Color="#FF991B1B" />
     <SolidColorBrush x:Key="Brush.NeutralBackground" Color="#FFF3F4F6" />
     <SolidColorBrush x:Key="Brush.NeutralText" Color="#FF374151" />
 
     <!-- Overlay scrim for modal/loading backdrops (dark, semi-transparent). -->
     <SolidColorBrush x:Key="Brush.Scrim" Color="#66101828" />
 
-    <!-- Matte data surface — a deliberately warm "stone" neutral set, kept
-         separate from the cool-gray core theme so the matte grid keeps its
-         distinct look. Roles mirror the core tokens (surface/border/text/...). -->
-    <SolidColorBrush x:Key="Matte.Surface" Color="#FFFFFFFF" />
-    <SolidColorBrush x:Key="Matte.RowAlt" Color="#FFFAFAF9" />
-    <SolidColorBrush x:Key="Matte.RowHover" Color="#FFF5F5F4" />
-    <SolidColorBrush x:Key="Matte.HeaderBackground" Color="#FFF2F2F0" />
-    <SolidColorBrush x:Key="Matte.HeaderText" Color="#FF57534E" />
-    <SolidColorBrush x:Key="Matte.Border" Color="#FFE4E4E1" />
-    <SolidColorBrush x:Key="Matte.GridLine" Color="#FFEFEEEB" />
-    <SolidColorBrush x:Key="Matte.Text" Color="#FF44403C" />
-    <SolidColorBrush x:Key="Matte.SelectedBackground" Color="#FFE7E5E4" />
-    <SolidColorBrush x:Key="Matte.SelectedText" Color="#FF1C1917" />
-
     <!-- Raw colors for ColorAnimation targets (animations need Color, not Brush) -->
     <Color x:Key="Color.Accent">#FF0078D4</Color>
     <Color x:Key="Color.TrackOff">#FFD1D5DB</Color>
 
-    <!-- 3. Typography (Pretendard — embedded as an assembly resource so it renders
-         even where the font is not installed system-wide. The pack URI points at the
-         static font files under Assets\Fonts; Segoe UI / Malgun Gothic stay as
-         fallbacks if the resource ever fails to load. -->
+    <!-- 5. Typography. Font: Segoe UI (Fluent's system face), Malgun Gothic fallback
+         for Korean. Pretendard is not used (corporate policy). Hierarchy comes from
+         size + weight only. -->
     <FontFamily x:Key="Font.Family">Segoe UI, Malgun Gothic</FontFamily>
 
-    <!-- Type scale (device-independent sizes). Controls must reference these
-         instead of hardcoding numeric FontSize values. -->
+    <!-- Type scale (device-independent units; 12 DIU = 9pt, 16 DIU = 12pt).
+         Controls reference these instead of hardcoding FontSize. Body/labels are 12
+         (9pt) for dense data screens; titles step up from 16 (12pt). -->
     <sys:Double x:Key="Font.Size.Micro">9</sys:Double>
     <sys:Double x:Key="Font.Size.Helper">12</sys:Double>
     <sys:Double x:Key="Font.Size.Label">12</sys:Double>
-    <sys:Double x:Key="Font.Size.Body">14</sys:Double>
+    <sys:Double x:Key="Font.Size.Body">12</sys:Double>
     <sys:Double x:Key="Font.Size.BodyLg">14</sys:Double>
     <sys:Double x:Key="Font.Size.Title">16</sys:Double>
     <sys:Double x:Key="Font.Size.Subtitle">16</sys:Double>
@@ -109,6 +115,8 @@
     <sys:Double x:Key="Font.Size.PageTitle">22</sys:Double>
     <sys:Double x:Key="Font.Size.Display">28</sys:Double>
 
+    <!-- Weight rule: structural elements (titles, field labels, grid headers) are
+         SemiBold; body, data and badges stay Regular. Only these two weights. -->
     <Style x:Key="Text.Title" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource Font.Family}" />
         <Setter Property="FontSize" Value="{StaticResource Font.Size.Title}" />
@@ -135,9 +143,7 @@
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
-    <!-- 6. Depth — the only shadow in the system, for overlays/popups only. -->
-    <!-- Fluent elevation: subtle resting shadow for cards (Card) and a deeper one
-         for flyouts/popups (Popup). -->
+    <!-- 6. Depth — the only shadows in the system, for cards and overlays/popups. -->
     <DropShadowEffect x:Key="Shadow.Card"
                       Color="#FF000000"
                       Opacity="0.10"

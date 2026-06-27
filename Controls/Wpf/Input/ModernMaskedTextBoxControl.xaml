@@ -14,6 +14,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+                <ResourceDictionary Source="/com.example;component/Themes/Controls.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -25,12 +26,7 @@
                        Style="{StaticResource Text.Label}"
                        Text="{Binding Title, ElementName=RootControl}" />
             <TextBlock x:Name="RequiredMark"
-                       Text="*"
-                       FontFamily="{DynamicResource Font.Family}"
-                       FontSize="{StaticResource Font.Size.Label}"
-                       FontWeight="Medium"
-                       Foreground="{StaticResource Brush.ErrorBorder}"
-                       Margin="3,0,0,0" />
+                       Style="{StaticResource RequiredMarkStyle}" />
         </StackPanel>
 
         <!-- 입력 박스 -->

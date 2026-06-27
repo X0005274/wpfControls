@@ -20,14 +20,14 @@
                  종류(Primary/Secondary/Danger)별 색은 아래 DataTrigger로 바꿉니다. -->
             <Style x:Key="ModernButtonStyle" TargetType="Button">
                 <Setter Property="FontFamily" Value="{DynamicResource Font.Family}" />
-                <Setter Property="FontSize" Value="13" />
+                <Setter Property="FontSize" Value="{StaticResource Font.Size.Body}" />
                 <Setter Property="FontWeight" Value="SemiBold" />
                 <Setter Property="Height" Value="{StaticResource Size.ControlHeight}" />
-                <Setter Property="Padding" Value="16,0" />
+                <Setter Property="Padding" Value="{StaticResource Pad.Button}" />
                 <Setter Property="Cursor" Value="Hand" />
                 <!-- 기본값(Primary): 파란 배경, 흰 글자 -->
                 <Setter Property="Background" Value="{StaticResource Brush.Accent}" />
-                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Foreground" Value="{StaticResource Brush.OnAccent}" />
                 <Setter Property="BorderBrush" Value="{StaticResource Brush.Accent}" />
                 <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="Template">
@@ -43,9 +43,7 @@
                                                   Margin="{TemplateBinding Padding}" />
                             </Border>
                             <ControlTemplate.Triggers>
-                                <!-- 비활성 상태: 흐리게 -->
                                 <Trigger Property="IsEnabled" Value="False">
-                                    <Setter TargetName="Bg" Property="Opacity" Value="0.5" />
                                     <Setter Property="Cursor" Value="Arrow" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
@@ -62,7 +60,7 @@
                     <!-- 위험 버튼: 빨간 배경 + 흰 글자 -->
                     <DataTrigger Binding="{Binding Kind, ElementName=RootControl}" Value="Danger">
                         <Setter Property="Background" Value="{StaticResource Brush.ErrorBorder}" />
-                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="Foreground" Value="{StaticResource Brush.OnAccent}" />
                         <Setter Property="BorderBrush" Value="{StaticResource Brush.ErrorBorder}" />
                     </DataTrigger>
 
@@ -121,6 +119,14 @@
                         <Setter Property="Background" Value="{StaticResource Brush.DangerPressed}" />
                         <Setter Property="BorderBrush" Value="{StaticResource Brush.DangerPressed}" />
                     </MultiDataTrigger>
+
+                    <!-- 비활성: 종류와 무관하게 회색으로 통일(입력 컨트롤과 동일한 disabled 표현).
+                         Kind 트리거를 덮어쓰도록 맨 마지막에 둡니다. -->
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Background" Value="{StaticResource Brush.DisabledBackground}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource Brush.BorderSubtle}" />
+                        <Setter Property="Foreground" Value="{StaticResource Brush.DisabledText}" />
+                    </Trigger>
                 </Style.Triggers>
             </Style>
         </ResourceDictionary>
@@ -132,7 +138,7 @@
             Click="InnerButton_Click">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
             <TextBlock FontFamily="Segoe MDL2 Assets"
-                       FontSize="14"
+                       FontSize="{StaticResource Font.Size.Body}"
                        VerticalAlignment="Center"
                        Margin="0,0,8,0"
                        Text="{Binding IconGlyph, ElementName=RootControl}">

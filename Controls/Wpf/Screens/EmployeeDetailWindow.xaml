@@ -131,7 +131,7 @@
 
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="0,0,0,16">
-            <TextBlock x:Name="HeaderName" FontSize="{StaticResource Font.Size.Heading}" FontWeight="Medium" Foreground="{StaticResource Brush.TextPrimary}" />
+            <TextBlock x:Name="HeaderName" FontSize="{StaticResource Font.Size.Heading}" FontWeight="SemiBold" Foreground="{StaticResource Brush.TextPrimary}" />
             <TextBlock x:Name="HeaderSub" FontSize="{StaticResource Font.Size.Body}" Margin="0,4,0,0" Foreground="{StaticResource Brush.TextSecondary}" />
         </StackPanel>
 

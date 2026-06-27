@@ -28,7 +28,7 @@
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="{Binding Text, ElementName=RootControl}"
                        FontSize="{StaticResource Font.Size.Label}"
-                       FontWeight="Medium"
+                       FontWeight="SemiBold"
                        VerticalAlignment="Center"
                        Foreground="{StaticResource Brush.SelectedText}" />
             <Button x:Name="RemoveButton"

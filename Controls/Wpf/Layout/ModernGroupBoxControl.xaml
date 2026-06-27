@@ -32,7 +32,7 @@
                     Background="{StaticResource Brush.HeaderBackground}"
                     BorderBrush="{StaticResource Brush.BorderSubtle}"
                     BorderThickness="0,0,0,1"
-                    Padding="14,10">
+                    Padding="16,8">
                 <TextBlock Style="{StaticResource Text.Title}"
                            FontSize="{StaticResource Font.Size.Body}"
                            Text="{Binding HeaderText, ElementName=RootControl}" />

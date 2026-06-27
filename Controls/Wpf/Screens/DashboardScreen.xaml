@@ -143,7 +143,7 @@
                    Text="대시보드"
                    Margin="0,0,0,16"
                    FontSize="{StaticResource Font.Size.PageTitle}"
-                   FontWeight="Medium"
+                   FontWeight="SemiBold"
                    Foreground="{StaticResource Brush.TextPrimary}" />
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
@@ -235,7 +235,7 @@
                                             <StackPanel Grid.Column="0" VerticalAlignment="Center">
                                                 <TextBlock Text="{Binding NameWithId}"
                                                            FontSize="{StaticResource Font.Size.Body}"
-                                                           FontWeight="Medium"
+                                                           FontWeight="SemiBold"
                                                            Foreground="{StaticResource Brush.TextPrimary}"
                                                            TextTrimming="CharacterEllipsis" />
                                                 <TextBlock Text="{Binding TypeLabel}"

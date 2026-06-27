@@ -14,6 +14,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+                <ResourceDictionary Source="/com.example;component/Themes/Controls.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         </ResourceDictionary>
@@ -23,12 +24,7 @@
         <StackPanel Orientation="Horizontal">
             <TextBlock Style="{StaticResource Text.Label}"
                        Text="{Binding Title, ElementName=RootControl}" />
-            <TextBlock Text="*"
-                       FontFamily="{DynamicResource Font.Family}"
-                       FontSize="{StaticResource Font.Size.Label}"
-                       FontWeight="Medium"
-                       Foreground="{StaticResource Brush.ErrorBorder}"
-                       Margin="3,0,0,0"
+            <TextBlock Style="{StaticResource RequiredMarkStyle}"
                        Visibility="{Binding IsRequired, ElementName=RootControl, Converter={StaticResource BoolToVisibility}}" />
         </StackPanel>
         <TextBlock Style="{StaticResource Text.Helper}"
