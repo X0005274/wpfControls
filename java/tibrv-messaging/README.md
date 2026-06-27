@@ -21,6 +21,20 @@ cd java/tibrv-messaging
 mvn package      # tibrvj.jar 이 없으면 빌드 초기에 안내와 함께 멈춥니다
 ```
 
+## 실행 클래스 (Eclipse에서 바로 실행)
+
+`com.example.messaging.rendezvous.app` 패키지에 실행용 `main` 이 있습니다.
+Eclipse에서 각 클래스를 우클릭 → `Run As → Java Application`.
+
+| 클래스 | 역할 |
+|---|---|
+| `EmployeeService` | 응답 서비스를 띄움 — `RPC.EMPLOYEE.GET` Subject 수신 후 응답 |
+| `EmployeeClient`  | 테스트 클라이언트 — `GetEmployee` 요청 1건 전송 후 응답 출력(인자로 사번 지정 가능) |
+
+먼저 `rvd` 가 떠 있어야 하고, RV 네이티브 라이브러리가 안 잡히면 Run Configuration의
+VM arguments 에 `-Djava.library.path=${env_var:TIBRV_HOME}/bin` 을 추가하세요.
+`EmployeeService` 를 먼저 실행한 뒤 `EmployeeClient` 를 실행해 확인합니다.
+
 ## 구성 클래스
 
 | 클래스 | 역할 |
