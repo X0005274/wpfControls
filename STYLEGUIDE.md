@@ -3,9 +3,12 @@
 A Windows **Fluent**‑aligned design system for the `com.example` WPF control library
 (pure WPF `UserControl`s hosted in WinForms via `ElementHost`).
 
-**Single source of truth:** [`Themes/Tokens.xaml`](Themes/Tokens.xaml).
+**Single source of truth:** [`Themes/Tokens.xaml`](Themes/Tokens.xaml) (values) +
+[`Themes/Controls.xaml`](Themes/Controls.xaml) (shared control styles).
 Controls must consume tokens and never hardcode hex / px / font weights. Change a
-token once and every control and screen follows.
+token once and every control and screen follows. Reusable patterns that don't depend
+on a control's named parts (required mark, inner editor, data-grid header/row/cell)
+live in `Controls.xaml` so they're defined once, not copied per control.
 
 ---
 
@@ -38,6 +41,7 @@ a glance.
 | `Brush.Accent` | `#0078D4` | Primary action, selected/active, focus |
 | `Brush.AccentHover` | `#106EBE` | Primary hover |
 | `Brush.AccentPressed` | `#005A9E` | Primary pressed |
+| `Brush.OnAccent` | `#FFFFFF` | Text/glyph on accent or any strong/colored fill |
 | `Brush.SelectedBackground` | `#CFE4F7` | Selected row/item fill |
 | `Brush.SelectedText` | `#005A9E` | Selected text |
 | `Brush.FocusBorder` | `#0078D4` | Focused input border |
@@ -88,7 +92,7 @@ weight only**.
 | Page title | `Font.Size.PageTitle` | 22 | SemiBold |
 | Heading | `Font.Size.Heading` | 20 | SemiBold |
 | Subtitle / section | `Font.Size.Subtitle` / `Text.Title` | 16 | SemiBold |
-| Body / data | `Font.Size.Body` / `Text.Body` | 14 | Regular |
+| Body / data | `Font.Size.Body` / `Text.Body` | 12 (9pt) | Regular |
 | Caption / label | `Font.Size.Label` / `Text.Label` | 12 | SemiBold |
 | Helper / caption | `Font.Size.Helper` / `Text.Helper` | 12 | Regular |
 
@@ -103,6 +107,16 @@ weight only**.
 ### Spacing — 4px grid
 `Space.Xs 4` · `Space.Sm 8` · `Space.Md 12` · `Space.Lg 16` · `Space.Xl 24`
 Layout gaps/padding use these; don't invent off‑grid values.
+
+### Sizing — one Compact density
+| Token | Value | Use |
+|---|---|---|
+| `Size.ControlHeight` | 32 | inputs, buttons, combo (one height so a field row aligns) |
+| `Size.RowHeight` | 32 | data‑grid rows |
+| `Size.GridHeaderHeight` | 36 | data‑grid column header |
+
+One density (Compact 32) suited to information‑dense MES/admin screens. Field padding
+`Pad.Field 12,0`, item/cell padding `Pad.Item 12,6`, button padding `Pad.Button 16,0`.
 
 ### Radius (Fluent)
 | Token | Value | Use |
@@ -157,7 +171,7 @@ In WinForms, use `Demo/CardPanel.cs` (rounded + bordered) to match the WPF grid 
 | Accent | `#2563EB` (Tailwind) | `#0078D4` (Fluent) |
 | Accent hover / pressed | `#1D4ED8` / `#1E40AF` | `#106EBE` / `#005A9E` |
 | Selection | `#DBEAFE` / navy | `#CFE4F7` / `#005A9E` |
-| Body size | 13 | **14** |
+| Body size | 13 | **12 (9pt)** — dense data screens |
 | Control radius | 6 | **4** (cards 8) |
 | Hierarchy | uniform weight (flat) | structure SemiBold / body Regular |
 | Elevation | popup only | Card + Popup |

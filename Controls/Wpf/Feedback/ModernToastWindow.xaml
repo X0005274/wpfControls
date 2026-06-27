@@ -37,8 +37,7 @@
                    Text=""
                    Margin="16,12"
                    FontSize="{StaticResource Font.Size.Body}"
-                   FontWeight="Medium"
                    TextWrapping="Wrap"
-                   Foreground="White" />
+                   Foreground="{StaticResource Brush.OnAccent}" />
     </Border>
 </Window>

@@ -14,83 +14,25 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+                <ResourceDictionary Source="/com.example;component/Themes/Controls.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <!-- Matte palette: muted stone neutrals, soft contrast, flat fills. -->
-            <Style x:Key="MatteColumnHeaderStyle" TargetType="DataGridColumnHeader">
-                <Setter Property="Background" Value="{StaticResource Matte.HeaderBackground}" />
-                <Setter Property="Foreground" Value="{StaticResource Matte.HeaderText}" />
-                <Setter Property="FontSize" Value="{StaticResource Font.Size.Label}" />
-                <Setter Property="FontWeight" Value="Medium" />
-                <Setter Property="Height" Value="38" />
-                <Setter Property="Padding" Value="12,0" />
-                <Setter Property="VerticalContentAlignment" Value="Center" />
-                <Setter Property="HorizontalContentAlignment" Value="Left" />
-                <Setter Property="BorderBrush" Value="{StaticResource Matte.Border}" />
-                <Setter Property="BorderThickness" Value="0,0,1,1" />
-            </Style>
-
-            <Style x:Key="MatteRowStyle" TargetType="DataGridRow">
-                <Setter Property="Background" Value="{StaticResource Matte.Surface}" />
-                <Setter Property="Foreground" Value="{StaticResource Matte.Text}" />
-                <Style.Triggers>
-                    <Trigger Property="AlternationIndex" Value="1">
-                        <Setter Property="Background" Value="{StaticResource Matte.RowAlt}" />
-                    </Trigger>
-                    <MultiTrigger>
-                        <MultiTrigger.Conditions>
-                            <Condition Property="IsMouseOver" Value="True" />
-                            <Condition Property="IsSelected" Value="False" />
-                        </MultiTrigger.Conditions>
-                        <Setter Property="Background" Value="{StaticResource Matte.RowHover}" />
-                    </MultiTrigger>
-                </Style.Triggers>
-            </Style>
-
-            <!-- Cell-level selection keeps the text readable: near-black on a muted
-                 stone fill, with a restrained accent indicator handled by the row. -->
-            <Style x:Key="MatteCellStyle" TargetType="DataGridCell">
-                <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Padding" Value="12,8" />
-                <Setter Property="FontSize" Value="{StaticResource Font.Size.Body}" />
-                <Setter Property="Background" Value="Transparent" />
-                <Setter Property="Foreground" Value="{StaticResource Matte.Text}" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="DataGridCell">
-                            <Border Background="{TemplateBinding Background}"
-                                    Padding="{TemplateBinding Padding}">
-                                <ContentPresenter VerticalAlignment="Center" />
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Style.Triggers>
-                    <Trigger Property="IsSelected" Value="True">
-                        <Setter Property="Background" Value="{StaticResource Matte.SelectedBackground}" />
-                        <Setter Property="Foreground" Value="{StaticResource Matte.SelectedText}" />
-                        <Setter Property="FontWeight" Value="Medium" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Border CornerRadius="8"
+    <Border CornerRadius="{StaticResource Radius.Lg}"
             BorderThickness="1"
-            BorderBrush="{StaticResource Matte.Border}"
-            Background="{StaticResource Matte.Surface}"
+            BorderBrush="{StaticResource Brush.Border}"
+            Background="{StaticResource Brush.Surface}"
             ClipToBounds="True">
         <DataGrid x:Name="InnerDataGrid"
                   AutoGenerateColumns="True"
                   HeadersVisibility="Column"
                   GridLinesVisibility="Horizontal"
-                  HorizontalGridLinesBrush="{StaticResource Matte.GridLine}"
-                  VerticalGridLinesBrush="{StaticResource Matte.GridLine}"
+                  HorizontalGridLinesBrush="{StaticResource Brush.BorderSubtle}"
+                  VerticalGridLinesBrush="{StaticResource Brush.BorderSubtle}"
                   BorderThickness="0"
                   Background="Transparent"
-                  RowBackground="{StaticResource Matte.Surface}"
+                  RowBackground="{StaticResource Brush.Surface}"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"
                   CanUserResizeRows="False"
@@ -98,9 +40,9 @@
                   SelectionUnit="FullRow"
                   EnableRowVirtualization="True"
                   AlternationCount="2"
-                  ColumnHeaderStyle="{StaticResource MatteColumnHeaderStyle}"
-                  RowStyle="{StaticResource MatteRowStyle}"
-                  CellStyle="{StaticResource MatteCellStyle}"
+                  ColumnHeaderStyle="{StaticResource GridColumnHeaderStyle}"
+                  RowStyle="{StaticResource GridRowStyle}"
+                  CellStyle="{StaticResource GridCellStyle}"
                   ItemsSource="{Binding ItemsSource, ElementName=RootControl}"
                   SelectedItem="{Binding SelectedItem, ElementName=RootControl, Mode=TwoWay}"
                   IsReadOnly="{Binding IsReadOnly, ElementName=RootControl}" />

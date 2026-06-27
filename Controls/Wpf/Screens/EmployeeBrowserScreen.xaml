@@ -150,7 +150,7 @@
                    Text="사원 조회"
                    Margin="0,0,0,16"
                    FontSize="{StaticResource Font.Size.PageTitle}"
-                   FontWeight="Medium"
+                   FontWeight="SemiBold"
                    Foreground="{StaticResource Brush.TextPrimary}" />
 
         <!-- 조회 조건 -->

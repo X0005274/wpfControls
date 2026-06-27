@@ -14,102 +14,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+                <ResourceDictionary Source="/com.example;component/Themes/Controls.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <Style x:Key="ModernColumnHeaderStyle" TargetType="DataGridColumnHeader">
-                <Setter Property="Background" Value="{StaticResource Brush.GridHeaderBackground}" />
-                <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}" />
-                <Setter Property="FontSize" Value="12" />
-                <Setter Property="FontWeight" Value="SemiBold" />
-                <Setter Property="Height" Value="38" />
-                <Setter Property="Padding" Value="12,0" />
-                <Setter Property="Cursor" Value="Hand" />
-                <Setter Property="VerticalContentAlignment" Value="Center" />
-                <Setter Property="HorizontalContentAlignment" Value="Left" />
-                <Setter Property="BorderBrush" Value="{StaticResource Brush.BorderSubtle}" />
-                <Setter Property="BorderThickness" Value="0,0,1,1" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="DataGridColumnHeader">
-                            <Border Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    Padding="{TemplateBinding Padding}">
-                                <DockPanel LastChildFill="True">
-                                    <!-- Simple, intuitive sort indicator: ▲ ascending / ▼ descending -->
-                                    <TextBlock x:Name="SortGlyph"
-                                               DockPanel.Dock="Right"
-                                               Margin="6,0,0,0"
-                                               VerticalAlignment="Center"
-                                               FontSize="9"
-                                               Foreground="{StaticResource Brush.Accent}"
-                                               Visibility="Collapsed" />
-                                    <ContentPresenter VerticalAlignment="Center"
-                                                      HorizontalAlignment="Left" />
-                                </DockPanel>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="SortDirection" Value="Ascending">
-                                    <Setter TargetName="SortGlyph" Property="Text" Value="&#x25B2;" />
-                                    <Setter TargetName="SortGlyph" Property="Visibility" Value="Visible" />
-                                </Trigger>
-                                <Trigger Property="SortDirection" Value="Descending">
-                                    <Setter TargetName="SortGlyph" Property="Text" Value="&#x25BC;" />
-                                    <Setter TargetName="SortGlyph" Property="Visibility" Value="Visible" />
-                                </Trigger>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-
-            <Style x:Key="ModernRowStyle" TargetType="DataGridRow">
-                <Setter Property="Background" Value="{StaticResource Brush.Surface}" />
-                <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
-                <Style.Triggers>
-                    <!-- Alternating and hover only paint when the row is NOT selected,
-                         so they never compete with the selected cell background. -->
-                    <Trigger Property="AlternationIndex" Value="1">
-                        <Setter Property="Background" Value="{StaticResource Brush.SurfaceAlt}" />
-                    </Trigger>
-                    <MultiTrigger>
-                        <MultiTrigger.Conditions>
-                            <Condition Property="IsMouseOver" Value="True" />
-                            <Condition Property="IsSelected" Value="False" />
-                        </MultiTrigger.Conditions>
-                        <Setter Property="Background" Value="{StaticResource Brush.HoverBackground}" />
-                    </MultiTrigger>
-                </Style.Triggers>
-            </Style>
-
-            <!-- Selection is driven at the cell level so the text colour is always
-                 controlled: a clearly readable dark-navy on a light-blue fill. -->
-            <Style x:Key="ModernCellStyle" TargetType="DataGridCell">
-                <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Padding" Value="{StaticResource Pad.Item}" />
-                <Setter Property="FontSize" Value="13" />
-                <Setter Property="Background" Value="Transparent" />
-                <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="DataGridCell">
-                            <Border Background="{TemplateBinding Background}"
-                                    Padding="{TemplateBinding Padding}">
-                                <ContentPresenter VerticalAlignment="Center" />
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Style.Triggers>
-                    <Trigger Property="IsSelected" Value="True">
-                        <Setter Property="Background" Value="{StaticResource Brush.SelectedBackground}" />
-                        <Setter Property="Foreground" Value="{StaticResource Brush.SelectedText}" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -136,9 +42,9 @@
                   SelectionUnit="FullRow"
                   EnableRowVirtualization="True"
                   AlternationCount="2"
-                  ColumnHeaderStyle="{StaticResource ModernColumnHeaderStyle}"
-                  RowStyle="{StaticResource ModernRowStyle}"
-                  CellStyle="{StaticResource ModernCellStyle}"
+                  ColumnHeaderStyle="{StaticResource GridColumnHeaderStyle}"
+                  RowStyle="{StaticResource GridRowStyle}"
+                  CellStyle="{StaticResource GridCellStyle}"
                   ItemsSource="{Binding ItemsSource, ElementName=RootControl}"
                   SelectedItem="{Binding SelectedItem, ElementName=RootControl, Mode=TwoWay}"
                   IsReadOnly="{Binding IsReadOnly, ElementName=RootControl}" />

@@ -14,34 +14,10 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+                <ResourceDictionary Source="/com.example;component/Themes/Controls.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
-
-            <Style x:Key="ModernInnerTextBoxStyle" TargetType="TextBox">
-                <Setter Property="FontSize" Value="13" />
-                <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
-                <Setter Property="CaretBrush" Value="{StaticResource Brush.TextPrimary}" />
-                <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Background" Value="Transparent" />
-                <Setter Property="VerticalContentAlignment" Value="Center" />
-                <Setter Property="Padding" Value="0" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="TextBox">
-                            <ScrollViewer x:Name="PART_ContentHost"
-                                          Focusable="False"
-                                          HorizontalScrollBarVisibility="Hidden"
-                                          VerticalScrollBarVisibility="Hidden" />
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Style.Triggers>
-                    <Trigger Property="IsEnabled" Value="False">
-                        <Setter Property="Foreground" Value="{StaticResource Brush.DisabledText}" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -50,12 +26,7 @@
         <StackPanel Orientation="Horizontal" Margin="{StaticResource Gap.Label}">
             <TextBlock Style="{StaticResource Text.Label}"
                        Text="{Binding Title, ElementName=RootControl}" />
-            <TextBlock Text="*"
-                       FontFamily="{DynamicResource Font.Family}"
-                       FontSize="{StaticResource Font.Size.Label}"
-                       FontWeight="Medium"
-                       Foreground="{StaticResource Brush.ErrorBorder}"
-                       Margin="3,0,0,0"
+            <TextBlock Style="{StaticResource RequiredMarkStyle}"
                        Visibility="{Binding IsRequired, ElementName=RootControl, Converter={StaticResource BoolToVisibility}}" />
         </StackPanel>
 
@@ -120,7 +91,7 @@
                         </TextBlock.Style>
                     </TextBlock>
                     <TextBox x:Name="InnerTextBox"
-                             Style="{StaticResource ModernInnerTextBoxStyle}"
+                             Style="{StaticResource FieldInnerTextBoxStyle}"
                              Text="{Binding Text, ElementName=RootControl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              IsReadOnly="{Binding IsReadOnly, ElementName=RootControl}"
                              IsEnabled="{Binding IsEditorEnabled, ElementName=RootControl}" />

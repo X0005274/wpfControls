@@ -228,7 +228,7 @@
                        Text="승인·예외처리"
                        VerticalAlignment="Center"
                        FontSize="{StaticResource Font.Size.PageTitle}"
-                       FontWeight="Medium"
+                       FontWeight="SemiBold"
                        Foreground="{StaticResource Brush.TextPrimary}" />
             <Button Grid.Column="1"
                     x:Name="CreateButton"
@@ -351,7 +351,7 @@
                                             <TextBlock Grid.Column="0"
                                                        Text="{Binding NameWithId}"
                                                        FontSize="{StaticResource Font.Size.Body}"
-                                                       FontWeight="Medium"
+                                                       FontWeight="SemiBold"
                                                        Foreground="{StaticResource Brush.TextPrimary}"
                                                        VerticalAlignment="Center"
                                                        TextTrimming="CharacterEllipsis" />
@@ -409,7 +409,7 @@
                                 HorizontalAlignment="Center">
                         <TextBlock Text="예외를 선택하세요."
                                    FontSize="{StaticResource Font.Size.BodyLg}"
-                                   FontWeight="Medium"
+                                   FontWeight="SemiBold"
                                    HorizontalAlignment="Center"
                                    Foreground="{StaticResource Brush.TextPrimary}" />
                         <TextBlock Text="좌측 목록에서 처리할 예외를 선택하면 상세가 표시됩니다."
@@ -433,7 +433,7 @@
                                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                                     <TextBlock x:Name="DetailName"
                                                FontSize="{StaticResource Font.Size.Title}"
-                                               FontWeight="Medium"
+                                               FontWeight="SemiBold"
                                                Foreground="{StaticResource Brush.TextPrimary}" />
                                     <TextBlock x:Name="DetailType"
                                                FontSize="{StaticResource Font.Size.Label}"

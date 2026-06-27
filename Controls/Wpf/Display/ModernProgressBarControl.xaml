@@ -26,7 +26,7 @@
             <TextBlock x:Name="PercentTextBlock"
                        FontFamily="{DynamicResource Font.Family}"
                        FontSize="{StaticResource Font.Size.Label}"
-                       FontWeight="Medium"
+                       FontWeight="SemiBold"
                        Foreground="{StaticResource Brush.Accent}"
                        HorizontalAlignment="Right"
                        Text="0%" />

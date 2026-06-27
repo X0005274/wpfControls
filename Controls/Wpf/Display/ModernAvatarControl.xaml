@@ -25,8 +25,8 @@
         <Ellipse Fill="{StaticResource Brush.Accent}" />
         <TextBlock x:Name="InitialsText"
                    Text="{Binding Text, ElementName=RootControl}"
-                   Foreground="White"
-                   FontWeight="Medium"
+                   Foreground="{StaticResource Brush.OnAccent}"
+                   FontWeight="SemiBold"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center" />
     </Grid>

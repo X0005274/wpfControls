@@ -14,13 +14,14 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/com.example;component/Themes/Tokens.xaml" />
+                <ResourceDictionary Source="/com.example;component/Themes/Controls.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
 
             <!-- Dropdown item: hover / selected from tokens, with a check affordance -->
             <Style x:Key="ModernComboBoxItemStyle" TargetType="ComboBoxItem">
-                <Setter Property="FontSize" Value="13" />
+                <Setter Property="FontSize" Value="{StaticResource Font.Size.Body}" />
                 <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 <Setter Property="Template">
@@ -64,7 +65,6 @@
                                     <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource Brush.SelectedBackground}" />
                                     <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
                                     <Setter Property="Foreground" Value="{StaticResource Brush.SelectedText}" />
-                                    <Setter Property="FontWeight" Value="Medium" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -79,7 +79,7 @@
 
             <!-- Full ComboBox template, token-driven -->
             <Style x:Key="ModernComboBoxStyle" TargetType="ComboBox">
-                <Setter Property="FontSize" Value="13" />
+                <Setter Property="FontSize" Value="{StaticResource Font.Size.Body}" />
                 <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
                 <Setter Property="MinHeight" Value="{StaticResource Size.ControlHeight}" />
                 <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -225,12 +225,7 @@
         <StackPanel Orientation="Horizontal" Margin="{StaticResource Gap.Label}">
             <TextBlock Style="{StaticResource Text.Label}"
                        Text="{Binding Title, ElementName=RootControl}" />
-            <TextBlock Text="*"
-                       FontFamily="{DynamicResource Font.Family}"
-                       FontSize="{StaticResource Font.Size.Label}"
-                       FontWeight="Medium"
-                       Foreground="{StaticResource Brush.ErrorBorder}"
-                       Margin="3,0,0,0"
+            <TextBlock Style="{StaticResource RequiredMarkStyle}"
                        Visibility="{Binding IsRequired, ElementName=RootControl, Converter={StaticResource BoolToVisibility}}" />
         </StackPanel>
 

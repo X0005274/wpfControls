@@ -12,11 +12,11 @@
 
     <Style x:Key="Browser.PrimaryButton" TargetType="Button">
         <Setter Property="Background" Value="{StaticResource Brush.Accent}" />
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="FontSize" Value="13" />
-        <Setter Property="FontWeight" Value="Medium" />
-        <Setter Property="Height" Value="36" />
-        <Setter Property="Padding" Value="16,0" />
+        <Setter Property="Foreground" Value="{StaticResource Brush.OnAccent}" />
+        <Setter Property="FontSize" Value="{StaticResource Font.Size.Body}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Height" Value="{StaticResource Size.ControlHeight}" />
+        <Setter Property="Padding" Value="{StaticResource Pad.Button}" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template">
             <Setter.Value>
@@ -39,15 +39,15 @@
     </Style>
 
     <Style x:Key="Browser.FilterCombo" TargetType="ComboBox">
-        <Setter Property="Height" Value="36" />
-        <Setter Property="Padding" Value="10,0" />
+        <Setter Property="Height" Value="{StaticResource Size.ControlHeight}" />
+        <Setter Property="Padding" Value="{StaticResource Pad.Field}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontSize" Value="{StaticResource Font.Size.Body}" />
     </Style>
 
     <Style x:Key="Browser.CardTitle" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontSize" Value="{StaticResource Font.Size.Body}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
         <Setter Property="Margin" Value="0,0,0,12" />
     </Style>
@@ -82,7 +82,7 @@
 
     <Style x:Key="Browser.TreeItem" TargetType="TreeViewItem">
         <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
-        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontSize" Value="{StaticResource Font.Size.Body}" />
         <Setter Property="Padding" Value="4,3" />
         <Setter Property="Margin" Value="0,1,0,1" />
     </Style>
@@ -90,10 +90,10 @@
     <Style x:Key="Browser.GridHeader" TargetType="DataGridColumnHeader">
         <Setter Property="Background" Value="{StaticResource Brush.HeaderBackground}" />
         <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}" />
-        <Setter Property="FontSize" Value="12" />
-        <Setter Property="FontWeight" Value="Medium" />
-        <Setter Property="Height" Value="38" />
-        <Setter Property="Padding" Value="12,0" />
+        <Setter Property="FontSize" Value="{StaticResource Font.Size.Label}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Height" Value="{StaticResource Size.GridHeaderHeight}" />
+        <Setter Property="Padding" Value="{StaticResource Pad.Field}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="BorderBrush" Value="{StaticResource Brush.BorderSubtle}" />
@@ -120,7 +120,7 @@
     <Style x:Key="Browser.GridCell" TargetType="DataGridCell">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="{StaticResource Pad.Item}" />
-        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontSize" Value="{StaticResource Font.Size.Body}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
         <Setter Property="Template">
@@ -136,7 +136,6 @@
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Background" Value="{StaticResource Brush.SelectedBackground}" />
                 <Setter Property="Foreground" Value="{StaticResource Brush.SelectedText}" />
-                <Setter Property="FontWeight" Value="Medium" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -144,7 +143,7 @@
     <!-- 재직상태 cell: status badge -->
     <DataTemplate x:Key="Browser.StatusBadgeTemplate">
         <Border Style="{StaticResource Browser.Badge}" Tag="{Binding StatusTone}">
-            <TextBlock Text="{Binding StatusLabel}" FontSize="11" FontWeight="Medium" />
+            <TextBlock Text="{Binding StatusLabel}" FontSize="{StaticResource Font.Size.Label}" FontWeight="Normal" />
         </Border>
     </DataTemplate>
 
