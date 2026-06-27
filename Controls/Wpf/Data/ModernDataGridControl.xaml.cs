@@ -40,6 +40,19 @@ namespace com.example.Controls.Wpf.Data
         public ModernDataGridControl()
         {
             this.InitializeComponent();
+            this.InnerDataGrid.Sorting += this.InnerDataGrid_Sorting;
+        }
+
+        /// <summary>
+        /// Suppresses header-click sorting when the grid has no rows, so an empty grid
+        /// neither reorders nor shows a sort indicator on the headers.
+        /// </summary>
+        private void InnerDataGrid_Sorting(object sender, DataGridSortingEventArgs e)
+        {
+            if (this.InnerDataGrid.Items.Count == 0)
+            {
+                e.Handled = true;
+            }
         }
 
         public IEnumerable ItemsSource

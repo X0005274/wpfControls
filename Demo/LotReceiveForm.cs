@@ -14,16 +14,28 @@ namespace com.example.Demo
         private readonly List<LotGridRow> allRows;
         private List<LotGridRow> shownRows;
 
+        // Random generator for sample Product Ids (H5G32ABCDEFGHI_AA001-XX001 ~ XX999).
+        private readonly System.Random productRng = new System.Random();
+
+        // Selected-lot label fonts: bold + italic when a row is selected (emphasized),
+        // italic only for the empty "No selection" state.
+        private readonly System.Drawing.Font selectedFontStrong =
+            new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+        private readonly System.Drawing.Font selectedFontEmpty =
+            new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Italic);
+
         public LotReceiveForm()
         {
             this.InitializeComponent();
             this.ConfigureColumns();
+            this.ConfigureWaferColumns();
             this.ConfigureFabFilter();
             this.ConfigureStateFilter();
             this.ConfigureStateBadges();
             this.lotGrid.SelectionChanged += this.LotGrid_SelectionChanged;
             this.allRows = this.BuildSampleData();
             this.ShowRows(this.allRows);
+            this.PopulateWafers(null);
         }
 
         private void ConfigureFabFilter()
@@ -52,18 +64,22 @@ namespace com.example.Demo
         private void ConfigureColumns()
         {
             // Auto-width columns: each sizes to fit its data and header label.
-            // (Many columns -> horizontal scrollbar; few -> room to add more.)
             this.lotGrid.AddTextColumn("Lot Id", "LotId");
             this.lotGrid.AddBadgeColumn("Lot State", "LotState", "LotStateTone");
             this.lotGrid.AddTextColumn("Event", "Event");
             this.lotGrid.AddTextColumn("Event Time", "EventTime");
             this.lotGrid.AddTextColumn("Product Id", "ProductId");
-            this.lotGrid.AddTextColumn("Sub Product Id", "SubProductId");
-            this.lotGrid.AddTextColumn("Flow Id", "FlowId");
             this.lotGrid.AddTextColumn("Oper Id", "OperId");
             this.lotGrid.AddTextColumn("Carrier Id", "CarrierId");
-            this.lotGrid.AddTextColumn("Eqp Id", "EqpId");
-            this.lotGrid.AddTextColumn("Stk Id", "StkId");
+        }
+
+        private void ConfigureWaferColumns()
+        {
+            // Wafer grid: filled from the lot selected on the left.
+            this.waferGrid.AddTextColumn("Wafer Id", "WaferId");
+            this.waferGrid.AddBadgeColumn("Wafer State", "WaferState", "WaferStateTone");
+            this.waferGrid.AddTextColumn("Event", "Event");
+            this.waferGrid.AddTextColumn("Event Time", "EventTime");
         }
 
         private List<LotGridRow> BuildSampleData()
@@ -93,7 +109,7 @@ namespace com.example.Demo
             row.LotStateTone = this.ToneForState(lotState);
             row.Event = this.EventForState(lotState);
             row.EventTime = new DateTime(2026, 6, 27, 8, 0, 0).AddMinutes(index * 37).ToString("yyyy-MM-dd HH:mm:ss");
-            row.ProductId = "PRD-" + (100 + index).ToString();
+            row.ProductId = "H5G32ABCDEFGHI_AA001-XX" + this.productRng.Next(1, 1000).ToString("D3");
             row.SubProductId = "SUB-" + (index + 1).ToString("D2");
             row.FlowId = "FLOW-" + ((index % 3) + 1).ToString();
             row.OperId = "OP" + (1010 + index * 10).ToString();
@@ -143,7 +159,96 @@ namespace com.example.Demo
 
         private void LotGrid_SelectionChanged(object sender, EventArgs e)
         {
+            LotGridRow selected = this.lotGrid.SelectedItem as LotGridRow;
             this.UpdateExecutionState();
+            this.PopulateWafers(selected);
+        }
+
+        /// <summary>
+        /// Fills the Wafer grid with the wafers of the given lot (.01 ~ .25), or
+        /// clears it when no lot is selected.
+        /// </summary>
+        private void PopulateWafers(LotGridRow lot)
+        {
+            List<WaferGridRow> wafers = lot == null ? new List<WaferGridRow>() : this.BuildWafers(lot);
+            this.waferGrid.ItemsSource = null;
+            this.waferGrid.ItemsSource = wafers;
+        }
+
+        private List<WaferGridRow> BuildWafers(LotGridRow lot)
+        {
+            // 25 wafers per lot: WaferId = "<LotId>.01" ~ ".25", with freely-varied
+            // states (deterministic per lot so the same lot always shows the same set).
+            int seed = 0;
+            foreach (char ch in lot.LotId)
+            {
+                seed += ch;
+            }
+
+            System.Random rng = new System.Random(seed);
+            DateTime baseTime = new DateTime(2026, 6, 27, 9, 0, 0);
+
+            List<WaferGridRow> wafers = new List<WaferGridRow>();
+            for (int index = 0; index < 25; index++)
+            {
+                string state;
+                string tone;
+                this.RandomWaferState(rng, out state, out tone);
+
+                WaferGridRow wafer = new WaferGridRow();
+                wafer.WaferId = lot.LotId + "." + (index + 1).ToString("D2");
+                wafer.WaferState = state;
+                wafer.WaferStateTone = tone;
+                wafer.Event = this.EventForWaferState(state);
+                wafer.EventTime = baseTime.AddMinutes(index * 3).ToString("yyyy-MM-dd HH:mm:ss");
+                wafers.Add(wafer);
+            }
+
+            return wafers;
+        }
+
+        private void RandomWaferState(System.Random rng, out string state, out string tone)
+        {
+            int roll = rng.Next(100);
+            if (roll < 70)
+            {
+                state = "Good";
+                tone = "success";
+                return;
+            }
+            if (roll < 90)
+            {
+                state = "In Process";
+                tone = "neutral";
+                return;
+            }
+            if (roll < 97)
+            {
+                state = "Hold";
+                tone = "warning";
+                return;
+            }
+
+            state = "Scrap";
+            tone = "danger";
+        }
+
+        private string EventForWaferState(string state)
+        {
+            if (state == "Good")
+            {
+                return "Measure";
+            }
+            if (state == "In Process")
+            {
+                return "Process";
+            }
+            if (state == "Hold")
+            {
+                return "Hold";
+            }
+
+            return "Scrap";
         }
 
         /// <summary>
@@ -196,14 +301,37 @@ namespace com.example.Demo
 
             if (selected != null)
             {
-                this.execSelectedLabel.Text = "Selected: " + selected.LotId + " (" + selected.LotState + ")";
+                this.selectedLabel.Text = selected.LotId + "  (" + selected.LotState + ")";
+                this.selectedLabel.ForeColor = this.ColorForTone(this.ToneForState(selected.LotState));
+                this.selectedLabel.Font = this.selectedFontStrong;
                 this.receiveButton.IsButtonEnabled = true;
             }
             else
             {
-                this.execSelectedLabel.Text = "No lot selected";
+                this.selectedLabel.Text = "No selection";
+                this.selectedLabel.ForeColor = System.Drawing.Color.FromArgb(156, 163, 175);
+                this.selectedLabel.Font = this.selectedFontEmpty;
                 this.receiveButton.IsButtonEnabled = false;
             }
+        }
+
+        /// <summary>
+        /// Maps a badge tone ("success" / "danger" / "neutral") to the same text
+        /// color used by the grid Lot State badges, so the selected-lot label reads
+        /// with the matching badge color.
+        /// </summary>
+        private System.Drawing.Color ColorForTone(string tone)
+        {
+            if (tone == "success")
+            {
+                return System.Drawing.Color.FromArgb(21, 128, 61);
+            }
+            if (tone == "danger" || tone == "error")
+            {
+                return System.Drawing.Color.FromArgb(185, 28, 28);
+            }
+
+            return System.Drawing.Color.FromArgb(55, 65, 81);
         }
 
         private void SearchButton_Click(object sender, EventArgs e)

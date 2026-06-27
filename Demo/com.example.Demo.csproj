@@ -55,6 +55,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="CardPanel.cs" />
     <Compile Include="StatBadge.cs" />
+    <Compile Include="FocuslessSplitContainer.cs" />
     <Compile Include="LotSearchHostForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,11 +69,21 @@
       <DependentUpon>ButtonSwapDemoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LotGridRow.cs" />
+    <Compile Include="WaferGridRow.cs" />
     <Compile Include="LotReceiveForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LotReceiveForm.Designer.cs">
       <DependentUpon>LotReceiveForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InputSampleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SampleShellForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SampleShellForm.Designer.cs">
+      <DependentUpon>SampleShellForm.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -13,7 +13,7 @@ namespace com.example.Demo
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LotReceiveForm());
+            Application.Run(new SampleShellForm());
         }
     }
 }
