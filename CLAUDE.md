@@ -1,27 +1,72 @@
 # CLAUDE.md
 
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 Enterprise Windows desktop app. Existing UI is WinForms; new reusable UI is **pure WPF** hosted in WinForms through `ElementHost`. Modernize the UI incrementally — do not change existing business logic unless explicitly asked.
 
 ## Environment
 
-- IDE: Visual Studio 2026 · Runtime: .NET Framework 4.8 · Language: C# (7.3)
-- New UI: pure WPF `UserControl`, hosted via `System.Windows.Forms.Integration.ElementHost`
+- IDE: Visual Studio 2026 (VS 18) · Runtime: .NET Framework 4.8 · Language: C# (7.3)
 - Root namespace: `com.example`
+- Use only syntax supported by .NET Framework 4.8 / C# 7.3.
+
+## Build & run
+
+There is no test project; "verify" means a clean build plus running the demo.
+
+```bash
+# Build everything (run from repo root). Building the Demo transitively builds the libs.
+msbuild com.example.sln /t:Build /p:Configuration=Debug
+
+# This machine's MSBuild (VS 2026 = VS 18):
+"C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe" \
+  Demo/com.example.Demo.csproj /t:Build /p:Configuration=Debug /v:minimal /clp:ErrorsOnly
+
+# Run the WinForms demo host
+Demo/bin/Debug/com.example.Demo.exe
+```
+
+- A running `com.example.Demo.exe` locks the build output (MSB3027). **Kill it before rebuilding.**
+- In Visual Studio: set **com.example.Demo** as the startup project and press **F5**.
+- Many source files are UTF-8 **without BOM** and contain Korean comments. Do not edit them with tools that re-encode (e.g. PowerShell `Get-Content`/`Set-Content` without an explicit `UTF8Encoding($false)`), or the Korean will be corrupted.
+
+## Solution structure (4 projects)
+
+| Project | Output | Role |
+|---|---|---|
+| `com.example` (repo root `com.example.csproj`) | WPF class library | The reusable **pure-WPF** UserControls + the design-token theme. |
+| `com.example.WinForms.Controls` | WinForms class library | Thin **wrappers** that host each WPF control in an `ElementHost` so legacy WinForms forms/designer can drop them in. |
+| `com.example.Messaging.Rendezvous` | class library | TIBCO Rendezvous messaging (request/reply client + server, message router). Non-UI; independent of the control libraries. |
+| `Demo` (`Demo/com.example.Demo.csproj`) | WinExe | WinForms host that exercises the controls. Startup object is `SampleShellForm`. |
+
+## Architecture (the parts that span files)
+
+### Design tokens are the single source of truth
+`Themes/Tokens.xaml` is a `ResourceDictionary` of every color, font size, spacing, radius, and elevation value. **Controls must consume tokens and never hardcode hex / px / font-weight** — change a token once and every control and screen follows. Controls pull it in via merged dictionary `Source="/com.example;component/Themes/Tokens.xaml"`. The design language (Windows Fluent: accent `#0078D4`, Segoe UI, control radius 4 / card radius 8, a fixed type ramp, structural-elements-SemiBold / body-Regular) is documented in `STYLEGUIDE.md`. When a value recurs, add a token rather than a literal.
+
+### Two parallel control sets, one source of behavior
+For most controls there is a WPF control (`Controls/Wpf/...`) **and** a WinForms wrapper (`com.example.WinForms.Controls/...`) of the same name minus the `Control` suffix (e.g. `ModernDataGridControl` ↔ `ModernDataGrid`). The wrapper holds no real logic — behavior and styling live in the WPF control. **Put grid/badge/sort/visual changes in the WPF control so every host inherits them**; the wrapper only re-exposes inner `DependencyProperty`s as CLR properties and surfaces events (via `DependencyPropertyDescriptor.AddValueChanged` on the inner control's DP).
+
+### The wrapper / ElementHost pattern is designer-safe by design
+All wrappers derive from `com.example.WinForms.Controls/Hosting/WpfElementHostBase<TWpf>`. It creates the inner WPF control in its constructor and hosts it as the `ElementHost.Child` **at runtime only** (skipped at design-time, restored in `OnHandleCreated`). It is marked `[Designer(ControlDesigner)]` so the VS form designer treats the wrapper as an opaque control instead of re-serializing the WPF `Child` — without this, dragging a wrapper in the designer breaks the form. When adding a new wrapper, inherit this base; do not host the WPF control yourself.
+
+### The Demo is a menu-driven shell
+`Demo/SampleShellForm` is a left-nav gallery: each sample screen is an ordinary `Form` embedded into the content panel as a non-top-level child. **Register a new sample in one line** in `SampleShellForm.RegisterSamples()` (`this.AddSample("Title", () => new YourForm())`); the shell generates the nav button and handles embedding/switching. `LotReceiveForm` is the worked example (Fab/Lot/State query → resizable Lot/Wafer split grids → count/state/execution footer cards).
 
 ## Absolute rules
 
-- Never use `var`. Use explicit types (`string`, `int`, `List<T>`, `ElementHost`, concrete class names).
+- Never use `var`. Use explicit types everywhere.
 - No third-party UI libraries (MahApps, ModernWpf, MaterialDesign, DevExpress, Telerik, Syncfusion, etc.). Pure WPF only, unless the user explicitly requests otherwise.
-- Output complete, compilable code only — no pseudocode, placeholders, TODOs, or omitted sections. Never assume the user will fill in missing parts.
-- Use only syntax supported by .NET Framework 4.8 / C# 7.3.
+- Output complete, compilable code only — no pseudocode, placeholders, TODOs, or omitted sections.
 - Do not refactor existing WinForms business logic unless explicitly asked.
+- **Pretendard font is not allowed** (corporate policy). Use Segoe UI (the `Font.Family` token already falls back to Malgun Gothic for Korean).
 
 ## C# style
 
 - Explicit access modifier on every type and member.
-- PascalCase for types, methods, properties, and public members; camelCase for locals, parameters, and private fields.
-- Braces on every control block (`if`/`else`/`for`/`foreach`/`while`/`using`) — no brace-less one-liners.
-- Descriptive names; single-letter names only for trivial loop counters.
+- PascalCase for types/methods/properties/public members; camelCase for locals/parameters/private fields.
+- Braces on every control block — no brace-less one-liners.
+- One public type per file; file name matches the type name (and `x:Class` for controls).
 - Split long initialization into named private methods.
 
 ## WPF component rules
@@ -29,8 +74,8 @@ Enterprise Windows desktop app. Existing UI is WinForms; new reusable UI is **pu
 - Base every reusable component on `UserControl`.
 - Expose every bindable value as a `DependencyProperty` with a CLR wrapper. Register two-way values with `FrameworkPropertyMetadataOptions.BindsTwoWayByDefault`.
 - Expose secrets (e.g. password text) through a plain CLR property, never a `DependencyProperty`.
-- Keep visual styling in XAML; prefer simple, stable visual trees over complex templates.
-- Visual design: modern, clean, conservative enterprise look. No flashy gradients, heavy shadows, or unnecessary animation.
+- `ItemsSource` DPs are typed `IEnumerable`; `SelectedItem`/`SelectedValue` are typed `object` to stay binding-agnostic. Bound collections are `ObservableCollection<T>`; UI item models (`Models/Ui`) implement `INotifyPropertyChanged`.
+- Keep styling in XAML and visual trees simple; conservative enterprise look (no flashy gradients/shadows/animation).
 - Every component must render and function when hosted in WinForms via `ElementHost`.
 
 Canonical DependencyProperty:
@@ -49,103 +94,18 @@ public string Title
 
 ## WinForms integration
 
-When integration is requested, deliver all of:
-
-- The WPF `UserControl` files (XAML + code-behind).
-- A WinForms hosting example using `ElementHost` — set `host.Child` and give the host an explicit size (`Dock`/`Height`/`Anchor`).
-- The required assembly references.
-
-Host project must reference `WindowsFormsIntegration` plus `PresentationCore`, `PresentationFramework`, `WindowsBase`. Run WPF on an STA thread (`[STAThread]`).
-
-```csharp
-ElementHost host = new ElementHost();
-host.Dock = DockStyle.Top;
-host.Height = 80;
-host.Child = new ModernTextBoxControl();
-this.Controls.Add(host);
-```
-
-## Namespace & folder layout
-
-```
-com.example
-├── Controls/Wpf
-│   ├── Input       (TextBox, PasswordBox, SearchBox, RichTextBox)
-│   ├── Selection   (ComboBox, CheckBox, RadioButton, ToggleSwitch, ListBox, Slider)
-│   ├── Display     (Label, ProgressBar, StatusBar, Badge, DatePicker)
-│   ├── Data        (DataGrid, ListView, TreeView, TabControl)
-│   └── Layout      (Expander, GroupBox, FormSection, ScrollSection)
-└── Models/Ui       (ComboBoxItemModel, etc.)
-```
-
-- Place each control in the folder matching its category; place item models in `Models/Ui`.
-
-## Standard components
-
-### Input
-- `ModernTextBoxControl` — labeled input; placeholder, required, read-only, enabled states
-- `ModernPasswordBoxControl` — password input with show/hide toggle
-- `ModernRichTextBoxControl` — multi-line formatted text editor
-- `ModernSearchBoxControl` — search input with clear button and search event
-
-### Selection
-- `ModernComboBoxControl` — `DisplayMemberPath`, `SelectedValuePath`, `SelectedValue`, `SelectedItem`
-- `ModernCheckBoxControl` — styled checkbox with title and description
-- `ModernRadioButtonGroupControl` — radio group with bindable selected value
-- `ModernToggleSwitchControl` — on/off toggle (WPF `ToggleButton`)
-- `ModernListBoxControl` — selectable list with `ItemsSource` binding
-- `ModernSliderControl` — range slider with min/max and current-value display
-
-### Display
-- `ModernLabelControl` — title and optional description
-- `ModernProgressBarControl` — determinate and indeterminate
-- `ModernStatusBarControl` — status indicator and message
-- `ModernBadgeControl` — colored badge for status/count
-- `ModernDatePickerControl` — date selection with title and required indicator
-
-### Data
-- `ModernDataGridControl` — column definitions and row selection
-- `ModernListViewControl` — list view with custom item template
-- `ModernTreeViewControl` — hierarchical tree with bindable items
-- `ModernTabControl` — tabbed container
-
-### Layout
-- `ModernExpanderControl` — collapsible section with header
-- `ModernGroupBoxControl` — titled group container
-- `ModernFormSectionControl` — grid-based labeled form section
-- `ModernScrollSectionControl` — scrollable container with fixed header
-
-## Models & files
-
-- One public type per file; the file name matches the type name (and `x:Class` for controls).
-- UI item models implement `INotifyPropertyChanged`.
-- Expose mutable bound collections as `ObservableCollection<T>`.
-- `ItemsSource` DPs are typed `IEnumerable`; `SelectedItem`/`SelectedValue` are typed `object` to stay binding-agnostic.
+Host project must reference `WindowsFormsIntegration` plus `PresentationCore`, `PresentationFramework`, `WindowsBase`, `System.Xaml`, and the `com.example` library. Run WPF on an STA thread (`[STAThread]`). Give each `ElementHost` an explicit size (`Dock`/`Height`/`Anchor`).
 
 ## XAML & build correctness — verify before finishing
 
-- [ ] `x:Class`, code-behind namespace + class name, file name, and folder all match exactly.
-- [ ] Code-behind class is `partial`.
-- [ ] Each `x:Name` is unique and does not collide with a DependencyProperty's CLR property name.
-- [ ] Each `.xaml` uses Build Action `Page` with `<Generator>MSBuild:Compile</Generator>`; the `.csproj` has both the `Page` entry and the matching `Compile` + `DependentUpon` entry.
-- [ ] The `com.example` library is WPF-enabled: WPF `ProjectTypeGuids` and references to `PresentationCore`, `PresentationFramework`, `WindowsBase`, `System.Xaml`.
-- [ ] All `using` statements, referenced model classes, and event handlers exist.
-- [ ] No `var`; no third-party UI dependency.
-- [ ] If `InitializeComponent` could fail, state the exact cause and the fix.
-
-## Code output format
-
-When code is requested, present in this order:
-
-1. Folder structure
-2. File list
-3. Full code for every file (no omissions)
-4. WinForms `ElementHost` integration example
-5. Required references
-6. Common build/integration failure points
+- `x:Class`, code-behind namespace + class name, file name, and folder all match exactly; code-behind class is `partial`.
+- Each `.xaml` uses Build Action `Page` with `<Generator>MSBuild:Compile</Generator>`; the `.csproj` has both the `Page` entry and the matching `Compile` + `DependentUpon` entry. New `.cs` files need a `Compile` entry too (these projects use classic, non-SDK `.csproj` with explicit item lists).
+- Each `x:Name` is unique and does not collide with a DependencyProperty's CLR property name.
+- No `var`; no third-party UI dependency.
 
 ## Response behavior
 
 - Ask one short clarifying question only when requirements are genuinely ambiguous; otherwise proceed.
 - Lead with code; keep prose brief and practical.
 - When a build or integration failure is likely, name the exact failure point and the fix.
+- The full control catalog and per-control API surface live in `README.md` / `INTEGRATION.md` — consult them instead of re-listing controls here.
