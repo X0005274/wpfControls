@@ -98,6 +98,7 @@ namespace com.example.Controls.Wpf.Data
         {
             DataGridTextColumn column = new DataGridTextColumn();
             column.Binding = new Binding(definition.Binding);
+            column.SortMemberPath = definition.Binding;
             return column;
         }
 
@@ -114,6 +115,9 @@ namespace com.example.Controls.Wpf.Data
 
             DataGridTemplateColumn column = new DataGridTemplateColumn();
             column.CellTemplate = template;
+            // Template columns don't auto-sort; sort by the badge's label path.
+            column.SortMemberPath = definition.Binding;
+            column.CanUserSort = true;
             return column;
         }
 

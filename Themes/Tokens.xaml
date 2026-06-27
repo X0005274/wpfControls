@@ -24,8 +24,9 @@
 
     <!-- 4. Corner radius -->
     <CornerRadius x:Key="Radius.Sm">4</CornerRadius>
-    <CornerRadius x:Key="Radius.Md">6</CornerRadius>
+    <CornerRadius x:Key="Radius.Md">4</CornerRadius>
     <CornerRadius x:Key="Radius.Lg">8</CornerRadius>
+    <CornerRadius x:Key="Radius.Pill">10</CornerRadius>
 
     <!-- 1. Color roles -->
     <SolidColorBrush x:Key="Brush.Background" Color="#FFF7F8FA" />
@@ -39,15 +40,15 @@
     <SolidColorBrush x:Key="Brush.TextPrimary" Color="#FF111827" />
     <SolidColorBrush x:Key="Brush.TextSecondary" Color="#FF6B7280" />
     <SolidColorBrush x:Key="Brush.TextPlaceholder" Color="#FF9CA3AF" />
-    <SolidColorBrush x:Key="Brush.Accent" Color="#FF2563EB" />
-    <SolidColorBrush x:Key="Brush.AccentHover" Color="#FF1D4ED8" />
-    <SolidColorBrush x:Key="Brush.AccentPressed" Color="#FF1E40AF" />
+    <SolidColorBrush x:Key="Brush.Accent" Color="#FF0078D4" />
+    <SolidColorBrush x:Key="Brush.AccentHover" Color="#FF106EBE" />
+    <SolidColorBrush x:Key="Brush.AccentPressed" Color="#FF005A9E" />
     <SolidColorBrush x:Key="Brush.DangerPressed" Color="#FF991B1B" />
-    <SolidColorBrush x:Key="Brush.SelectedBackground" Color="#FFDBEAFE" />
-    <SolidColorBrush x:Key="Brush.SelectedText" Color="#FF1E3A8A" />
+    <SolidColorBrush x:Key="Brush.SelectedBackground" Color="#FFCFE4F7" />
+    <SolidColorBrush x:Key="Brush.SelectedText" Color="#FF005A9E" />
     <SolidColorBrush x:Key="Brush.HoverBackground" Color="#FFF3F4F6" />
-    <SolidColorBrush x:Key="Brush.FocusBorder" Color="#FF2563EB" />
-    <SolidColorBrush x:Key="Brush.FocusRing" Color="#332563EB" />
+    <SolidColorBrush x:Key="Brush.FocusBorder" Color="#FF0078D4" />
+    <SolidColorBrush x:Key="Brush.FocusRing" Color="#330078D4" />
     <SolidColorBrush x:Key="Brush.DisabledBackground" Color="#FFF3F4F6" />
     <SolidColorBrush x:Key="Brush.DisabledText" Color="#FF9CA3AF" />
     <SolidColorBrush x:Key="Brush.ErrorBorder" Color="#FFDC2626" />
@@ -86,7 +87,7 @@
     <SolidColorBrush x:Key="Matte.SelectedText" Color="#FF1C1917" />
 
     <!-- Raw colors for ColorAnimation targets (animations need Color, not Brush) -->
-    <Color x:Key="Color.Accent">#FF2563EB</Color>
+    <Color x:Key="Color.Accent">#FF0078D4</Color>
     <Color x:Key="Color.TrackOff">#FFD1D5DB</Color>
 
     <!-- 3. Typography (Pretendard — embedded as an assembly resource so it renders
@@ -98,11 +99,11 @@
     <!-- Type scale (device-independent sizes). Controls must reference these
          instead of hardcoding numeric FontSize values. -->
     <sys:Double x:Key="Font.Size.Micro">9</sys:Double>
-    <sys:Double x:Key="Font.Size.Helper">11</sys:Double>
+    <sys:Double x:Key="Font.Size.Helper">12</sys:Double>
     <sys:Double x:Key="Font.Size.Label">12</sys:Double>
-    <sys:Double x:Key="Font.Size.Body">13</sys:Double>
+    <sys:Double x:Key="Font.Size.Body">14</sys:Double>
     <sys:Double x:Key="Font.Size.BodyLg">14</sys:Double>
-    <sys:Double x:Key="Font.Size.Title">15</sys:Double>
+    <sys:Double x:Key="Font.Size.Title">16</sys:Double>
     <sys:Double x:Key="Font.Size.Subtitle">16</sys:Double>
     <sys:Double x:Key="Font.Size.Heading">20</sys:Double>
     <sys:Double x:Key="Font.Size.PageTitle">22</sys:Double>
@@ -135,6 +136,14 @@
     </Style>
 
     <!-- 6. Depth — the only shadow in the system, for overlays/popups only. -->
+    <!-- Fluent elevation: subtle resting shadow for cards (Card) and a deeper one
+         for flyouts/popups (Popup). -->
+    <DropShadowEffect x:Key="Shadow.Card"
+                      Color="#FF000000"
+                      Opacity="0.10"
+                      BlurRadius="8"
+                      ShadowDepth="1"
+                      Direction="270" />
     <DropShadowEffect x:Key="Shadow.Popup"
                       Color="#FF101828"
                       Opacity="0.12"

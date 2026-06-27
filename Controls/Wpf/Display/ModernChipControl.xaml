@@ -21,7 +21,7 @@
     </UserControl.Resources>
 
     <!-- 둥근 알약 모양 태그. 필요하면 오른쪽에 삭제(X) 버튼을 보여 줍니다. -->
-    <Border CornerRadius="12"
+    <Border CornerRadius="{StaticResource Radius.Pill}"
             Background="{StaticResource Brush.SelectedBackground}"
             Padding="10,3"
             HorizontalAlignment="Left">

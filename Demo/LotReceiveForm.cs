@@ -18,10 +18,18 @@ namespace com.example.Demo
         {
             this.InitializeComponent();
             this.ConfigureColumns();
+            this.ConfigureFabFilter();
             this.ConfigureStateFilter();
             this.lotGrid.SelectionChanged += this.LotGrid_SelectionChanged;
             this.allRows = this.BuildSampleData();
             this.ShowRows(this.allRows);
+        }
+
+        private void ConfigureFabFilter()
+        {
+            List<string> fabs = new List<string> { "M14", "M15", "M16", "M17" };
+            this.fabCombo.ItemsSource = fabs;
+            this.fabCombo.SelectedItem = "M14";
         }
 
         private void ConfigureStateFilter()
@@ -33,17 +41,19 @@ namespace com.example.Demo
 
         private void ConfigureColumns()
         {
-            this.lotGrid.AddTextColumn("Lot Id", "LotId", "130");
-            this.lotGrid.AddBadgeColumn("Lot State", "LotState", "LotStateTone", "120");
-            this.lotGrid.AddTextColumn("Event", "Event", "110");
-            this.lotGrid.AddTextColumn("Event Time", "EventTime", "160");
-            this.lotGrid.AddTextColumn("Product Id", "ProductId", "120");
-            this.lotGrid.AddTextColumn("Sub Product Id", "SubProductId", "140");
-            this.lotGrid.AddTextColumn("Flow Id", "FlowId", "110");
-            this.lotGrid.AddTextColumn("Oper Id", "OperId", "100");
-            this.lotGrid.AddTextColumn("Carrier Id", "CarrierId", "120");
-            this.lotGrid.AddTextColumn("Eqp Id", "EqpId", "100");
-            this.lotGrid.AddTextColumn("Stk Id", "StkId", "*");
+            // Auto-width columns: each sizes to fit its data and header label.
+            // (Many columns -> horizontal scrollbar; few -> room to add more.)
+            this.lotGrid.AddTextColumn("Lot Id", "LotId");
+            this.lotGrid.AddBadgeColumn("Lot State", "LotState", "LotStateTone");
+            this.lotGrid.AddTextColumn("Event", "Event");
+            this.lotGrid.AddTextColumn("Event Time", "EventTime");
+            this.lotGrid.AddTextColumn("Product Id", "ProductId");
+            this.lotGrid.AddTextColumn("Sub Product Id", "SubProductId");
+            this.lotGrid.AddTextColumn("Flow Id", "FlowId");
+            this.lotGrid.AddTextColumn("Oper Id", "OperId");
+            this.lotGrid.AddTextColumn("Carrier Id", "CarrierId");
+            this.lotGrid.AddTextColumn("Eqp Id", "EqpId");
+            this.lotGrid.AddTextColumn("Stk Id", "StkId");
         }
 
         private List<LotGridRow> BuildSampleData()
