@@ -32,7 +32,7 @@ namespace com.example.Demo
         {
             this.SuspendLayout();
 
-            this.BackColor = Color.FromArgb(225, 229, 235);
+            this.BackColor = Color.FromArgb(247, 248, 250);
             this.ClientSize = new Size(1280, 760);
             this.Font = new Font("Segoe UI", 9F);
             this.Text = "User Form";

@@ -17,6 +17,7 @@ namespace com.example.Demo
         private Button activeNavButton;
 
         private static readonly Color AccentColor = Color.FromArgb(0, 120, 212);
+        private static readonly Color AccentHoverColor = Color.FromArgb(16, 110, 190);
         private static readonly Color NavTextColor = Color.FromArgb(55, 65, 81);
         private static readonly Color NavHoverColor = Color.FromArgb(243, 244, 246);
 
@@ -126,12 +127,16 @@ namespace com.example.Demo
                 {
                     button.BackColor = AccentColor;
                     button.ForeColor = Color.White;
+                    // Hover on the active button must stay dark-accent, otherwise the
+                    // light hover colour shows under the white text and hides it.
+                    button.FlatAppearance.MouseOverBackColor = AccentHoverColor;
                     button.Font = new Font("Segoe UI Semibold", 10.5F);
                 }
                 else
                 {
                     button.BackColor = Color.White;
                     button.ForeColor = NavTextColor;
+                    button.FlatAppearance.MouseOverBackColor = NavHoverColor;
                     button.Font = new Font("Segoe UI", 10.5F);
                 }
             }

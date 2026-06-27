@@ -41,7 +41,7 @@ namespace com.example.Demo
 
             // ===== contentPanel (가운데 — 선택된 샘플 화면이 임베드됨) =====
             this.contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.contentPanel.BackColor = System.Drawing.Color.FromArgb(225, 229, 235);
+            this.contentPanel.BackColor = System.Drawing.Color.FromArgb(247, 248, 250);
             this.contentPanel.Name = "contentPanel";
             this.contentPanel.TabIndex = 2;
 
@@ -101,7 +101,7 @@ namespace com.example.Demo
             // ===== SampleShellForm =====
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(225, 229, 235);
+            this.BackColor = System.Drawing.Color.FromArgb(247, 248, 250);
             this.ClientSize = new System.Drawing.Size(1600, 900);
             this.Controls.Add(this.contentPanel);
             this.Controls.Add(this.sidebarPanel);

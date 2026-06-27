@@ -89,7 +89,7 @@ namespace com.example.Demo
             this.SuspendLayout();
 
             // ===== accentStrip (very top) =====
-            this.accentStrip.BackColor = System.Drawing.Color.FromArgb(37, 99, 235);
+            this.accentStrip.BackColor = System.Drawing.Color.FromArgb(0, 120, 212);
             this.accentStrip.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.accentStrip.Location = new System.Drawing.Point(0, 0);
             this.accentStrip.Name = "accentStrip";
@@ -181,7 +181,7 @@ namespace com.example.Demo
             this.gridSplit.TabIndex = 2;
 
             // --- Panel1: Lot (타이틀 + lotGrid) ---
-            this.gridSplit.Panel1.BackColor = System.Drawing.Color.FromArgb(225, 229, 235);
+            this.gridSplit.Panel1.BackColor = System.Drawing.Color.FromArgb(247, 248, 250);
             this.gridSplit.Panel1.Controls.Add(this.lotGrid);
             this.gridSplit.Panel1.Controls.Add(this.lotTitleLabel);
             this.gridSplit.Panel1.Controls.Add(this.lotTitleBar);
@@ -202,7 +202,7 @@ namespace com.example.Demo
             this.lotTitleLabel.Text = "Lot";
 
             this.lotGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.lotGrid.BackColor = System.Drawing.Color.FromArgb(225, 229, 235);
+            this.lotGrid.BackColor = System.Drawing.Color.FromArgb(247, 248, 250);
             this.lotGrid.IsReadOnly = true;
             this.lotGrid.Location = new System.Drawing.Point(0, 28);
             this.lotGrid.Name = "lotGrid";
@@ -210,7 +210,7 @@ namespace com.example.Demo
             this.lotGrid.TabIndex = 2;
 
             // --- Panel2: Wafer (타이틀 + waferGrid) ---
-            this.gridSplit.Panel2.BackColor = System.Drawing.Color.FromArgb(225, 229, 235);
+            this.gridSplit.Panel2.BackColor = System.Drawing.Color.FromArgb(247, 248, 250);
             this.gridSplit.Panel2.Controls.Add(this.waferGrid);
             this.gridSplit.Panel2.Controls.Add(this.waferTitleLabel);
             this.gridSplit.Panel2.Controls.Add(this.waferTitleBar);
@@ -231,7 +231,7 @@ namespace com.example.Demo
             this.waferTitleLabel.Text = "Wafer";
 
             this.waferGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.waferGrid.BackColor = System.Drawing.Color.FromArgb(225, 229, 235);
+            this.waferGrid.BackColor = System.Drawing.Color.FromArgb(247, 248, 250);
             this.waferGrid.IsReadOnly = true;
             this.waferGrid.Location = new System.Drawing.Point(0, 28);
             this.waferGrid.Name = "waferGrid";
@@ -337,7 +337,7 @@ namespace com.example.Demo
             // ===== LotReceiveForm =====
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(225, 229, 235);
+            this.BackColor = System.Drawing.Color.FromArgb(247, 248, 250);
             this.ClientSize = new System.Drawing.Size(1920, 768);
             this.Controls.Add(this.gridSplit);
             this.Controls.Add(this.execCard);
