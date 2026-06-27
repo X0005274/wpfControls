@@ -70,11 +70,19 @@
     </Compile>
     <Compile Include="LotGridRow.cs" />
     <Compile Include="WaferGridRow.cs" />
+    <Compile Include="EquipmentRow.cs" />
+    <Compile Include="EquipmentLotRow.cs" />
     <Compile Include="LotReceiveForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LotReceiveForm.Designer.cs">
       <DependentUpon>LotReceiveForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EquipmentLotForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EquipmentLotForm.Designer.cs">
+      <DependentUpon>EquipmentLotForm.cs</DependentUpon>
     </Compile>
     <Compile Include="InputSampleForm.cs">
       <SubType>Form</SubType>

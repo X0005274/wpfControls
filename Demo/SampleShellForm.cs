@@ -36,6 +36,7 @@ namespace com.example.Demo
         private void RegisterSamples()
         {
             this.AddSample("Lot Receive", delegate { return new LotReceiveForm(); });
+            this.AddSample("Equipment / Lot", delegate { return new EquipmentLotForm(); });
             this.AddSample("User Form", delegate { return new InputSampleForm(); });
         }
 

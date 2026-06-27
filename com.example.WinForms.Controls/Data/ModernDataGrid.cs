@@ -23,6 +23,11 @@ namespace com.example.WinForms.Controls.Data
         /// <summary>선택된 행이 바뀔 때 발생합니다.</summary>
         public event EventHandler SelectionChanged;
 
+        /// <summary>행을 우클릭할 때 발생합니다. 발생 시점에는 해당 행이 이미 선택되어
+        /// 있으므로, 핸들러에서 SelectedItem 으로 대상 행을 읽어 컨텍스트 메뉴를 띄울 수
+        /// 있습니다.</summary>
+        public event EventHandler RowRightClicked;
+
         /// <summary>기본 크기를 지정하며 컨트롤을 만듭니다.</summary>
         public ModernDataGrid()
         {
@@ -34,11 +39,23 @@ namespace com.example.WinForms.Controls.Data
                 com.example.Controls.Wpf.Data.ModernDataGridControl.SelectedItemProperty,
                 typeof(com.example.Controls.Wpf.Data.ModernDataGridControl));
             descriptor.AddValueChanged(this.Wpf, this.OnWpfSelectionChanged);
+
+            // 우클릭 이벤트를 표준 이벤트로 노출합니다.
+            this.Wpf.RowRightClicked += this.OnWpfRowRightClicked;
         }
 
         private void OnWpfSelectionChanged(object sender, EventArgs e)
         {
             EventHandler handler = this.SelectionChanged;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
+        }
+
+        private void OnWpfRowRightClicked(object sender, EventArgs e)
+        {
+            EventHandler handler = this.RowRightClicked;
             if (handler != null)
             {
                 handler(this, EventArgs.Empty);

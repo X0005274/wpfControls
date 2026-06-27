@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
 using com.example.Controls.Wpf.Display;
 
 namespace com.example.Controls.Wpf.Data
@@ -37,10 +39,46 @@ namespace com.example.Controls.Wpf.Data
                 typeof(ModernDataGridControl),
                 new PropertyMetadata(true));
 
+        /// <summary>
+        /// Raised when a row is right-clicked. The row under the cursor is selected
+        /// first (so <see cref="SelectedItem"/> is up to date), then this fires — a host
+        /// can show a context menu at the cursor in the handler.
+        /// </summary>
+        public event EventHandler RowRightClicked;
+
         public ModernDataGridControl()
         {
             this.InitializeComponent();
             this.InnerDataGrid.Sorting += this.InnerDataGrid_Sorting;
+            this.InnerDataGrid.PreviewMouseRightButtonUp += this.InnerDataGrid_PreviewMouseRightButtonUp;
+        }
+
+        /// <summary>
+        /// Selects the row under a right-click and raises <see cref="RowRightClicked"/>.
+        /// Right-clicking empty space (no row) is ignored.
+        /// </summary>
+        private void InnerDataGrid_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            DependencyObject node = e.OriginalSource as DependencyObject;
+            while (node != null && !(node is DataGridRow))
+            {
+                node = VisualTreeHelper.GetParent(node);
+            }
+
+            DataGridRow row = node as DataGridRow;
+            if (row == null)
+            {
+                return;
+            }
+
+            row.IsSelected = true;
+            this.SelectedItem = row.Item;
+
+            EventHandler handler = this.RowRightClicked;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
