@@ -20,6 +20,7 @@ namespace com.example.Demo
             this.ConfigureColumns();
             this.ConfigureFabFilter();
             this.ConfigureStateFilter();
+            this.ConfigureStateBadges();
             this.lotGrid.SelectionChanged += this.LotGrid_SelectionChanged;
             this.allRows = this.BuildSampleData();
             this.ShowRows(this.allRows);
@@ -37,6 +38,15 @@ namespace com.example.Demo
             // Multi-select check combo; nothing checked = no state filter (all states).
             List<string> states = new List<string> { "Created", "Released", "Scrapped" };
             this.stateCombo.ItemsSource = states;
+        }
+
+        private void ConfigureStateBadges()
+        {
+            // Use the same tones as the grid Lot State badges so the summary card
+            // reads with one consistent color language.
+            this.createdBadge.SetTone("success");
+            this.releasedBadge.SetTone("neutral");
+            this.scrappedBadge.SetTone("danger");
         }
 
         private void ConfigureColumns()
@@ -137,29 +147,62 @@ namespace com.example.Demo
         }
 
         /// <summary>
-        /// Drives the execution area: when a row is selected, show the selected lot
-        /// and enable Receive Lot; otherwise show the row count and disable it.
+        /// Drives the three bottom cards: the count card (queried row count, screen-
+        /// agnostic wording), the state card (per-state badges in the grid's tones),
+        /// and the execution card (selection + Receive Lot).
         /// </summary>
         private void UpdateExecutionState()
         {
             LotGridRow selected = this.lotGrid.SelectedItem as LotGridRow;
-            if (selected != null)
-            {
-                this.receiveButton.IsButtonEnabled = true;
-                this.statusLabel.Text = "Selected: " + selected.LotId + " (" + selected.LotState + ")";
-                return;
-            }
 
-            this.receiveButton.IsButtonEnabled = false;
             int total = this.allRows.Count;
             int shown = this.shownRows == null ? 0 : this.shownRows.Count;
+
+            this.countValueLabel.Text = shown.ToString();
             if (shown == total)
             {
-                this.statusLabel.Text = total + " lots";
+                this.countCaptionLabel.Text = "rows";
             }
             else
             {
-                this.statusLabel.Text = "Showing " + shown + " of " + total + " lots";
+                this.countCaptionLabel.Text = "of " + total + " rows";
+            }
+
+            int created = 0;
+            int released = 0;
+            int scrapped = 0;
+            if (this.shownRows != null)
+            {
+                foreach (LotGridRow row in this.shownRows)
+                {
+                    if (row.LotState == "Created")
+                    {
+                        created++;
+                    }
+                    else if (row.LotState == "Released")
+                    {
+                        released++;
+                    }
+                    else if (row.LotState == "Scrapped")
+                    {
+                        scrapped++;
+                    }
+                }
+            }
+
+            this.createdBadge.Text = "Created " + created;
+            this.releasedBadge.Text = "Released " + released;
+            this.scrappedBadge.Text = "Scrapped " + scrapped;
+
+            if (selected != null)
+            {
+                this.execSelectedLabel.Text = "Selected: " + selected.LotId + " (" + selected.LotState + ")";
+                this.receiveButton.IsButtonEnabled = true;
+            }
+            else
+            {
+                this.execSelectedLabel.Text = "No lot selected";
+                this.receiveButton.IsButtonEnabled = false;
             }
         }
 

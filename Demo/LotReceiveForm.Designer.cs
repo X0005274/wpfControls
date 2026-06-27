@@ -20,8 +20,18 @@ namespace com.example.Demo
 
         private com.example.WinForms.Controls.Data.ModernDataGrid lotGrid;
 
+        private CardPanel countCard;
+        private System.Windows.Forms.Label countValueLabel;
+        private System.Windows.Forms.Label countCaptionLabel;
+
+        private CardPanel stateCard;
+        private System.Windows.Forms.Label stateCaptionLabel;
+        private StatBadge createdBadge;
+        private StatBadge releasedBadge;
+        private StatBadge scrappedBadge;
+
         private CardPanel execCard;
-        private System.Windows.Forms.Label statusLabel;
+        private System.Windows.Forms.Label execSelectedLabel;
         private com.example.WinForms.Controls.Input.ModernButton receiveButton;
 
         protected override void Dispose(bool disposing)
@@ -43,10 +53,20 @@ namespace com.example.Demo
             this.stateCombo = new com.example.WinForms.Controls.Selection.ModernMultiSelectComboBox();
             this.searchButton = new com.example.WinForms.Controls.Input.ModernButton();
             this.lotGrid = new com.example.WinForms.Controls.Data.ModernDataGrid();
+            this.countCard = new CardPanel();
+            this.countValueLabel = new System.Windows.Forms.Label();
+            this.countCaptionLabel = new System.Windows.Forms.Label();
+            this.stateCard = new CardPanel();
+            this.stateCaptionLabel = new System.Windows.Forms.Label();
+            this.createdBadge = new StatBadge();
+            this.releasedBadge = new StatBadge();
+            this.scrappedBadge = new StatBadge();
             this.execCard = new CardPanel();
-            this.statusLabel = new System.Windows.Forms.Label();
+            this.execSelectedLabel = new System.Windows.Forms.Label();
             this.receiveButton = new com.example.WinForms.Controls.Input.ModernButton();
             this.queryCard.SuspendLayout();
+            this.countCard.SuspendLayout();
+            this.stateCard.SuspendLayout();
             this.execCard.SuspendLayout();
             this.SuspendLayout();
 
@@ -117,32 +137,105 @@ namespace com.example.Demo
             this.lotGrid.Size = new System.Drawing.Size(1888, 520);
             this.lotGrid.TabIndex = 2;
 
-            // ===== execCard (실행) =====
+            // ===== countCard (조회 건수, 좌측 하단 / 좁게) =====
+            this.countCard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.countCard.BackColor = System.Drawing.Color.White;
+            this.countCard.Controls.Add(this.countCaptionLabel);
+            this.countCard.Controls.Add(this.countValueLabel);
+            this.countCard.Location = new System.Drawing.Point(16, 672);
+            this.countCard.Name = "countCard";
+            this.countCard.Size = new System.Drawing.Size(236, 80);
+            this.countCard.TabIndex = 3;
+
+            // countValueLabel — queried row count (primary, SemiBold)
+            this.countValueLabel.AutoSize = true;
+            this.countValueLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
+            this.countValueLabel.ForeColor = System.Drawing.Color.FromArgb(17, 24, 39);
+            this.countValueLabel.Location = new System.Drawing.Point(22, 13);
+            this.countValueLabel.Name = "countValueLabel";
+            this.countValueLabel.Size = new System.Drawing.Size(60, 25);
+            this.countValueLabel.TabIndex = 0;
+            this.countValueLabel.Text = "0";
+
+            // countCaptionLabel — generic, screen-agnostic caption (not "lots")
+            this.countCaptionLabel.AutoSize = true;
+            this.countCaptionLabel.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.countCaptionLabel.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
+            this.countCaptionLabel.Location = new System.Drawing.Point(24, 47);
+            this.countCaptionLabel.Name = "countCaptionLabel";
+            this.countCaptionLabel.Size = new System.Drawing.Size(40, 17);
+            this.countCaptionLabel.TabIndex = 1;
+            this.countCaptionLabel.Text = "rows";
+
+            // ===== stateCard (상태 분포, 중앙 하단 / 좁게 / 배지 색 통일) =====
+            this.stateCard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.stateCard.BackColor = System.Drawing.Color.White;
+            this.stateCard.Controls.Add(this.scrappedBadge);
+            this.stateCard.Controls.Add(this.releasedBadge);
+            this.stateCard.Controls.Add(this.createdBadge);
+            this.stateCard.Controls.Add(this.stateCaptionLabel);
+            this.stateCard.Location = new System.Drawing.Point(268, 672);
+            this.stateCard.Name = "stateCard";
+            this.stateCard.Size = new System.Drawing.Size(360, 80);
+            this.stateCard.TabIndex = 4;
+
+            // stateCaptionLabel — generic caption
+            this.stateCaptionLabel.AutoSize = true;
+            this.stateCaptionLabel.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.stateCaptionLabel.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
+            this.stateCaptionLabel.Location = new System.Drawing.Point(20, 12);
+            this.stateCaptionLabel.Name = "stateCaptionLabel";
+            this.stateCaptionLabel.Size = new System.Drawing.Size(40, 17);
+            this.stateCaptionLabel.TabIndex = 0;
+            this.stateCaptionLabel.Text = "By state";
+
+            // createdBadge (success tone — matches grid badge)
+            this.createdBadge.Location = new System.Drawing.Point(20, 38);
+            this.createdBadge.Name = "createdBadge";
+            this.createdBadge.Size = new System.Drawing.Size(104, 26);
+            this.createdBadge.TabIndex = 1;
+            this.createdBadge.Text = "Created 0";
+
+            // releasedBadge (neutral tone — matches grid badge)
+            this.releasedBadge.Location = new System.Drawing.Point(128, 38);
+            this.releasedBadge.Name = "releasedBadge";
+            this.releasedBadge.Size = new System.Drawing.Size(104, 26);
+            this.releasedBadge.TabIndex = 2;
+            this.releasedBadge.Text = "Released 0";
+
+            // scrappedBadge (danger tone — matches grid badge)
+            this.scrappedBadge.Location = new System.Drawing.Point(236, 38);
+            this.scrappedBadge.Name = "scrappedBadge";
+            this.scrappedBadge.Size = new System.Drawing.Size(104, 26);
+            this.scrappedBadge.TabIndex = 3;
+            this.scrappedBadge.Text = "Scrapped 0";
+
+            // ===== execCard (실행, 우측 하단 / 넓게) =====
             this.execCard.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.execCard.BackColor = System.Drawing.Color.White;
             this.execCard.Controls.Add(this.receiveButton);
-            this.execCard.Controls.Add(this.statusLabel);
-            this.execCard.Location = new System.Drawing.Point(16, 672);
+            this.execCard.Controls.Add(this.execSelectedLabel);
+            this.execCard.Location = new System.Drawing.Point(644, 672);
             this.execCard.Name = "execCard";
-            this.execCard.Size = new System.Drawing.Size(1888, 80);
-            this.execCard.TabIndex = 3;
+            this.execCard.Size = new System.Drawing.Size(1260, 80);
+            this.execCard.TabIndex = 5;
 
-            // statusLabel (row count) — secondary meta text in italic
-            this.statusLabel.AutoSize = true;
-            this.statusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
-            this.statusLabel.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
-            this.statusLabel.Location = new System.Drawing.Point(20, 32);
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(40, 15);
-            this.statusLabel.TabIndex = 0;
-            this.statusLabel.Text = "0 lots";
+            // execSelectedLabel — current selection (accent, italic)
+            this.execSelectedLabel.AutoSize = true;
+            this.execSelectedLabel.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Italic);
+            this.execSelectedLabel.ForeColor = System.Drawing.Color.FromArgb(0, 120, 212);
+            this.execSelectedLabel.Location = new System.Drawing.Point(24, 31);
+            this.execSelectedLabel.Name = "execSelectedLabel";
+            this.execSelectedLabel.Size = new System.Drawing.Size(100, 17);
+            this.execSelectedLabel.TabIndex = 0;
+            this.execSelectedLabel.Text = "No lot selected";
 
             // receiveButton (Primary, right-aligned, receive icon)
             this.receiveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.receiveButton.BackColor = System.Drawing.Color.White;
             this.receiveButton.IconGlyph = "\uE896";
             this.receiveButton.Kind = com.example.Controls.Wpf.Input.ButtonKind.Primary;
-            this.receiveButton.Location = new System.Drawing.Point(1718, 18);
+            this.receiveButton.Location = new System.Drawing.Point(1090, 18);
             this.receiveButton.Name = "receiveButton";
             this.receiveButton.Size = new System.Drawing.Size(150, 44);
             this.receiveButton.TabIndex = 1;
@@ -156,6 +249,8 @@ namespace com.example.Demo
             this.ClientSize = new System.Drawing.Size(1920, 768);
             this.Controls.Add(this.lotGrid);
             this.Controls.Add(this.execCard);
+            this.Controls.Add(this.stateCard);
+            this.Controls.Add(this.countCard);
             this.Controls.Add(this.queryCard);
             this.Controls.Add(this.accentStrip);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -164,6 +259,10 @@ namespace com.example.Demo
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Lot Receive";
             this.queryCard.ResumeLayout(false);
+            this.countCard.ResumeLayout(false);
+            this.countCard.PerformLayout();
+            this.stateCard.ResumeLayout(false);
+            this.stateCard.PerformLayout();
             this.execCard.ResumeLayout(false);
             this.execCard.PerformLayout();
             this.ResumeLayout(false);

@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="CardPanel.cs" />
+    <Compile Include="StatBadge.cs" />
     <Compile Include="LotSearchHostForm.cs">
       <SubType>Form</SubType>
     </Compile>
