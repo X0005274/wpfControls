@@ -108,7 +108,7 @@
     <sys:Double x:Key="Font.Size.Helper">12</sys:Double>
     <sys:Double x:Key="Font.Size.Label">12</sys:Double>
     <sys:Double x:Key="Font.Size.Body">12</sys:Double>
-    <sys:Double x:Key="Font.Size.BodyLg">14</sys:Double>
+    <sys:Double x:Key="Font.Size.BodyLg">12</sys:Double>
     <sys:Double x:Key="Font.Size.Title">16</sys:Double>
     <sys:Double x:Key="Font.Size.Subtitle">16</sys:Double>
     <sys:Double x:Key="Font.Size.Heading">20</sys:Double>
