@@ -160,7 +160,7 @@ namespace com.example.Demo
             // statusLabel
             this.statusLabel.AutoSize = true;
             this.statusLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.statusLabel.ForeColor = System.Drawing.Color.FromArgb(37, 99, 235);
+            this.statusLabel.ForeColor = System.Drawing.Color.FromArgb(0, 120, 212);
             this.statusLabel.Location = new System.Drawing.Point(116, 332);
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(80, 17);
