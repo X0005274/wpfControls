@@ -78,7 +78,7 @@
 
     <Border CornerRadius="{StaticResource Radius.Lg}"
             BorderThickness="1"
-            BorderBrush="{StaticResource Brush.BorderSubtle}"
+            BorderBrush="{StaticResource Brush.Border}"
             Background="{StaticResource Brush.Surface}"
             ClipToBounds="True">
         <DataGrid x:Name="InnerDataGrid"
