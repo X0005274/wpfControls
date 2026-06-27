@@ -17,6 +17,7 @@ namespace com.example.Demo
         private com.example.WinForms.Controls.Input.ModernTextBox lotIdBox;
         private com.example.WinForms.Controls.Selection.ModernMultiSelectComboBox stateCombo;
         private com.example.WinForms.Controls.Input.ModernButton searchButton;
+        private System.Windows.Forms.TableLayoutPanel filterTable;
 
         private FocuslessSplitContainer gridSplit;
         private System.Windows.Forms.Panel lotTitleBar;
@@ -58,6 +59,7 @@ namespace com.example.Demo
             this.lotIdBox = new com.example.WinForms.Controls.Input.ModernTextBox();
             this.stateCombo = new com.example.WinForms.Controls.Selection.ModernMultiSelectComboBox();
             this.searchButton = new com.example.WinForms.Controls.Input.ModernButton();
+            this.filterTable = new System.Windows.Forms.TableLayoutPanel();
             this.gridSplit = new FocuslessSplitContainer();
             this.lotTitleBar = new System.Windows.Forms.Panel();
             this.lotTitleLabel = new System.Windows.Forms.Label();
@@ -76,6 +78,7 @@ namespace com.example.Demo
             this.execCard = new CardPanel();
             this.receiveButton = new com.example.WinForms.Controls.Input.ModernButton();
             this.queryCard.SuspendLayout();
+            this.filterTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridSplit)).BeginInit();
             this.gridSplit.Panel1.SuspendLayout();
             this.gridSplit.Panel2.SuspendLayout();
@@ -95,20 +98,39 @@ namespace com.example.Demo
 
             // ===== queryCard (조회) =====
             this.queryCard.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            // Padding insets the content so the filter table never paints over the card's
+            // rounded corners / 1px border (drawn by CardPanel.OnPaint).
             this.queryCard.BackColor = System.Drawing.Color.White;
-            this.queryCard.Controls.Add(this.searchButton);
-            this.queryCard.Controls.Add(this.stateCombo);
-            this.queryCard.Controls.Add(this.lotIdBox);
-            this.queryCard.Controls.Add(this.fabCombo);
+            this.queryCard.Controls.Add(this.filterTable);
             this.queryCard.Location = new System.Drawing.Point(16, 16);
             this.queryCard.Name = "queryCard";
+            this.queryCard.Padding = new System.Windows.Forms.Padding(20, 16, 20, 16);
             this.queryCard.Size = new System.Drawing.Size(1888, 104);
             this.queryCard.TabIndex = 1;
+
+            // filterTable: auto-lays the filter row (no manual X coordinates). One
+            // auto-width column per control + a trailing percent column that absorbs the
+            // slack; one auto-height row. Add a filter = add a column + control.
+            this.filterTable.BackColor = System.Drawing.Color.White;
+            this.filterTable.ColumnCount = 5;
+            this.filterTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.filterTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.filterTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.filterTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.filterTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.filterTable.Controls.Add(this.fabCombo, 0, 0);
+            this.filterTable.Controls.Add(this.lotIdBox, 1, 0);
+            this.filterTable.Controls.Add(this.stateCombo, 2, 0);
+            this.filterTable.Controls.Add(this.searchButton, 3, 0);
+            this.filterTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.filterTable.Name = "filterTable";
+            this.filterTable.RowCount = 1;
+            this.filterTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
 
             // fabCombo (Fab Id, required)
             this.fabCombo.BackColor = System.Drawing.Color.White;
             this.fabCombo.IsRequired = true;
-            this.fabCombo.Location = new System.Drawing.Point(20, 16);
+            this.fabCombo.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
             this.fabCombo.Name = "fabCombo";
             this.fabCombo.Size = new System.Drawing.Size(140, 72);
             this.fabCombo.TabIndex = 0;
@@ -116,7 +138,7 @@ namespace com.example.Demo
 
             // lotIdBox
             this.lotIdBox.BackColor = System.Drawing.Color.White;
-            this.lotIdBox.Location = new System.Drawing.Point(176, 16);
+            this.lotIdBox.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
             this.lotIdBox.Name = "lotIdBox";
             this.lotIdBox.PlaceholderText = "Enter Lot ID";
             this.lotIdBox.Size = new System.Drawing.Size(280, 72);
@@ -125,7 +147,7 @@ namespace com.example.Demo
 
             // stateCombo (Lot State multi-select filter)
             this.stateCombo.BackColor = System.Drawing.Color.White;
-            this.stateCombo.Location = new System.Drawing.Point(472, 16);
+            this.stateCombo.Margin = new System.Windows.Forms.Padding(0, 0, 16, 0);
             this.stateCombo.Name = "stateCombo";
             this.stateCombo.PlaceholderText = "All states";
             this.stateCombo.Size = new System.Drawing.Size(200, 72);
@@ -136,9 +158,8 @@ namespace com.example.Demo
             this.searchButton.BackColor = System.Drawing.Color.White;
             this.searchButton.IconGlyph = "\uE721";
             this.searchButton.Kind = com.example.Controls.Wpf.Input.ButtonKind.Secondary;
-            // Y=40 lines up with the input field boxes (label 24 + control top 16);
-            // height 32 matches the field height (Size.ControlHeight) so the row aligns.
-            this.searchButton.Location = new System.Drawing.Point(688, 40);
+            // Top margin = label height so the button lines up with the input fields.
+            this.searchButton.Margin = new System.Windows.Forms.Padding(0, 24, 0, 0);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(104, 32);
             this.searchButton.TabIndex = 3;
@@ -329,6 +350,7 @@ namespace com.example.Demo
             this.Name = "LotReceiveForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Lot Receive";
+            this.filterTable.ResumeLayout(false);
             this.queryCard.ResumeLayout(false);
             this.gridSplit.Panel1.ResumeLayout(false);
             this.gridSplit.Panel1.PerformLayout();
