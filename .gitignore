@@ -53,3 +53,12 @@ Demo/demo_*.png
 
 # Release packaging staging folder
 dist/
+
+# Java / Maven build output
+target/
+*.class
+
+# Eclipse / m2e (IDE-specific)
+.classpath
+.project
+.settings/

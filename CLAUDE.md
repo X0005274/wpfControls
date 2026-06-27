@@ -39,6 +39,8 @@ Demo/bin/Debug/com.example.Demo.exe
 | `com.example.Messaging.Rendezvous` | class library | TIBCO Rendezvous messaging (request/reply client + server, message router). Non-UI; independent of the control libraries. |
 | `Demo` (`Demo/com.example.Demo.csproj`) | WinExe | WinForms host that exercises the controls. Startup object is `SampleShellForm`. |
 
+A separate **Java** module lives in `java/tibrv-messaging` (Maven; `mvn package`). It is the Java counterpart of `com.example.Messaging.Rendezvous` and is **not** part of `com.example.sln` / MSBuild. Both implement the same RV wire contract documented in `docs/rv-contract.md`; the Java classes mirror the .NET `Tibrv*` types. Like the .NET project, it builds only where the TIBCO assembly is present (env `TIBRV_HOME`, here `tibrvj.jar`).
+
 ## Architecture (the parts that span files)
 
 ### Design tokens are the single source of truth

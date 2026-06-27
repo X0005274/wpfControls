@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  com.example:tibrv-messaging
+  =============================================================================
+  Java counterpart of the .NET com.example.Messaging.Rendezvous library. It does
+  Request/Reply of server Methods over TIBCO Rendezvous (RV), using the same wire
+  contract (Subject + "method" field). See ../../docs/rv-contract.md.
+
+  [IMPORTANT] This module builds only where the TIBCO Rendezvous Java assembly
+  (tibrvj.jar) is installed. It requires the TIBRV_HOME environment variable:
+     TIBRV_HOME = the TIBCO RV install folder (e.g. C:\TIBCO\tibrv\8.6)
+  The dependency below resolves $(TIBRV_HOME)/lib/tibrvj.jar via system scope,
+  mirroring how the .NET project references TIBCO.Rendezvous.dll through TIBRV_HOME.
+  At runtime the RV native libraries (TIBRV_HOME/bin) must also be reachable
+  (PATH on Windows, or -Djava.library.path).
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>tibrv-messaging</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>com.example TIBRV Messaging</name>
+    <description>TIBCO Rendezvous based Request/Reply messaging library (Java)</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- TIBCO RV Java jar (override with -Dtibrv.jar=... if your layout differs). -->
+        <tibrv.jar>${env.TIBRV_HOME}/lib/tibrvj.jar</tibrv.jar>
+    </properties>
+
+    <dependencies>
+        <!--
+          TIBCO Rendezvous Java API. It is proprietary and not on Maven Central, so it
+          is referenced from the local install via system scope (like the .NET HintPath).
+          System-scoped jars are NOT bundled; the RV runtime must be installed to run.
+        -->
+        <dependency>
+            <groupId>com.tibco</groupId>
+            <artifactId>tibrvj</artifactId>
+            <version>8.6</version>
+            <scope>system</scope>
+            <systemPath>${tibrv.jar}</systemPath>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Fail early with a clear message when tibrvj.jar cannot be found. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.4.1</version>
+                <executions>
+                    <execution>
+                        <id>require-tibrvj</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireFilesExist>
+                                    <files>
+                                        <file>${tibrv.jar}</file>
+                                    </files>
+                                    <message>tibrvj.jar was not found. Set the TIBRV_HOME environment variable to the TIBCO RV install folder, or pass -Dtibrv.jar=&lt;path&gt;. Looked for: ${tibrv.jar}</message>
+                                </requireFilesExist>
+                            </rules>
+                            <failFast>true</failFast>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
