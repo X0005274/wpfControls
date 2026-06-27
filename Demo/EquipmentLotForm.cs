@@ -48,14 +48,78 @@ namespace com.example.Demo
             this.allEquipment = this.BuildEquipment();
             this.allLots = this.BuildLots();
 
-            this.equipmentGrid.ItemsSource = this.allEquipment;
-            if (this.allEquipment.Count > 0)
+            this.ConfigureTypeFilter();
+            this.ConfigureStateFilter();
+            this.ShowEquipment(this.allEquipment);
+        }
+
+        private void ConfigureTypeFilter()
+        {
+            List<string> types = new List<string>();
+            types.Add("All");
+            types.AddRange(this.equipmentTypes);
+            this.typeCombo.ItemsSource = types;
+            this.typeCombo.SelectedItem = "All";
+        }
+
+        private void ConfigureStateFilter()
+        {
+            // Multi-select; nothing checked = no state filter (all states).
+            List<string> states = new List<string> { "Run", "Idle", "Setup", "PM", "Down" };
+            this.stateCombo.ItemsSource = states;
+        }
+
+        /// <summary>
+        /// Binds the equipment grid to the given rows and selects the first one (which
+        /// populates its connectable lots), or clears the lot grid when empty.
+        /// </summary>
+        private void ShowEquipment(List<EquipmentRow> rows)
+        {
+            this.equipmentGrid.ItemsSource = null;
+            this.equipmentGrid.ItemsSource = rows;
+            if (rows.Count > 0)
             {
-                // Selecting the first equipment populates its connectable lots.
-                this.equipmentGrid.SelectedItem = this.allEquipment[0];
+                this.equipmentGrid.SelectedItem = rows[0];
+            }
+            else
+            {
+                this.PopulateLots(null);
+                this.UpdateExecutionState();
+            }
+        }
+
+        private void SearchButton_Click(object sender, EventArgs e)
+        {
+            string keyword = (this.eqpIdBox.Text ?? string.Empty).Trim();
+            string type = this.typeCombo.SelectedItem as string;
+
+            HashSet<string> selectedStates = new HashSet<string>();
+            System.Collections.IList checkedItems = this.stateCombo.SelectedItems;
+            if (checkedItems != null)
+            {
+                foreach (object item in checkedItems)
+                {
+                    if (item != null)
+                    {
+                        selectedStates.Add(item.ToString());
+                    }
+                }
             }
 
-            this.UpdateExecutionState();
+            List<EquipmentRow> matched = new List<EquipmentRow>();
+            foreach (EquipmentRow row in this.allEquipment)
+            {
+                bool idOk = keyword.Length == 0
+                    || (row.EqpId != null && row.EqpId.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0);
+                bool typeOk = string.IsNullOrEmpty(type) || type == "All" || row.EqpType == type;
+                bool stateOk = selectedStates.Count == 0 || selectedStates.Contains(row.EqpState);
+                if (idOk && typeOk && stateOk)
+                {
+                    matched.Add(row);
+                }
+            }
+
+            this.ShowEquipment(matched);
         }
 
         private void ConfigureEquipmentColumns()
