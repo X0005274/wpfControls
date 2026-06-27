@@ -41,19 +41,19 @@ namespace com.example.Demo
 
         private void ConfigureColumns()
         {
-            // Fixed-width columns: the grid fills the area; when columns exceed the
-            // width a horizontal scrollbar appears, and more columns can be added.
-            this.lotGrid.AddTextColumn("Lot Id", "LotId", "150");
-            this.lotGrid.AddBadgeColumn("Lot State", "LotState", "LotStateTone", "140");
-            this.lotGrid.AddTextColumn("Event", "Event", "130");
-            this.lotGrid.AddTextColumn("Event Time", "EventTime", "200");
-            this.lotGrid.AddTextColumn("Product Id", "ProductId", "160");
-            this.lotGrid.AddTextColumn("Sub Product Id", "SubProductId", "190");
-            this.lotGrid.AddTextColumn("Flow Id", "FlowId", "150");
-            this.lotGrid.AddTextColumn("Oper Id", "OperId", "140");
-            this.lotGrid.AddTextColumn("Carrier Id", "CarrierId", "170");
-            this.lotGrid.AddTextColumn("Eqp Id", "EqpId", "140");
-            this.lotGrid.AddTextColumn("Stk Id", "StkId", "150");
+            // Auto-width columns: each sizes to fit its data and header label.
+            // (Many columns -> horizontal scrollbar; few -> room to add more.)
+            this.lotGrid.AddTextColumn("Lot Id", "LotId");
+            this.lotGrid.AddBadgeColumn("Lot State", "LotState", "LotStateTone");
+            this.lotGrid.AddTextColumn("Event", "Event");
+            this.lotGrid.AddTextColumn("Event Time", "EventTime");
+            this.lotGrid.AddTextColumn("Product Id", "ProductId");
+            this.lotGrid.AddTextColumn("Sub Product Id", "SubProductId");
+            this.lotGrid.AddTextColumn("Flow Id", "FlowId");
+            this.lotGrid.AddTextColumn("Oper Id", "OperId");
+            this.lotGrid.AddTextColumn("Carrier Id", "CarrierId");
+            this.lotGrid.AddTextColumn("Eqp Id", "EqpId");
+            this.lotGrid.AddTextColumn("Stk Id", "StkId");
         }
 
         private List<LotGridRow> BuildSampleData()

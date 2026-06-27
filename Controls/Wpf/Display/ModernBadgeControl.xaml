@@ -19,7 +19,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Border x:Name="BadgeBorder"
-            CornerRadius="10"
+            CornerRadius="{StaticResource Radius.Pill}"
             Background="{StaticResource Brush.NeutralBackground}"
             Padding="10,3"
             HorizontalAlignment="Left">

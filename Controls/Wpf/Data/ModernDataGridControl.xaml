@@ -23,10 +23,47 @@
                 <Setter Property="FontWeight" Value="SemiBold" />
                 <Setter Property="Height" Value="38" />
                 <Setter Property="Padding" Value="12,0" />
+                <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
                 <Setter Property="HorizontalContentAlignment" Value="Left" />
                 <Setter Property="BorderBrush" Value="{StaticResource Brush.BorderSubtle}" />
                 <Setter Property="BorderThickness" Value="0,0,1,1" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridColumnHeader">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Padding="{TemplateBinding Padding}">
+                                <DockPanel LastChildFill="True">
+                                    <!-- Simple, intuitive sort indicator: ▲ ascending / ▼ descending -->
+                                    <TextBlock x:Name="SortGlyph"
+                                               DockPanel.Dock="Right"
+                                               Margin="6,0,0,0"
+                                               VerticalAlignment="Center"
+                                               FontSize="9"
+                                               Foreground="{StaticResource Brush.Accent}"
+                                               Visibility="Collapsed" />
+                                    <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Left" />
+                                </DockPanel>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="SortDirection" Value="Ascending">
+                                    <Setter TargetName="SortGlyph" Property="Text" Value="&#x25B2;" />
+                                    <Setter TargetName="SortGlyph" Property="Visibility" Value="Visible" />
+                                </Trigger>
+                                <Trigger Property="SortDirection" Value="Descending">
+                                    <Setter TargetName="SortGlyph" Property="Text" Value="&#x25BC;" />
+                                    <Setter TargetName="SortGlyph" Property="Visibility" Value="Visible" />
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style>
 
             <Style x:Key="ModernRowStyle" TargetType="DataGridRow">
@@ -83,6 +120,8 @@
             ClipToBounds="True">
         <DataGrid x:Name="InnerDataGrid"
                   AutoGenerateColumns="True"
+                  ColumnWidth="Auto"
+                  CanUserSortColumns="True"
                   HeadersVisibility="Column"
                   GridLinesVisibility="Horizontal"
                   HorizontalGridLinesBrush="{StaticResource Brush.BorderSubtle}"
