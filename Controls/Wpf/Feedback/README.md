@@ -49,7 +49,7 @@ System.Threading.Tasks.Task.Run(() =>
 
 - `Show(컨트롤)` 은 그 컨트롤(폼/패널) 위에 반투명 덮개 + 스피너를 올립니다.
 - 작업이 끝나면 UI 스레드에서 `Dispose()` 로 덮개를 치웁니다.
-- TIBCO 동기 요청(`RendezvousRequestClient.Request`)처럼 시간이 걸리는 호출과 잘 어울립니다.
+- TIBCO 동기 요청(`TibrvRequestClient.Request`)처럼 시간이 걸리는 호출과 잘 어울립니다.
 
 ## 메모
 
