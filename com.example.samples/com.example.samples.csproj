@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+    <Compile Include="WpfScreenHostForm.cs" />
     <Compile Include="CardPanel.cs">
       <SubType>Component</SubType>
     </Compile>

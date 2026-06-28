@@ -31,19 +31,20 @@ com.example.samples/bin/Debug/com.example.samples.exe
 - After renaming/moving projects, a stale `obj/` markup-compile cache can cause MC1000 "could not find … .xaml"; delete `obj`/`bin` and rebuild.
 - Many source files are UTF-8 **without BOM** and contain Korean comments. Do not edit them with tools that re-encode (e.g. PowerShell `Get-Content`/`Set-Content` without an explicit `UTF8Encoding($false)`), or the Korean will be corrupted.
 
-## Solution structure (3 projects)
+## Solution structure (2 projects)
 
 | Project | Output | Role |
 |---|---|---|
-| `com.example.commons` (repo root `com.example.commons.csproj`, **assembly `com.example`**) | WPF + WinForms class library | The reusable **pure-WPF** UserControls + the design-token theme (`Controls/Wpf`, `Themes`) **and** the thin WinForms **wrappers** that host each WPF control in an `ElementHost` (`WinForms/...`, namespaces `com.example.WinForms.Controls.*`). One DLL (`com.example.dll`) for both WPF and WinForms hosts. |
-| `com.example.samples` (`com.example.samples/…`, assembly `com.example.samples`) | WinExe (WPF-flavored) | Runnable example gallery: the WinForms host (`SampleShellForm` + sample forms) **and** the example WPF business screens (`Screens/…`). References `com.example.commons`. |
-| `com.example.Messaging.Rendezvous` | class library | TIBCO Rendezvous messaging (request/reply client + server, message router). Non-UI; independent of the control library; **not in `com.example.sln`** (builds only where the TIBCO assembly is present). |
+| `com.example.commons` (repo root `com.example.commons.csproj`, **assembly `com.example`**) | WPF + WinForms class library | The reusable **pure-WPF** UserControls + design-token theme (`Controls/Wpf`, `Themes`), the WinForms **wrappers** (`WinForms/…`, namespaces `com.example.WinForms.Controls.*`), **and** the TIBCO Rendezvous messaging (`Messaging/…`, `Tibrv*`, namespaces `com.example.Messaging.Rendezvous.*`). One DLL (`com.example.dll`). |
+| `com.example.samples` (`com.example.samples/…`, assembly `com.example.samples`) | WinExe (WPF-flavored) | Runnable example gallery: the WinForms host (`SampleShellForm` + sample forms) **and** the example WPF business screens (`Screens/…`, hosted via `WpfScreenHostForm`). References `com.example.commons`. |
 
 > **Assembly name stays `com.example`** for the commons project so all XAML pack URIs (`/com.example;component/…`) and `com.example.*` namespaces are unchanged — only the project/file is named `com.example.commons`.
 >
-> Integrating into another solution: add **`com.example.commons`** (controls) and optionally **`com.example.Messaging.Rendezvous`**. `com.example.samples` is example-only — copy from it, don't ship it.
+> **TIBCO RV is conditional**: `Messaging/Tibrv*.cs` and the `TIBCO.Rendezvous` reference compile into `com.example.dll` **only when `$(TibrvAssembly)` exists** (env `TIBRV_HOME` → `…\bin\TIBCO.Rendezvous.dll`). Without TIBCO the control library still builds (messaging omitted).
+>
+> Integrating into another solution: add **`com.example.commons`** only — it carries controls + messaging. `com.example.samples` is the example gallery (ships in releases so users can run it; not added to their solution).
 
-A separate **Java** module lives in `java/tibrv-messaging` (Maven; `mvn package`). It is the Java counterpart of `com.example.Messaging.Rendezvous` and is **not** part of `com.example.sln` / MSBuild. Both implement the same RV wire contract documented in `docs/rv-contract.md`; the Java classes mirror the .NET `Tibrv*` types. Like the .NET project, it builds only where the TIBCO assembly is present (env `TIBRV_HOME`, here `tibrvj.jar`).
+A separate **Java** module lives in `java/tibrv-messaging` (Maven; `mvn package`). It is the Java counterpart of the `Messaging/Tibrv*` types and is **not** part of `com.example.sln` / MSBuild. Both implement the same RV wire contract documented in `docs/rv-contract.md`. Like the .NET messaging code, it builds only where the TIBCO assembly is present (env `TIBRV_HOME`, here `tibrvj.jar`).
 
 ## Architecture (the parts that span files)
 

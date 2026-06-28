@@ -14,6 +14,10 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Deterministic>true</Deterministic>
     <LangVersion>7.3</LangVersion>
+    <!-- TIBCO RV .NET assembly (env TIBRV_HOME). The Messaging.Rendezvous code below is
+         compiled only when this assembly exists, so the control library still builds on
+         machines without TIBCO installed. -->
+    <TibrvAssembly>$(TIBRV_HOME)\bin\TIBCO.Rendezvous.dll</TibrvAssembly>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,6 +60,19 @@
          same library can be dropped onto WinForms forms. (Merged from the former
          com.example.WinForms.Controls project; namespaces stay com.example.WinForms.Controls.*) -->
     <Compile Include="WinForms\**\*.cs" />
+  </ItemGroup>
+  <!-- TIBCO Rendezvous messaging (Tibrv*): compiled into this library only where the
+       TIBCO RV .NET assembly is present (merged from the former
+       com.example.Messaging.Rendezvous project; namespaces stay
+       com.example.Messaging.Rendezvous.*). -->
+  <ItemGroup Condition="Exists('$(TibrvAssembly)')">
+    <Reference Include="TIBCO.Rendezvous">
+      <HintPath>$(TibrvAssembly)</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="Exists('$(TibrvAssembly)')">
+    <Compile Include="Messaging\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <!-- Theme / design tokens -->
