@@ -14,6 +14,10 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Deterministic>true</Deterministic>
     <LangVersion>7.3</LangVersion>
+    <!-- TIBCO RV .NET assembly (env TIBRV_HOME). The Messaging.Rendezvous code below is
+         compiled only when this assembly exists, so the control library still builds on
+         machines without TIBCO installed. -->
+    <TibrvAssembly>$(TIBRV_HOME)\bin\TIBCO.Rendezvous.dll</TibrvAssembly>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,7 +52,27 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
     <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- WinForms wrapper controls: ElementHost hosts of the WPF controls above, so the
+         same library can be dropped onto WinForms forms. (Merged from the former
+         com.example.WinForms.Controls project; namespaces stay com.example.WinForms.Controls.*) -->
+    <Compile Include="WinForms\**\*.cs" />
+  </ItemGroup>
+  <!-- TIBCO Rendezvous messaging (Tibrv*): compiled into this library only where the
+       TIBCO RV .NET assembly is present (merged from the former
+       com.example.Messaging.Rendezvous project; namespaces stay
+       com.example.Messaging.Rendezvous.*). -->
+  <ItemGroup Condition="Exists('$(TibrvAssembly)')">
+    <Reference Include="TIBCO.Rendezvous">
+      <HintPath>$(TibrvAssembly)</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="Exists('$(TibrvAssembly)')">
+    <Compile Include="Messaging\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <!-- Theme / design tokens -->
@@ -254,34 +278,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\Wpf\Screens\EmployeeManagementScreen.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\Wpf\Screens\ApprovalExceptionScreen.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\Wpf\Screens\PayrollRunScreen.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\Wpf\Screens\DashboardScreen.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\Wpf\Screens\EmployeeBrowserScreen.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\Wpf\Screens\LotSearchScreen.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\Wpf\Screens\EmployeeDetailWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <!-- Input code-behind -->
@@ -436,28 +432,6 @@
       <DependentUpon>ModernToastWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Wpf\Feedback\ModernToast.cs" />
-    <!-- Screens -->
-    <Compile Include="Controls\Wpf\Screens\EmployeeManagementScreen.xaml.cs">
-      <DependentUpon>EmployeeManagementScreen.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Wpf\Screens\ApprovalExceptionScreen.xaml.cs">
-      <DependentUpon>ApprovalExceptionScreen.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Wpf\Screens\PayrollRunScreen.xaml.cs">
-      <DependentUpon>PayrollRunScreen.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Wpf\Screens\DashboardScreen.xaml.cs">
-      <DependentUpon>DashboardScreen.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Wpf\Screens\EmployeeBrowserScreen.xaml.cs">
-      <DependentUpon>EmployeeBrowserScreen.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Wpf\Screens\LotSearchScreen.xaml.cs">
-      <DependentUpon>LotSearchScreen.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Wpf\Screens\EmployeeDetailWindow.xaml.cs">
-      <DependentUpon>EmployeeDetailWindow.xaml</DependentUpon>
-    </Compile>
     <!-- Models -->
     <Compile Include="Models\Ui\AuditLogRow.cs" />
     <Compile Include="Models\Ui\ComboBoxItemModel.cs" />

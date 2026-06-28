@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using com.example.Controls.Wpf.Screens;
 
 namespace com.example.Demo
 {
@@ -37,6 +38,8 @@ namespace com.example.Demo
         {
             this.AddSample("Lot Receive", delegate { return new LotReceiveForm(); });
             this.AddSample("Equipment / Lot", delegate { return new EquipmentLotForm(); });
+            this.AddSample("Payroll", delegate { return new WpfScreenHostForm(new PayrollRunScreen()); });
+            this.AddSample("Employee Mgmt", delegate { return new WpfScreenHostForm(new EmployeeManagementScreen()); });
             this.AddSample("User Form", delegate { return new InputSampleForm(); });
         }
 

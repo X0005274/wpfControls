@@ -6,8 +6,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A1B2C3D4-1111-2222-3333-444455556666}</ProjectGuid>
     <OutputType>WinExe</OutputType>
+    <!-- WPF flavor so the example WPF screens (XAML Pages) compile in this exe. -->
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <RootNamespace>com.example.Demo</RootNamespace>
-    <AssemblyName>com.example.Demo</AssemblyName>
+    <AssemblyName>com.example.samples</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -53,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+    <Compile Include="WpfScreenHostForm.cs" />
     <Compile Include="CardPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -101,13 +104,61 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\com.example.csproj">
+    <!-- Example WPF screens built from the controls (moved out of the control library). -->
+    <Page Include="Screens\DashboardScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\PayrollRunScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\EmployeeManagementScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\EmployeeBrowserScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\EmployeeDetailWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\ApprovalExceptionScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\LotSearchScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Screens\DashboardScreen.xaml.cs">
+      <DependentUpon>DashboardScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\PayrollRunScreen.xaml.cs">
+      <DependentUpon>PayrollRunScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\EmployeeManagementScreen.xaml.cs">
+      <DependentUpon>EmployeeManagementScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\EmployeeBrowserScreen.xaml.cs">
+      <DependentUpon>EmployeeBrowserScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\EmployeeDetailWindow.xaml.cs">
+      <DependentUpon>EmployeeDetailWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ApprovalExceptionScreen.xaml.cs">
+      <DependentUpon>ApprovalExceptionScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\LotSearchScreen.xaml.cs">
+      <DependentUpon>LotSearchScreen.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\com.example.commons.csproj">
       <Project>{8F2A1C3D-4B5E-4789-ABCD-1234567890AB}</Project>
-      <Name>com.example</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\com.example.WinForms.Controls\com.example.WinForms.Controls.csproj">
-      <Project>{C4E7A1B2-3D5F-4A6B-8C9D-0E1F2A3B4C5D}</Project>
-      <Name>com.example.WinForms.Controls</Name>
+      <Name>com.example.commons</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
