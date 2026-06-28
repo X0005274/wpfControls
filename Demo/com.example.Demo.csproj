@@ -105,10 +105,6 @@
       <Project>{8F2A1C3D-4B5E-4789-ABCD-1234567890AB}</Project>
       <Name>com.example</Name>
     </ProjectReference>
-    <ProjectReference Include="..\com.example.WinForms.Controls\com.example.WinForms.Controls.csproj">
-      <Project>{C4E7A1B2-3D5F-4A6B-8C9D-0E1F2A3B4C5D}</Project>
-      <Name>com.example.WinForms.Controls</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ButtonSwapDemoForm.resx">

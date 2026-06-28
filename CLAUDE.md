@@ -30,14 +30,15 @@ Demo/bin/Debug/com.example.Demo.exe
 - In Visual Studio: set **com.example.Demo** as the startup project and press **F5**.
 - Many source files are UTF-8 **without BOM** and contain Korean comments. Do not edit them with tools that re-encode (e.g. PowerShell `Get-Content`/`Set-Content` without an explicit `UTF8Encoding($false)`), or the Korean will be corrupted.
 
-## Solution structure (4 projects)
+## Solution structure (3 projects)
 
 | Project | Output | Role |
 |---|---|---|
-| `com.example` (repo root `com.example.csproj`) | WPF class library | The reusable **pure-WPF** UserControls + the design-token theme. |
-| `com.example.WinForms.Controls` | WinForms class library | Thin **wrappers** that host each WPF control in an `ElementHost` so legacy WinForms forms/designer can drop them in. |
-| `com.example.Messaging.Rendezvous` | class library | TIBCO Rendezvous messaging (request/reply client + server, message router). Non-UI; independent of the control libraries. |
+| `com.example` (repo root `com.example.csproj`) | WPF + WinForms class library | The reusable **pure-WPF** UserControls + the design-token theme (`Controls/Wpf`, `Themes`) **and** the thin WinForms **wrappers** that host each WPF control in an `ElementHost` (`WinForms/...`, namespaces `com.example.WinForms.Controls.*`). One DLL covers both WPF and WinForms hosts. |
+| `com.example.Messaging.Rendezvous` | class library | TIBCO Rendezvous messaging (request/reply client + server, message router). Non-UI; independent of the control library. |
 | `Demo` (`Demo/com.example.Demo.csproj`) | WinExe | WinForms host that exercises the controls. Startup object is `SampleShellForm`. |
+
+> Integrating into another solution: add **`com.example`** (controls; WPF or WinForms hosts) and optionally **`com.example.Messaging.Rendezvous`** — two projects. (The former separate `com.example.WinForms.Controls` wrapper project was merged into `com.example`.)
 
 A separate **Java** module lives in `java/tibrv-messaging` (Maven; `mvn package`). It is the Java counterpart of `com.example.Messaging.Rendezvous` and is **not** part of `com.example.sln` / MSBuild. Both implement the same RV wire contract documented in `docs/rv-contract.md`; the Java classes mirror the .NET `Tibrv*` types. Like the .NET project, it builds only where the TIBCO assembly is present (env `TIBRV_HOME`, here `tibrvj.jar`).
 
@@ -47,10 +48,10 @@ A separate **Java** module lives in `java/tibrv-messaging` (Maven; `mvn package`
 `Themes/Tokens.xaml` is a `ResourceDictionary` of every color, font size, spacing, radius, and elevation value. **Controls must consume tokens and never hardcode hex / px / font-weight** — change a token once and every control and screen follows. Controls pull it in via merged dictionary `Source="/com.example;component/Themes/Tokens.xaml"`. The design language (Windows Fluent: accent `#0078D4`, Segoe UI, control radius 4 / card radius 8, a fixed type ramp, structural-elements-SemiBold / body-Regular) is documented in `STYLEGUIDE.md`. When a value recurs, add a token rather than a literal.
 
 ### Two parallel control sets, one source of behavior
-For most controls there is a WPF control (`Controls/Wpf/...`) **and** a WinForms wrapper (`com.example.WinForms.Controls/...`) of the same name minus the `Control` suffix (e.g. `ModernDataGridControl` ↔ `ModernDataGrid`). The wrapper holds no real logic — behavior and styling live in the WPF control. **Put grid/badge/sort/visual changes in the WPF control so every host inherits them**; the wrapper only re-exposes inner `DependencyProperty`s as CLR properties and surfaces events (via `DependencyPropertyDescriptor.AddValueChanged` on the inner control's DP).
+For most controls there is a WPF control (`Controls/Wpf/...`) **and** a WinForms wrapper (`WinForms/...`, namespace `com.example.WinForms.Controls.*`) of the same name minus the `Control` suffix (e.g. `ModernDataGridControl` ↔ `ModernDataGrid`). The wrapper holds no real logic — behavior and styling live in the WPF control. **Put grid/badge/sort/visual changes in the WPF control so every host inherits them**; the wrapper only re-exposes inner `DependencyProperty`s as CLR properties and surfaces events (via `DependencyPropertyDescriptor.AddValueChanged` on the inner control's DP).
 
 ### The wrapper / ElementHost pattern is designer-safe by design
-All wrappers derive from `com.example.WinForms.Controls/Hosting/WpfElementHostBase<TWpf>`. It creates the inner WPF control in its constructor and hosts it as the `ElementHost.Child` **at runtime only** (skipped at design-time, restored in `OnHandleCreated`). It is marked `[Designer(ControlDesigner)]` so the VS form designer treats the wrapper as an opaque control instead of re-serializing the WPF `Child` — without this, dragging a wrapper in the designer breaks the form. When adding a new wrapper, inherit this base; do not host the WPF control yourself.
+All wrappers derive from `WinForms/Hosting/WpfElementHostBase<TWpf>` (in `com.example`). It creates the inner WPF control in its constructor and hosts it as the `ElementHost.Child` **at runtime only** (skipped at design-time, restored in `OnHandleCreated`). It is marked `[Designer(ControlDesigner)]` so the VS form designer treats the wrapper as an opaque control instead of re-serializing the WPF `Child` — without this, dragging a wrapper in the designer breaks the form. When adding a new wrapper, inherit this base; do not host the WPF control yourself.
 
 ### The Demo is a menu-driven shell
 `Demo/SampleShellForm` is a left-nav gallery: each sample screen is an ordinary `Form` embedded into the content panel as a non-top-level child. **Register a new sample in one line** in `SampleShellForm.RegisterSamples()` (`this.AddSample("Title", () => new YourForm())`); the shell generates the nav button and handles embedding/switching. `LotReceiveForm` is the worked example (Fab/Lot/State query → resizable Lot/Wafer split grids → count/state/execution footer cards).

@@ -48,7 +48,14 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
     <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- WinForms wrapper controls: ElementHost hosts of the WPF controls above, so the
+         same library can be dropped onto WinForms forms. (Merged from the former
+         com.example.WinForms.Controls project; namespaces stay com.example.WinForms.Controls.*) -->
+    <Compile Include="WinForms\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <!-- Theme / design tokens -->
