@@ -16,8 +16,8 @@ built for **.NET Framework 4.8** and designed to be hosted inside existing
 
 ## Screenshots
 
-The included **WinForms demo host** (`com.example.Demo`) renders every control inside a single
-`ElementHost`, framed by a native WinForms header and status bar.
+The included **WinForms sample gallery** (`com.example.samples`) renders the controls hosted in
+`ElementHost`s, framed by a native WinForms shell (left-nav menu + sample screens).
 
 ### Input
 ![Input controls](docs/screenshots/01-input.png)
@@ -69,20 +69,25 @@ The full DependencyProperty / public-API surface for each control is documented 
 
 ```
 wpfControls
-├── com.example.sln
-├── com.example.csproj            # WPF class library (the controls)
-├── INTEGRATION.md                # hosting guide + API reference
-├── Properties/AssemblyInfo.cs
-├── Models/Ui/                    # ComboBoxItemModel, RadioButtonItemModel, TreeViewItemModel
-├── Controls/Wpf/
-│   ├── Input/   Selection/   Display/   Data/   Layout/
-└── Demo/
-    ├── com.example.Demo.csproj   # WinForms host executable
-    ├── Program.cs                # [STAThread] entry point
-    ├── DemoForm.cs               # native WinForms shell + ElementHost
-    ├── GalleryBuilder.cs         # builds the WPF gallery (all controls)
-    └── DemoRow.cs                # sample data model
+├── com.example.sln                  # 2 projects: commons + samples
+├── com.example.commons.csproj       # control library  (assembly: com.example.dll)
+│   ├── Themes/                      # Tokens.xaml + Controls.xaml (design tokens + shared styles)
+│   ├── Controls/Wpf/                # pure-WPF UserControls — Input/ Selection/ Display/ Data/ Layout/ Feedback/
+│   ├── WinForms/                    # WinForms wrappers (ElementHost hosts) — Hosting/ + same groups
+│   ├── Messaging/                   # TIBCO RV (Tibrv*) — compiled only when TIBCO is present
+│   └── Models/Ui/                   # UI item models (INotifyPropertyChanged)
+├── INTEGRATION.md                   # hosting guide + API reference
+└── com.example.samples/             # runnable example gallery (assembly: com.example.samples.exe)
+    ├── com.example.samples.csproj
+    ├── Program.cs                   # [STAThread] entry point
+    ├── SampleShellForm.cs           # left-nav gallery shell (one line per sample)
+    ├── LotReceiveForm / EquipmentLotForm / InputSampleForm / …
+    └── Screens/                     # example WPF business screens (Payroll, Employee Mgmt, …)
 ```
+
+> The wrappers and messaging are merged into `com.example.commons` (one DLL, `com.example.dll`),
+> so a host solution adds **just that one project**. Add `com.example.commons` only — `com.example.samples`
+> is the example gallery (run it; don't add it to your solution).
 
 ---
 
@@ -94,11 +99,11 @@ wpfControls
 # Build the whole solution
 msbuild com.example.sln /t:Rebuild /p:Configuration=Debug
 
-# Run the WinForms demo host
-.\Demo\bin\Debug\com.example.Demo.exe
+# Run the WinForms sample gallery
+.\com.example.samples\bin\Debug\com.example.samples.exe
 ```
 
-In Visual Studio: set **com.example.Demo** as the startup project and press **F5**.
+In Visual Studio: set **com.example.samples** as the startup project and press **F5**.
 Type in the demo's search box and press **Enter** to see a WPF routed event update the
 native WinForms status bar.
 
@@ -125,7 +130,8 @@ this.Controls.Add(host);   // 'this' is your existing WinForms Form
 ```
 
 The host project must reference `WindowsFormsIntegration`, `PresentationCore`,
-`PresentationFramework`, `WindowsBase`, and the `com.example` library. See
+`PresentationFramework`, `WindowsBase`, and the **`com.example.commons`** project (output
+`com.example.dll`). See
 [`INTEGRATION.md`](INTEGRATION.md) for ComboBox, SearchBox event, and layout examples,
 plus common build/integration failure points.
 

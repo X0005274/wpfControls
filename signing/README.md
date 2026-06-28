@@ -1,6 +1,6 @@
 # Code signing — com.example
 
-릴리스 실행파일(`com.example.Demo.exe`)과 라이브러리(`com.example.dll`)는
+릴리스 실행파일(`com.example.samples.exe`)과 라이브러리(`com.example.dll`)는
 **자체 서명(self-signed) 코드서명 인증서**로 서명합니다. 이 폴더에는 그 인증서의
 **공개 부분**과 신뢰 등록 스크립트가 들어 있습니다.
 
@@ -38,11 +38,11 @@ powershell -ExecutionPolicy Bypass -File .\install-trust.ps1
 ```powershell
 # 인증서가 현재 사용자 저장소에 있는 경우 (thumbprint로 지정)
 $cert = Get-Item Cert:\CurrentUser\My\5B9CEC0ACF75B7508D68406F493D2D20CB0EB435
-Set-AuthenticodeSignature -FilePath .\com.example.Demo.exe -Certificate $cert -HashAlgorithm SHA256
+Set-AuthenticodeSignature -FilePath .\com.example.samples.exe -Certificate $cert -HashAlgorithm SHA256
 Set-AuthenticodeSignature -FilePath .\com.example.dll      -Certificate $cert -HashAlgorithm SHA256
 
 # 서명 확인 (신뢰 등록된 PC에서는 Valid)
-(Get-AuthenticodeSignature .\com.example.Demo.exe).Status
+(Get-AuthenticodeSignature .\com.example.samples.exe).Status
 ```
 
 같은 인증서로 계속 서명하면 대상 PC들은 **신뢰 등록을 한 번만** 하면 됩니다.
