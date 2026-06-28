@@ -53,9 +53,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="CardPanel.cs" />
-    <Compile Include="StatBadge.cs" />
-    <Compile Include="FocuslessSplitContainer.cs" />
+    <Compile Include="CardPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="StatBadge.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FocuslessSplitContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="LotSearchHostForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +113,9 @@
   <ItemGroup>
     <EmbeddedResource Include="ButtonSwapDemoForm.resx">
       <DependentUpon>ButtonSwapDemoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EquipmentLotForm.resx">
+      <DependentUpon>EquipmentLotForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
