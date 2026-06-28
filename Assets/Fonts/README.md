@@ -30,7 +30,7 @@ is permitted. Source: https://github.com/orioncactus/pretendard
 
 ## How it is wired up
 
-- `com.example.csproj` embeds every `*.otf` / `*.ttf` in this folder as a
+- `com.example.commons.csproj` embeds every `*.otf` / `*.ttf` in this folder as a
   `Resource` (wildcard — no per-file edits needed).
 - `Themes/Tokens.xaml` exposes the family via the `Font.Family` token:
 

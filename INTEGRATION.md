@@ -10,67 +10,55 @@ designed to be hosted inside existing WinForms forms through
 
 ```
 wpfControls
-├── com.example.sln
-├── com.example.csproj
+├── com.example.sln                       # 2 projects: commons + samples
+├── com.example.commons.csproj            # control library (assembly: com.example.dll)
 ├── INTEGRATION.md
-├── Properties
-│   └── AssemblyInfo.cs
-├── Models
-│   └── Ui
-│       ├── ComboBoxItemModel.cs
-│       ├── RadioButtonItemModel.cs
-│       └── TreeViewItemModel.cs
-└── Controls
-    └── Wpf
-        ├── Input
-        │   ├── ModernTextBoxControl.xaml(.cs)
-        │   ├── ModernPasswordBoxControl.xaml(.cs)
-        │   ├── ModernRichTextBoxControl.xaml(.cs)
-        │   └── ModernSearchBoxControl.xaml(.cs)
-        ├── Selection
-        │   ├── ModernComboBoxControl.xaml(.cs)
-        │   ├── ModernCheckBoxControl.xaml(.cs)
-        │   ├── ModernRadioButtonGroupControl.xaml(.cs)
-        │   ├── ModernToggleSwitchControl.xaml(.cs)
-        │   ├── ModernListBoxControl.xaml(.cs)
-        │   └── ModernSliderControl.xaml(.cs)
-        ├── Display
-        │   ├── ModernLabelControl.xaml(.cs)
-        │   ├── ModernProgressBarControl.xaml(.cs)
-        │   ├── ModernStatusBarControl.xaml(.cs)
-        │   ├── ModernBadgeControl.xaml(.cs)
-        │   └── ModernDatePickerControl.xaml(.cs)
-        ├── Data
-        │   ├── ModernDataGridControl.xaml(.cs)
-        │   ├── ModernListViewControl.xaml(.cs)
-        │   ├── ModernTreeViewControl.xaml(.cs)
-        │   └── ModernTabControl.xaml(.cs)
-        └── Layout
-            ├── ModernExpanderControl.xaml(.cs)
-            ├── ModernGroupBoxControl.xaml(.cs)
-            ├── ModernFormSectionControl.xaml(.cs)
-            └── ModernScrollSectionControl.xaml(.cs)
+├── Properties/AssemblyInfo.cs
+├── Themes/                               # Tokens.xaml, Controls.xaml (design tokens + shared styles)
+├── Models/Ui/                            # UI item models (INotifyPropertyChanged)
+├── Controls/Wpf/                         # pure-WPF UserControls (the "*Control" types)
+│   ├── Input/        ModernTextBoxControl, ModernPasswordBoxControl, ModernRichTextBoxControl,
+│   │                 ModernSearchBoxControl, ModernButtonControl, ModernNumericUpDownControl, …
+│   ├── Selection/    ModernComboBoxControl, ModernMultiSelectComboBoxControl, ModernCheckBoxControl,
+│   │                 ModernRadioButtonGroupControl, ModernToggleSwitchControl, ModernListBoxControl, ModernSliderControl
+│   ├── Display/      ModernLabelControl, ModernProgressBarControl, ModernStatusBarControl,
+│   │                 ModernBadgeControl, ModernDatePickerControl, ModernChipControl, ModernKpiCardControl, …
+│   ├── Data/         ModernDataGridControl, MatteDataGridControl, ModernListViewControl, ModernTreeViewControl, ModernTabControl
+│   ├── Layout/       ModernExpanderControl, ModernGroupBoxControl, ModernFormSectionControl, ModernScrollSectionControl, …
+│   └── Feedback/     ModernDialogWindow, ModernToastWindow, ModernLoadingPanelControl, ModernSpinnerControl
+├── WinForms/                             # WinForms wrappers (ElementHost hosts; namespaces com.example.WinForms.Controls.*)
+│   ├── Hosting/WpfElementHostBase.cs     # base class every wrapper derives from
+│   └── Input/ Selection/ Display/ Data/ Layout/   # "Modern*" wrappers (the "*Control" minus the suffix)
+├── Messaging/                            # TIBCO RV (Tibrv*) — compiled into com.example.dll only when TIBCO is present
+└── com.example.samples/                  # runnable example gallery (assembly: com.example.samples.exe)
+    ├── SampleShellForm.cs                # left-nav gallery shell
+    ├── LotReceiveForm / EquipmentLotForm / InputSampleForm / …
+    └── Screens/                          # example WPF business screens (Payroll, Employee Mgmt, …)
 ```
+
+> `com.example.commons` keeps **assembly name `com.example`** (so XAML pack URIs `/com.example;component/…`
+> and namespaces are unchanged). Wrappers + messaging are merged in, so a host adds just this one project.
 
 ---
 
 ## 2. Required assembly references
 
-The library (`com.example.csproj`) already references these:
+The library (`com.example.commons.csproj`, output `com.example.dll`) already references these:
 
 - `PresentationCore`
 - `PresentationFramework`
 - `WindowsBase`
 - `System.Xaml`
 - `System`, `System.Core`, `System.Xml`, `System.Xml.Linq`, `System.Data`, `Microsoft.CSharp`
-- `System.Windows.Forms`
+- `System.Windows.Forms`, `System.Drawing`
 - `WindowsFormsIntegration`  *(provides `ElementHost`)*
+- `TIBCO.Rendezvous`  *(conditional — only when `$(TibrvAssembly)` / env `TIBRV_HOME` exists; otherwise the messaging code is skipped and the controls still build)*
 
 **Your existing WinForms host project** must add references to:
 
 - `WindowsFormsIntegration`
 - `PresentationCore`, `PresentationFramework`, `WindowsBase`
-- A project reference (or assembly reference) to **com.example**.
+- A project reference (or assembly reference) to **com.example.commons** (`com.example.dll`).
 
 ---
 
@@ -245,7 +233,7 @@ group.InnerContent = new ModernTextBoxControl { Title = "Street" };
 1. **`InitializeComponent` does not exist / XAML not compiled.**
    Each `.xaml` must have Build Action **Page** with `Generator = MSBuild:Compile`, and
    the matching `.xaml.cs` must be a `partial` class. This is already configured in
-   `com.example.csproj`. If you add a control by copy/paste, replicate both the
+   `com.example.commons.csproj`. If you add a control by copy/paste, replicate both the
    `<Page>` and the `<Compile><DependentUpon>` entries.
 
 2. **`x:Class` mismatch.** The XAML `x:Class` must exactly equal
@@ -253,7 +241,7 @@ group.InnerContent = new ModernTextBoxControl { Title = "Street" };
    `com.example.Controls.Wpf.Input.ModernTextBoxControl`). A mismatch causes a
    compile error or a runtime `InitializeComponent` failure.
 
-3. **Class library is not WPF-enabled.** `com.example` must keep the WPF
+3. **Class library is not WPF-enabled.** `com.example.commons` must keep the WPF
    `ProjectTypeGuids` (`{60dc8134-...}`) and reference `PresentationCore`,
    `PresentationFramework`, `WindowsBase`, `System.Xaml`. Removing these breaks XAML
    markup compilation.
