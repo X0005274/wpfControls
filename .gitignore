@@ -62,3 +62,7 @@ target/
 .classpath
 .project
 .settings/
+
+# Stray screenshots accidentally saved into the samples project (real captures go to
+# a scratchpad, not the repo). Documentation images under docs/screenshots/ are kept.
+com.example.samples/*.png
