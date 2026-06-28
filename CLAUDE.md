@@ -15,30 +15,33 @@ Enterprise Windows desktop app. Existing UI is WinForms; new reusable UI is **pu
 There is no test project; "verify" means a clean build plus running the demo.
 
 ```bash
-# Build everything (run from repo root). Building the Demo transitively builds the libs.
+# Build everything (run from repo root). Building samples transitively builds commons.
 msbuild com.example.sln /t:Build /p:Configuration=Debug
 
 # This machine's MSBuild (VS 2026 = VS 18):
 "C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe" \
-  Demo/com.example.Demo.csproj /t:Build /p:Configuration=Debug /v:minimal /clp:ErrorsOnly
+  com.example.samples/com.example.samples.csproj /t:Build /p:Configuration=Debug /v:minimal /clp:ErrorsOnly
 
 # Run the WinForms demo host
-Demo/bin/Debug/com.example.Demo.exe
+com.example.samples/bin/Debug/com.example.samples.exe
 ```
 
-- A running `com.example.Demo.exe` locks the build output (MSB3027). **Kill it before rebuilding.**
-- In Visual Studio: set **com.example.Demo** as the startup project and press **F5**.
+- A running `com.example.samples.exe` locks the build output (MSB3027). **Kill it before rebuilding.**
+- In Visual Studio: set **com.example.samples** as the startup project and press **F5**.
+- After renaming/moving projects, a stale `obj/` markup-compile cache can cause MC1000 "could not find … .xaml"; delete `obj`/`bin` and rebuild.
 - Many source files are UTF-8 **without BOM** and contain Korean comments. Do not edit them with tools that re-encode (e.g. PowerShell `Get-Content`/`Set-Content` without an explicit `UTF8Encoding($false)`), or the Korean will be corrupted.
 
 ## Solution structure (3 projects)
 
 | Project | Output | Role |
 |---|---|---|
-| `com.example` (repo root `com.example.csproj`) | WPF + WinForms class library | The reusable **pure-WPF** UserControls + the design-token theme (`Controls/Wpf`, `Themes`) **and** the thin WinForms **wrappers** that host each WPF control in an `ElementHost` (`WinForms/...`, namespaces `com.example.WinForms.Controls.*`). One DLL covers both WPF and WinForms hosts. |
-| `com.example.Messaging.Rendezvous` | class library | TIBCO Rendezvous messaging (request/reply client + server, message router). Non-UI; independent of the control library. |
-| `Demo` (`Demo/com.example.Demo.csproj`) | WinExe | WinForms host that exercises the controls. Startup object is `SampleShellForm`. |
+| `com.example.commons` (repo root `com.example.commons.csproj`, **assembly `com.example`**) | WPF + WinForms class library | The reusable **pure-WPF** UserControls + the design-token theme (`Controls/Wpf`, `Themes`) **and** the thin WinForms **wrappers** that host each WPF control in an `ElementHost` (`WinForms/...`, namespaces `com.example.WinForms.Controls.*`). One DLL (`com.example.dll`) for both WPF and WinForms hosts. |
+| `com.example.samples` (`com.example.samples/…`, assembly `com.example.samples`) | WinExe (WPF-flavored) | Runnable example gallery: the WinForms host (`SampleShellForm` + sample forms) **and** the example WPF business screens (`Screens/…`). References `com.example.commons`. |
+| `com.example.Messaging.Rendezvous` | class library | TIBCO Rendezvous messaging (request/reply client + server, message router). Non-UI; independent of the control library; **not in `com.example.sln`** (builds only where the TIBCO assembly is present). |
 
-> Integrating into another solution: add **`com.example`** (controls; WPF or WinForms hosts) and optionally **`com.example.Messaging.Rendezvous`** — two projects. (The former separate `com.example.WinForms.Controls` wrapper project was merged into `com.example`.)
+> **Assembly name stays `com.example`** for the commons project so all XAML pack URIs (`/com.example;component/…`) and `com.example.*` namespaces are unchanged — only the project/file is named `com.example.commons`.
+>
+> Integrating into another solution: add **`com.example.commons`** (controls) and optionally **`com.example.Messaging.Rendezvous`**. `com.example.samples` is example-only — copy from it, don't ship it.
 
 A separate **Java** module lives in `java/tibrv-messaging` (Maven; `mvn package`). It is the Java counterpart of `com.example.Messaging.Rendezvous` and is **not** part of `com.example.sln` / MSBuild. Both implement the same RV wire contract documented in `docs/rv-contract.md`; the Java classes mirror the .NET `Tibrv*` types. Like the .NET project, it builds only where the TIBCO assembly is present (env `TIBRV_HOME`, here `tibrvj.jar`).
 
@@ -53,8 +56,8 @@ For most controls there is a WPF control (`Controls/Wpf/...`) **and** a WinForms
 ### The wrapper / ElementHost pattern is designer-safe by design
 All wrappers derive from `WinForms/Hosting/WpfElementHostBase<TWpf>` (in `com.example`). It creates the inner WPF control in its constructor and hosts it as the `ElementHost.Child` **at runtime only** (skipped at design-time, restored in `OnHandleCreated`). It is marked `[Designer(ControlDesigner)]` so the VS form designer treats the wrapper as an opaque control instead of re-serializing the WPF `Child` — without this, dragging a wrapper in the designer breaks the form. When adding a new wrapper, inherit this base; do not host the WPF control yourself.
 
-### The Demo is a menu-driven shell
-`Demo/SampleShellForm` is a left-nav gallery: each sample screen is an ordinary `Form` embedded into the content panel as a non-top-level child. **Register a new sample in one line** in `SampleShellForm.RegisterSamples()` (`this.AddSample("Title", () => new YourForm())`); the shell generates the nav button and handles embedding/switching. `LotReceiveForm` is the worked example (Fab/Lot/State query → resizable Lot/Wafer split grids → count/state/execution footer cards).
+### The samples app is a menu-driven shell
+`com.example.samples/SampleShellForm` is a left-nav gallery: each sample screen is an ordinary `Form` embedded into the content panel as a non-top-level child. **Register a new sample in one line** in `SampleShellForm.RegisterSamples()` (`this.AddSample("Title", () => new YourForm())`); the shell generates the nav button and handles embedding/switching. `LotReceiveForm` is the worked example (Fab/Lot/State query → resizable Lot/Wafer split grids → count/state/execution footer cards).
 
 ## Absolute rules
 

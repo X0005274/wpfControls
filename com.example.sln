@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.example", "com.example.csproj", "{8F2A1C3D-4B5E-4789-ABCD-1234567890AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.example.commons", "com.example.commons.csproj", "{8F2A1C3D-4B5E-4789-ABCD-1234567890AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.example.Demo", "Demo\com.example.Demo.csproj", "{A1B2C3D4-1111-2222-3333-444455556666}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.example.samples", "com.example.samples\com.example.samples.csproj", "{A1B2C3D4-1111-2222-3333-444455556666}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
