@@ -301,6 +301,34 @@ namespace com.example.Demo
             }
 
             this.connectButton.IsButtonEnabled = eqp != null && lot != null;
+
+            this.CenterSelectionLabels();
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            // Center after the form's font/DPI scaling has been applied.
+            this.CenterSelectionLabels();
+        }
+
+        /// <summary>
+        /// Vertically centers the two selection labels as a block inside the exec card,
+        /// independent of the actual (font/DPI-dependent) label heights.
+        /// </summary>
+        private void CenterSelectionLabels()
+        {
+            const int gap = 6;
+            int blockHeight = this.eqpSelLabel.Height + gap + this.lotSelLabel.Height;
+            int top = (this.execCard.ClientSize.Height - blockHeight) / 2;
+            if (top < 0)
+            {
+                top = 0;
+            }
+
+            this.eqpSelLabel.Top = top;
+            this.lotSelLabel.Top = top + this.eqpSelLabel.Height + gap;
         }
 
         private void ConnectButton_Click(object sender, EventArgs e)
