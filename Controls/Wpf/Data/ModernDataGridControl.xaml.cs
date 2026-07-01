@@ -16,6 +16,8 @@ namespace com.example.Controls.Wpf.Data
     /// </summary>
     public partial class ModernDataGridControl : UserControl
     {
+        private static readonly ValueToneBrushConverter ToneConverter = new ValueToneBrushConverter();
+
         public static readonly DependencyProperty ItemsSourceProperty =
             DependencyProperty.Register(
                 "ItemsSource",
@@ -136,13 +138,97 @@ namespace com.example.Controls.Wpf.Data
             this.InnerDataGrid.AutoGenerateColumns = false;
             foreach (ModernDataGridColumn definition in list)
             {
-                DataGridColumn column = definition.IsBadge
-                    ? BuildBadgeColumn(definition)
-                    : BuildTextColumn(definition);
+                DataGridColumn column;
+                if (definition.IsCombo)
+                {
+                    column = this.BuildComboColumn(definition);
+                }
+                else if (definition.IsBadge)
+                {
+                    column = BuildBadgeColumn(definition);
+                }
+                else
+                {
+                    column = BuildTextColumn(definition);
+                }
+
                 column.Header = definition.Header;
                 column.Width = ParseWidth(definition.Width);
                 this.InnerDataGrid.Columns.Add(column);
             }
+        }
+
+        /// <summary>
+        /// Builds an editable combo column: an always-live <see cref="ComboBox"/> in the
+        /// cell (single click opens it) two-way bound to the column's
+        /// <see cref="ModernDataGridColumn.Binding"/> path. When
+        /// <see cref="ModernDataGridColumn.ConditionPath"/> matches
+        /// <see cref="ModernDataGridColumn.ConditionValue"/> the combo is hidden and a
+        /// read-only dash is shown instead; when <see cref="ModernDataGridColumn.ValueTones"/>
+        /// is set the selected text is tinted by value.
+        /// </summary>
+        private DataGridColumn BuildComboColumn(ModernDataGridColumn definition)
+        {
+            FrameworkElementFactory combo = new FrameworkElementFactory(typeof(ComboBox), "PART_Combo");
+            combo.SetValue(ComboBox.ItemsSourceProperty, definition.ComboOptions);
+
+            Binding selection = new Binding(definition.Binding);
+            selection.Mode = BindingMode.TwoWay;
+            selection.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            combo.SetBinding(ComboBox.SelectedItemProperty, selection);
+
+            object comboStyle = this.TryFindResource("GridEditComboStyle");
+            if (comboStyle is Style)
+            {
+                combo.SetValue(FrameworkElement.StyleProperty, comboStyle);
+            }
+
+            if (definition.ValueTones != null)
+            {
+                Binding foreground = new Binding(definition.Binding);
+                foreground.Converter = ToneConverter;
+                foreground.ConverterParameter = definition.ValueTones;
+                combo.SetBinding(ComboBox.ForegroundProperty, foreground);
+            }
+
+            DataTemplate template = new DataTemplate();
+
+            if (string.IsNullOrEmpty(definition.ConditionPath))
+            {
+                template.VisualTree = combo;
+            }
+            else
+            {
+                FrameworkElementFactory dash = new FrameworkElementFactory(typeof(TextBlock), "PART_Dash");
+                dash.SetValue(TextBlock.TextProperty, "-");
+                dash.SetValue(TextBlock.FontSizeProperty, 13.0);
+                dash.SetValue(TextBlock.VerticalAlignmentProperty, VerticalAlignment.Center);
+                dash.SetValue(TextBlock.HorizontalAlignmentProperty, HorizontalAlignment.Center);
+                dash.SetValue(UIElement.VisibilityProperty, Visibility.Collapsed);
+                object secondary = this.TryFindResource("Brush.TextSecondary");
+                if (secondary is Brush)
+                {
+                    dash.SetValue(TextBlock.ForegroundProperty, secondary);
+                }
+
+                FrameworkElementFactory grid = new FrameworkElementFactory(typeof(Grid));
+                grid.AppendChild(combo);
+                grid.AppendChild(dash);
+                template.VisualTree = grid;
+
+                DataTrigger trigger = new DataTrigger();
+                trigger.Binding = new Binding(definition.ConditionPath);
+                trigger.Value = definition.ConditionValue;
+                trigger.Setters.Add(new Setter(UIElement.VisibilityProperty, Visibility.Collapsed, "PART_Combo"));
+                trigger.Setters.Add(new Setter(UIElement.VisibilityProperty, Visibility.Visible, "PART_Dash"));
+                template.Triggers.Add(trigger);
+            }
+
+            DataGridTemplateColumn column = new DataGridTemplateColumn();
+            column.CellTemplate = template;
+            column.SortMemberPath = definition.Binding;
+            column.CanUserSort = true;
+            return column;
         }
 
         private static DataGridColumn BuildTextColumn(ModernDataGridColumn definition)
@@ -150,6 +236,14 @@ namespace com.example.Controls.Wpf.Data
             DataGridTextColumn column = new DataGridTextColumn();
             column.Binding = new Binding(definition.Binding);
             column.SortMemberPath = definition.Binding;
+            if (definition.CenterText)
+            {
+                Style style = new Style(typeof(TextBlock));
+                style.Setters.Add(new Setter(FrameworkElement.HorizontalAlignmentProperty, HorizontalAlignment.Center));
+                style.Setters.Add(new Setter(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Center));
+                column.ElementStyle = style;
+            }
+
             return column;
         }
 

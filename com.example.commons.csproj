@@ -375,6 +375,7 @@
       <DependentUpon>ModernDataGridControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Wpf\Data\ModernDataGridColumn.cs" />
+    <Compile Include="Controls\Wpf\Data\ValueToneBrushConverter.cs" />
     <Compile Include="Controls\Wpf\Data\MatteDataGridControl.xaml.cs">
       <DependentUpon>MatteDataGridControl.xaml</DependentUpon>
     </Compile>
@@ -443,6 +444,7 @@
     <Compile Include="Models\Ui\PayrollLineRow.cs" />
     <Compile Include="Models\Ui\PayrollResultRow.cs" />
     <Compile Include="Models\Ui\RadioButtonItemModel.cs" />
+    <Compile Include="Models\Ui\TrayInspectionRow.cs" />
     <Compile Include="Models\Ui\TreeViewItemModel.cs" />
     <!-- Properties -->
     <Compile Include="Properties\AssemblyInfo.cs" />

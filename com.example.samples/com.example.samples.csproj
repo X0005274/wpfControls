@@ -41,6 +41,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -55,7 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="WpfScreenHostForm.cs" />
+    <Compile Include="WpfScreenHostForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="CardPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -95,6 +98,12 @@
     </Compile>
     <Compile Include="InputSampleForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrayInspectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrayInspectionForm.Designer.cs">
+      <DependentUpon>TrayInspectionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SampleShellForm.cs">
       <SubType>Form</SubType>
