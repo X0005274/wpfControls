@@ -42,6 +42,7 @@ namespace com.example.Demo
             this.AddSample("Employee Mgmt", delegate { return new WpfScreenHostForm(new EmployeeManagementScreen()); });
             this.AddSample("Tray Inspection", delegate { return new TrayInspectionForm(); });
             this.AddSample("Tray Console", delegate { return new TrayInspectionConsoleForm(); });
+            this.AddSample("Process Flow", delegate { return new ProcessFlowForm(); });
             this.AddSample("User Form", delegate { return new InputSampleForm(); });
         }
 
