@@ -18,6 +18,11 @@
          compiled only when this assembly exists, so the control library still builds on
          machines without TIBCO installed. -->
     <TibrvAssembly>$(TIBRV_HOME)\bin\TIBCO.Rendezvous.dll</TibrvAssembly>
+    <!-- FarPoint Spread 8 (licensed; company machines only). Set env FARPOINT_SPREAD8_HOME to
+         the folder holding FarPoint.Win.Spread.dll + FarPoint.Win.dll. The Spread grid below
+         compiles only when that assembly exists, so home builds without the license still
+         succeed (same pattern as TibrvAssembly above). -->
+    <SpreadAssembly>$(FARPOINT_SPREAD8_HOME)\FarPoint.Win.Spread.dll</SpreadAssembly>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -73,6 +78,22 @@
   </ItemGroup>
   <ItemGroup Condition="Exists('$(TibrvAssembly)')">
     <Compile Include="Messaging\**\*.cs" />
+  </ItemGroup>
+  <!-- FarPoint Spread 8 grid (Integrations\Spread\ModernSpreadGrid.cs): compiled into this
+       library only where the licensed Spread assemblies are present. Kept out of the
+       WinForms\** wildcard so home builds (no license) skip it cleanly. -->
+  <ItemGroup Condition="Exists('$(SpreadAssembly)')">
+    <Reference Include="FarPoint.Win.Spread">
+      <HintPath>$(FARPOINT_SPREAD8_HOME)\FarPoint.Win.Spread.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="FarPoint.Win">
+      <HintPath>$(FARPOINT_SPREAD8_HOME)\FarPoint.Win.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="Exists('$(SpreadAssembly)')">
+    <Compile Include="Integrations\Spread\ModernSpreadGrid.cs" />
   </ItemGroup>
   <ItemGroup>
     <!-- Theme / design tokens -->

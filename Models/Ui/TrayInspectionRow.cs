@@ -211,7 +211,42 @@ namespace com.example.Models.Ui
                 {
                     this.judgeResult = value;
                     this.OnPropertyChanged("JudgeResult");
+                    this.OnPropertyChanged("JudgeDisplay");
+                    this.OnPropertyChanged("JudgeTone");
                 }
+            }
+        }
+
+        /// <summary>Badge label: the result, or "미판정" while unjudged. (Not persisted.)</summary>
+        public string JudgeDisplay
+        {
+            get
+            {
+                if (this.judgeResult == "SUCC" || this.judgeResult == "FAIL")
+                {
+                    return this.judgeResult;
+                }
+
+                return "미판정";
+            }
+        }
+
+        /// <summary>Badge tone for <see cref="JudgeResult"/> (success/danger/neutral). (Not persisted.)</summary>
+        public string JudgeTone
+        {
+            get
+            {
+                if (this.judgeResult == "SUCC")
+                {
+                    return "success";
+                }
+
+                if (this.judgeResult == "FAIL")
+                {
+                    return "danger";
+                }
+
+                return "neutral";
             }
         }
 
