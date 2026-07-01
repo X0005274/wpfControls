@@ -111,6 +111,14 @@
     <Compile Include="TrayInspectionConsoleForm.Designer.cs">
       <DependentUpon>TrayInspectionConsoleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FlowLogRow.cs" />
+    <Compile Include="RequestRow.cs" />
+    <Compile Include="ProcessFlowForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProcessFlowForm.Designer.cs">
+      <DependentUpon>ProcessFlowForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SampleShellForm.cs">
       <SubType>Form</SubType>
     </Compile>
