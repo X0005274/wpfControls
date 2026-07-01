@@ -97,8 +97,7 @@
     <Color x:Key="Color.TrackOff">#FFD1D5DB</Color>
 
     <!-- 5. Typography. Font: Segoe UI (Fluent's system face), Malgun Gothic fallback
-         for Korean. Pretendard is not used (corporate policy). Hierarchy comes from
-         size + weight only. -->
+         for Korean. Hierarchy comes from size + weight only. -->
     <FontFamily x:Key="Font.Family">Segoe UI, Malgun Gothic</FontFamily>
 
     <!-- Type scale (device-independent units; 12 DIU = 9pt, 16 DIU = 12pt).

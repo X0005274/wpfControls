@@ -71,10 +71,17 @@ namespace com.example.WinForms.Controls.Data
         /// <summary>너비를 지정해 텍스트 컬럼을 추가합니다. (너비: "*", "2*", "Auto", 픽셀 숫자)</summary>
         public void AddTextColumn(string header, string binding, string width)
         {
+            this.AddTextColumn(header, binding, width, false);
+        }
+
+        /// <summary>가운데 정렬 여부를 지정해 텍스트 컬럼을 추가합니다.</summary>
+        public void AddTextColumn(string header, string binding, string width, bool centerText)
+        {
             ModernDataGridColumn column = new ModernDataGridColumn();
             column.Header = header;
             column.Binding = binding;
             column.Width = width;
+            column.CenterText = centerText;
             this.columnDefinitions.Add(column);
             this.Wpf.SetColumns(this.columnDefinitions);
         }
@@ -93,6 +100,44 @@ namespace com.example.WinForms.Controls.Data
             column.Binding = labelBinding;
             column.TonePath = tonePath;
             column.Width = width;
+            this.columnDefinitions.Add(column);
+            this.Wpf.SetColumns(this.columnDefinitions);
+        }
+
+        /// <summary>편집 가능한 콤보 컬럼을 추가합니다. options=선택지. (클릭 한 번에 열립니다.)</summary>
+        public void AddComboColumn(string header, string binding, IEnumerable<string> options)
+        {
+            this.AddComboColumn(header, binding, options, null, null, null, null);
+        }
+
+        /// <summary>너비를 지정해 콤보 컬럼을 추가합니다.</summary>
+        public void AddComboColumn(string header, string binding, IEnumerable<string> options, string width)
+        {
+            this.AddComboColumn(header, binding, options, null, null, null, width);
+        }
+
+        /// <summary>
+        /// 콤보 컬럼을 추가합니다.
+        /// conditionPath/conditionValue: 다른 컬럼 값이 conditionValue 이면 콤보 대신 '-'(수정불가) 표시.
+        /// valueTones: 값 → 톤(success/danger/warning/neutral) 매핑으로 선택 텍스트 색을 배지색과 동일하게.
+        /// </summary>
+        public void AddComboColumn(
+            string header,
+            string binding,
+            IEnumerable<string> options,
+            string conditionPath,
+            string conditionValue,
+            IDictionary<string, string> valueTones,
+            string width)
+        {
+            ModernDataGridColumn column = new ModernDataGridColumn();
+            column.Header = header;
+            column.Binding = binding;
+            column.Width = width;
+            column.ComboOptions = new List<string>(options);
+            column.ConditionPath = conditionPath;
+            column.ConditionValue = conditionValue;
+            column.ValueTones = valueTones;
             this.columnDefinitions.Add(column);
             this.Wpf.SetColumns(this.columnDefinitions);
         }
